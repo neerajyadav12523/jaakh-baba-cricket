@@ -221,8 +221,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
 <section id="bracket"><div class="wrap">
   <h2 data-i="bracketH">Tournament bracket</h2>
-  <p class="lead" data-i="bracketLead">The draw will be held publicly before the season. Seeded teams are kept apart so the strongest sides meet late.</p>
-  <p class="note"><span class="tag" data-i="proposed">Proposed</span> <span data-i="seedNote">Seeds are based on Season 4 and 5 results. Other slots fill after the draw.</span></p>
+  <p class="lead" data-i="bracketLead">Teams will be placed in the bracket after the draw, which is held before the season starts.</p>
   <div class="brframe"><div class="bracket" id="bracketGrid"></div></div>
   <p class="note" data-i="scrollNote">Scroll sideways to see all rounds.</p>
 </div></section>
@@ -314,7 +313,6 @@ const CONFIG = {
   organiserWhatsApp: "919736908731",                         // country code + number, no spaces
   organiserDisplay: "97369 08731"
 };
-const SEEDS = {1:"Singhana",17:"Shimla Royals",9:"Jailaaf",25:"Bhankhari",5:"Ranwa Team",21:"Bhirr"};
 
 const SEASONS = [
   {n:1,dates:"31 Oct – 8 Nov 2021",fdate:"7 Nov 2021",ov:15,win:"Khatoti XI",lose:"Shimla Royals",ws:"124/6 (13.4)",ls:"123/9 (15)",res:{en:"won by 4 wickets",hi:"4 विकेट से जीते"},
@@ -337,8 +335,8 @@ const T = {
   watchLive:"Live scores on CricHeroes",registerTeam:"Register your team",
   navFormat:"Format",navBracket:"Bracket",navSchedule:"Schedule",navHistory:"Hall of Fame",navRules:"Rules & Awards",navVisit:"For Spectators",navRegister:"Register",navSponsors:"Sponsors",
   formatH:"Same format, sixth year",formatLead:"Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.",
-  bracketH:"Tournament bracket",bracketLead:"The draw will be held publicly before the season. Seeded teams are kept apart so the strongest sides meet late.",
-  proposed:"Proposed",seedNote:"Seeds are based on Season 4 and 5 results. Other slots fill after the draw.",scrollNote:"Scroll sideways to see all rounds.",
+  bracketH:"Tournament bracket",bracketLead:"Teams will be placed in the bracket after the draw, which is held before the season starts.",
+  tbd:"To be decided",tbdTeams:"Teams to be decided",scrollNote:"Scroll sideways to see all rounds.",
   schedH:"Day-by-day schedule",schedLead:"Four matches a day in the early rounds. Teams must report 30 minutes before their start time.",tentative:"Tentative",datesNote:"Dates and times will be confirmed by the committee.",
   hofH:"Hall of Fame",hofLead:"Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.",hofNote:"Scores and Player of the Match from the CricHeroes scorecard of each final.",
   rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",
@@ -375,8 +373,8 @@ const T = {
   watchLive:"CricHeroes पर लाइव स्कोर",registerTeam:"अपनी टीम रजिस्टर करें",
   navFormat:"फॉर्मेट",navBracket:"ड्रॉ",navSchedule:"कार्यक्रम",navHistory:"हॉल ऑफ फेम",navRules:"नियम व पुरस्कार",navVisit:"दर्शकों के लिए",navRegister:"रजिस्ट्रेशन",navSponsors:"प्रायोजक",
   formatH:"वही फॉर्मेट, छठा साल",formatLead:"32 टीमें, सीधा नॉकआउट। एक हार और टीम बाहर। नौ दिन में पाँच राउंड के बाद विजेता तय होगा।",
-  bracketH:"टूर्नामेंट ड्रॉ",bracketLead:"ड्रॉ सीज़न से पहले सबके सामने निकाला जाएगा। सीडेड टीमें अलग-अलग रखी गई हैं ताकि मज़बूत टीमें आख़िर में भिड़ें।",
-  proposed:"प्रस्तावित",seedNote:"सीड सीज़न 4 और 5 के नतीजों पर आधारित हैं। बाकी स्थान ड्रॉ के बाद भरे जाएँगे।",scrollNote:"सभी राउंड देखने के लिए बगल में स्क्रॉल करें।",
+  bracketH:"टूर्नामेंट ड्रॉ",bracketLead:"सीज़न शुरू होने से पहले ड्रॉ निकाला जाएगा, उसके बाद टीमें ड्रॉ में रखी जाएँगी।",
+  tbd:"तय होना बाकी",tbdTeams:"टीमें तय होना बाकी",scrollNote:"सभी राउंड देखने के लिए बगल में स्क्रॉल करें।",
   schedH:"दिनवार कार्यक्रम",schedLead:"शुरुआती राउंड में रोज़ चार मैच। टीमें अपने मैच से 30 मिनट पहले पहुँचें।",tentative:"संभावित",datesNote:"तारीख़ और समय कमेटी तय करेगी।",
   hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच फाइनल। शिमला रॉयल्स चार फाइनल खेली और दो जीती।",hofNote:"हर फाइनल का स्कोर और मैन ऑफ द मैच CricHeroes स्कोरकार्ड से।",
   rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",
@@ -435,12 +433,7 @@ const dayDate=i=>new Date(start.getTime()+i*86400000);
 const fmtDay=d=>{const x=new Date(d.toLocaleString("en-US",{timeZone:"Asia/Kolkata"}));return `${t("days")[x.getDay()]} ${x.getDate()} ${t("months")[x.getMonth()]}`;};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-function sideHtml(s){
-  if(s.slot){const seed=SEEDS[s.slot];
-    return seed?`<div class="t seed"><span>${esc(seed)}</span><span class="seedb">${t("seedLbl")}</span></div>`
-               :`<div class="t tbd"><span>${t("slot")} ${s.slot}</span></div>`;}
-  return `<div class="t tbd"><span>${t("w")} M${s.from}</span></div>`;
-}
+const sideHtml=()=>`<div class="t tbd"><span>${t("tbd")}</span></div>`;
 function renderBracket(){
   const g=document.getElementById("bracketGrid");let h="";
   for(let r=0;r<5;r++){
@@ -458,13 +451,12 @@ function renderDays(){
     const ms=FIX.filter(f=>f.day===d);
     const rounds=[...new Set(ms.map(m=>t("rounds")[m.r]))].join(" + ");
     h+=`<div class="day${d===today?" today":""}"><h3><span>${fmtDay(dayDate(d))}</span><small>${d===today?`<span class="tag">${t("today")}</span> `:""}${rounds}</small></h3><ul>`;
-    for(const m of ms){const who=m.a.slot?`${sideTxt(m.a)} v ${sideTxt(m.b)}`:`${t("w")} M${m.a.from} v ${t("w")} M${m.b.from}`;
-      h+=`<li><b>${m.time}</b><span>M${m.no} · ${who}${m.lights?` (${t("lights")})`:""}</span></li>`;}
+    for(const m of ms){
+      h+=`<li><b>${m.time}</b><span>M${m.no} · ${t("rounds")[m.r]} · <i>${t("tbdTeams")}</i></span></li>`;}
     h+=`</ul></div>`;
   }
   el.innerHTML=h;
 }
-const sideTxt=s=>SEEDS[s.slot]?esc(SEEDS[s.slot]):`${t("slot")} ${s.slot}`;
 
 function renderHof(){
   let h=`<div class="dyn">${TITLES.map(x=>`<span class="tag${x[1]>1?"":" alt"}">${esc(x[0])} × ${x[1]}</span>`).join("")}</div>`;
@@ -532,10 +524,24 @@ document.getElementById("copyBtn").addEventListener("click",()=>{
    .catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);});
 });
 
-/* Highlight nav item for the section in view */
+/* Tabs: only the clicked section is shown */
 const links=[...document.querySelectorAll("#navlinks a")];
-const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id));}});},{rootMargin:"-45% 0px -50% 0px"});
-document.querySelectorAll("main section").forEach(s=>io.observe(s));
+const sections=[...document.querySelectorAll("main section")];
+function showTab(id,scroll){
+  if(!sections.some(s=>s.id===id))id=sections[0].id;
+  sections.forEach(s=>s.hidden=s.id!==id);
+  links.forEach(a=>{const on=a.getAttribute("href")==="#"+id;a.classList.toggle("on",on);a.setAttribute("aria-selected",on);if(on){const bar=a.parentElement;bar.scrollLeft=Math.max(0,a.offsetLeft-bar.clientWidth/2+a.offsetWidth/2);}});
+  try{localStorage.setItem("jb-tab",id);}catch(e){}
+  if(scroll)document.querySelector("nav.bar").scrollIntoView({behavior:"smooth",block:"start"});
+}
+document.addEventListener("click",e=>{
+  const a=e.target.closest('a[href^="#"]');if(!a)return;
+  const id=a.getAttribute("href").slice(1);if(!sections.some(s=>s.id===id))return;
+  e.preventDefault();showTab(id,a.closest("#navlinks")===null);
+});
+let firstTab=location.hash.slice(1);
+if(!firstTab){try{firstTab=localStorage.getItem("jb-tab")||"";}catch(e){}}
+showTab(firstTab,false);
 
 applyLang();
 setInterval(tick,1000);
