@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. Bracket, schedule, rules, registration.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Jaakh Baba Cricket Pratiyogita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: a haveli-fresco masthead, then a sticky section bar; sections stack as one long scroll, bracket scrolls sideways in its own frame */
+:root{
+  --sand:#f3e6cc;      /* page ground: Shekhawati plaster */
+  --paper:#fbf4e4;     /* raised surface */
+  --ink:#1f2340;       /* indigo text */
+  --muted:#5d5a6e;
+  --indigo:#23306b;    /* fresco indigo */
+  --marigold:#e39b16;  /* accent */
+  --fresco:#a8322b;    /* fresco red, for winners / live */
+  --line:#d9c7a3;
+  --on-indigo:#fbf4e4;
+  --display:"Yatra One","Mukta",Georgia,serif;
+  --body:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --sand:#14172b;--paper:#1d2140;--ink:#f1e8d6;--muted:#b4adc4;--indigo:#2c3a85;--marigold:#f2b33d;--fresco:#ef6a5c;--line:#363c66;--on-indigo:#fbf4e4;color-scheme:dark}}
+:root[data-theme="dark"]{--sand:#14172b;--paper:#1d2140;--ink:#f1e8d6;--muted:#b4adc4;--indigo:#2c3a85;--marigold:#f2b33d;--fresco:#ef6a5c;--line:#363c66;--on-indigo:#fbf4e4;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--sand);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.15}
+h2{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--indigo)}
+:root[data-theme="dark"] h2{color:var(--marigold)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) h2{color:var(--marigold)}}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:16px}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+
+/* Masthead */
+.mast{background:var(--indigo);color:var(--on-indigo);position:relative;overflow:hidden}
+.mast::before{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;
+  background-image:radial-gradient(circle at 20px 20px,var(--marigold) 3px,transparent 4px),
+  radial-gradient(circle at 0 0,transparent 14px,var(--marigold) 15px,transparent 16px);
+  background-size:40px 40px}
+.arch{position:relative;padding-block:28px 34px;display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:820px){.arch{grid-template-columns:1.4fr 1fr;align-items:end}}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:var(--marigold)}
+.mast h1{font-size:clamp(2.3rem,7vw,4.2rem);margin-top:8px}
+.season{display:inline-flex;align-items:baseline;gap:8px;margin-top:6px;font-family:var(--display);font-size:1.5rem;color:var(--marigold)}
+.season b{font-size:3rem;line-height:1}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-weight:500}
+.facts span{white-space:nowrap}
+.toggles{display:flex;gap:6px}
+.chipbtn{font:inherit;font-size:.85rem;font-weight:700;border:1px solid rgba(251,244,228,.45);background:transparent;color:var(--on-indigo);border-radius:999px;padding:4px 12px;cursor:pointer}
+.chipbtn[aria-pressed="true"]{background:var(--marigold);border-color:var(--marigold);color:#1f2340}
+
+.clock{background:rgba(0,0,0,.22);border:1px solid rgba(251,244,228,.25);border-radius:14px;padding:16px}
+.clock .lbl{font-size:.85rem;opacity:.85}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center}
+.cd div{background:rgba(251,244,228,.1);border-radius:10px;padding:8px 2px}
+.cd b{display:block;font-size:2rem;line-height:1;font-weight:800}
+.cd small{font-size:.75rem;opacity:.8}
+.livepill{display:inline-flex;align-items:center;gap:8px;background:var(--fresco);color:#fff;font-weight:800;border-radius:999px;padding:4px 14px}
+.livepill i{width:9px;height:9px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.livepill i{animation:none}}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:700;text-decoration:none;border-radius:10px;padding:10px 16px;cursor:pointer;border:2px solid transparent}
+.btn.pri{background:var(--marigold);color:#1f2340}
+.btn.sec{border-color:currentColor;background:transparent;color:inherit}
+
+/* Sticky nav */
+nav.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.bar .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.bar a{flex:none;text-decoration:none;font-weight:700;font-size:.92rem;padding:12px 10px;color:var(--muted);border-bottom:3px solid transparent}
+nav.bar a:hover,nav.bar a.on{color:var(--ink);border-bottom-color:var(--marigold)}
+
+section{padding-block:44px;scroll-margin-top:52px}
+section+section{border-top:1px dashed var(--line)}
+.lead{color:var(--muted);max-width:65ch;margin:8px 0 0}
+.note{font-size:.88rem;color:var(--muted);margin-top:10px}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:2px 7px;background:var(--marigold);color:#1f2340}
+.tag.alt{background:transparent;border:1px solid var(--line);color:var(--muted)}
+
+/* Format strip */
+.format{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:22px}
+.fmt{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
+.fmt b{display:block;font-family:var(--display);font-size:1.25rem;color:var(--indigo)}
+:root[data-theme="dark"] .fmt b{color:var(--marigold)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fmt b{color:var(--marigold)}}
+.fmt span{font-size:.9rem;color:var(--muted)}
+
+/* Bracket */
+.brframe{overflow-x:auto;margin-top:22px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.bracket{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:14px;padding:16px;min-width:1040px}
+.rcol{display:flex;flex-direction:column}
+.rhead{font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-bottom:8px;border-bottom:2px solid var(--marigold);margin-bottom:8px}
+.rhead small{display:block;text-transform:none;letter-spacing:0;font-weight:500}
+.rbody{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:6px}
+.m{border:1px solid var(--line);border-radius:8px;background:var(--sand);font-size:.84rem;overflow:hidden}
+.m .mid{display:flex;justify-content:space-between;padding:2px 8px;font-size:.7rem;font-weight:700;color:var(--muted);background:rgba(127,110,80,.08)}
+.m .t{display:flex;justify-content:space-between;gap:6px;padding:3px 8px;min-width:0}
+.m .t span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m .t+.t{border-top:1px dashed var(--line)}
+.m .t.seed span:first-child{font-weight:800}
+.m .t.tbd{color:var(--muted);font-style:italic}
+.m.final{border:2px solid var(--marigold)}
+.seedb{font-size:.66rem;font-weight:800;color:var(--fresco)}
+
+/* Schedule */
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:22px}
+.day{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.day.today{border:2px solid var(--fresco)}
+.day h3{font-size:1.15rem;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.day h3 small{font-family:var(--body);font-size:.8rem;color:var(--muted)}
+.day ul{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:4px;font-size:.92rem}
+.day li{display:flex;gap:10px}
+.day li b{min-width:70px;font-variant-numeric:tabular-nums}
+
+/* Hall of fame */
+.hof{display:grid;gap:10px;margin-top:22px}
+.hrow{display:grid;grid-template-columns:70px 1fr;gap:14px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+@media(min-width:700px){.hrow{grid-template-columns:80px 1.2fr 1.6fr 90px}}
+.hrow .sn{font-family:var(--display);font-size:2rem;color:var(--marigold);line-height:1}
+.hrow .yr{font-size:.8rem;color:var(--muted)}
+.hrow .res{min-width:0}
+.hrow .win{color:var(--fresco);font-weight:800}
+.hrow .views{font-size:.85rem;color:var(--muted);text-align:right}
+@media(max-width:699px){.hrow .views{grid-column:2;text-align:left}.hrow .res{grid-column:2}}
+.hrow a{font-size:.85rem;font-weight:700}
+.dyn{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+
+/* Rules / awards / info */
+.cols{display:grid;gap:24px;margin-top:22px}
+@media(min-width:820px){.cols{grid-template-columns:1fr 1fr}}
+ol.rules{margin:0;padding-left:1.3em;display:grid;gap:8px}
+.awards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.aw{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.aw b{display:block}
+.aw span{font-size:.85rem;color:var(--muted)}
+.aw.big{grid-column:1/-1;background:var(--indigo);color:var(--on-indigo);border-color:var(--indigo)}
+.aw.big span{color:var(--on-indigo);opacity:.8}
+.info{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:22px}
+.info div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
+.info b{display:block;font-size:1.02rem;margin-bottom:2px}
+.info p{margin:0;font-size:.93rem;color:var(--muted)}
+
+/* Register */
+form{display:grid;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:22px;max-width:640px}
+.frow{display:grid;gap:12px}
+@media(min-width:560px){.frow{grid-template-columns:1fr 1fr}}
+label{display:grid;gap:4px;font-weight:700;font-size:.9rem}
+input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--sand);color:var(--ink);width:100%}
+.out{white-space:pre-wrap;background:var(--sand);border:1px dashed var(--line);border-radius:8px;padding:12px;font-size:.9rem}
+.err{color:var(--fresco);font-weight:700;font-size:.9rem}
+
+/* Sponsors */
+.tiers{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-top:22px}
+.tier{border:2px dashed var(--line);border-radius:12px;padding:16px;text-align:center}
+.tier b{display:block;font-family:var(--display);font-size:1.2rem}
+.tier span{font-size:.88rem;color:var(--muted)}
+
+footer{background:var(--indigo);color:var(--on-indigo);padding-block:28px;font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+
+<header class="mast">
+  <div class="wrap arch">
+    <div>
+      <div class="top">
+        <span class="eyebrow" data-i="eyebrow">Shimla · Khetri · Jhunjhunu</span>
+      </div>
+      <h1 data-i="title">Jaakh Baba Cricket Pratiyogita</h1>
+      <div class="season"><span data-i="season">Season</span> <b class="num">6</b></div>
+      <div class="facts">
+        <span class="num" id="dateRange">24 – 31 Oct 2026</span>
+        <span data-i="venue">Girls School Ground, Shimla</span>
+        <span data-i="teamsShort">32 teams · 31 matches</span>
+      </div>
+      <div class="ctas">
+        <a class="btn pri" id="liveLink" target="_blank" rel="noopener" data-i="watchLive">Live scores on CricHeroes</a>
+        <a class="btn sec" href="#register" data-i="registerTeam">Register your team</a>
+      </div>
+    </div>
+    <div class="clock" id="clock" aria-live="polite">
+      <div class="toggles" style="justify-content:flex-end;margin-bottom:10px">
+        <button class="chipbtn" id="langEn" aria-pressed="true">English</button>
+        <button class="chipbtn" id="langHi" aria-pressed="false">हिन्दी</button>
+      </div>
+      <div id="clockBody"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="bar" aria-label="Sections">
+  <div class="wrap" id="navlinks">
+    <a href="#format" data-i="navFormat">Format</a>
+    <a href="#bracket" data-i="navBracket">Bracket</a>
+    <a href="#schedule" data-i="navSchedule">Schedule</a>
+    <a href="#history" data-i="navHistory">Hall of Fame</a>
+    <a href="#rules" data-i="navRules">Rules & Awards</a>
+    <a href="#visit" data-i="navVisit">For Spectators</a>
+    <a href="#register" data-i="navRegister">Register</a>
+    <a href="#sponsors" data-i="navSponsors">Sponsors</a>
+  </div>
+</nav>
+
+<main>
+<section id="format"><div class="wrap">
+  <h2 data-i="formatH">Same format, sixth year</h2>
+  <p class="lead" data-i="formatLead">Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over eight days decide the champion.</p>
+  <div class="format" id="formatGrid"></div>
+</div></section>
+
+<section id="bracket"><div class="wrap">
+  <h2 data-i="bracketH">Tournament bracket</h2>
+  <p class="lead" data-i="bracketLead">The draw will be held publicly before the season. Seeded teams are kept apart so the strongest sides meet late.</p>
+  <p class="note"><span class="tag" data-i="proposed">Proposed</span> <span data-i="seedNote">Seeds are based on Season 4 and 5 results. Other slots fill after the draw.</span></p>
+  <div class="brframe"><div class="bracket" id="bracketGrid"></div></div>
+  <p class="note" data-i="scrollNote">Scroll sideways to see all rounds.</p>
+</div></section>
+
+<section id="schedule"><div class="wrap">
+  <h2 data-i="schedH">Day-by-day schedule</h2>
+  <p class="lead" data-i="schedLead">Four matches a day in the early rounds. Teams must report 30 minutes before their start time.</p>
+  <div class="days" id="days"></div>
+  <p class="note"><span class="tag alt" data-i="tentative">Tentative</span> <span data-i="datesNote">Dates and times will be confirmed by the committee.</span></p>
+</div></section>
+
+<section id="history"><div class="wrap">
+  <h2 data-i="hofH">Hall of Fame</h2>
+  <p class="lead" data-i="hofLead">Five seasons of finals at the Girls School Ground. Shimla Royals have reached four of them.</p>
+  <div class="hof" id="hof"></div>
+  <p class="note" data-i="hofNote">Winners of Seasons 1 to 3 will be added once confirmed by the committee.</p>
+</div></section>
+
+<section id="rules"><div class="wrap">
+  <h2 data-i="rulesH">Rules & awards</h2>
+  <div class="cols">
+    <div>
+      <p class="note" style="margin:0 0 10px"><span class="tag alt" data-i="draft">Draft</span></p>
+      <ol class="rules" id="rulesList"></ol>
+    </div>
+    <div class="awards" id="awards"></div>
+  </div>
+</div></section>
+
+<section id="visit"><div class="wrap">
+  <h2 data-i="visitH">Coming to watch?</h2>
+  <div class="info" id="info"></div>
+  <div class="ctas">
+    <a class="btn pri" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Girls+School+Shimla+Khetri+Jhunjhunu+Rajasthan" data-i="mapBtn">Open ground in Google Maps</a>
+  </div>
+</div></section>
+
+<section id="register"><div class="wrap">
+  <h2 data-i="regH">Register your team</h2>
+  <p class="lead" data-i="regLead">Fill this in and send it to the organisers on WhatsApp. Your place is confirmed only when the committee replies and the entry fee is paid.</p>
+  <form id="regForm" novalidate>
+    <div class="frow">
+      <label><span data-i="fTeam">Team name</span><input id="fTeam" required></label>
+      <label><span data-i="fVillage">Village</span><input id="fVillage" required></label>
+    </div>
+    <div class="frow">
+      <label><span data-i="fCaptain">Captain's name</span><input id="fCaptain" required></label>
+      <label><span data-i="fPhone">Captain's mobile</span><input id="fPhone" inputmode="numeric" maxlength="10" required></label>
+    </div>
+    <div class="frow">
+      <label><span data-i="fPlayers">Squad size</span>
+        <select id="fPlayers"><option>11</option><option>12</option><option>13</option><option>14</option><option selected>15</option></select></label>
+      <label><span data-i="fPrev">Played earlier seasons?</span>
+        <select id="fPrev"><option value="yes" data-i="yes">Yes</option><option value="no" data-i="no">No, first time</option></select></label>
+    </div>
+    <div class="err" id="fErr" hidden></div>
+    <div class="ctas" style="margin:0">
+      <button class="btn pri" type="submit" data-i="fSubmit">Prepare WhatsApp message</button>
+    </div>
+    <div id="fOut" hidden>
+      <div class="out" id="fMsg"></div>
+      <div class="ctas">
+        <a class="btn pri" id="waLink" target="_blank" rel="noopener" data-i="sendWa">Send on WhatsApp</a>
+        <button class="btn sec" type="button" id="copyBtn" data-i="copy">Copy message</button>
+      </div>
+    </div>
+  </form>
+</div></section>
+
+<section id="sponsors"><div class="wrap">
+  <h2 data-i="spH">Sponsors</h2>
+  <p class="lead" data-i="spLead">Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.</p>
+  <div class="tiers" id="tiers"></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span data-i="footer">Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan</span>
+  <a href="https://cricheroes.com/search/3/jaakh-baba" target="_blank" rel="noopener" data-i="pastOn">Past seasons on CricHeroes</a>
+</div></footer>
+
+<script>
+/* ===== Settings the organisers edit ===== */
+const CONFIG = {
+  startISO: "2026-10-24T08:30:00+05:30",
+  days: 8,
+  liveUrl: "https://cricheroes.com/search/3/jaakh-baba",   // replace with the Season 6 CricHeroes link once created
+  organiserWhatsApp: ""                                      // e.g. "919876543210"; blank = message is shown for copying
+};
+const SEEDS = {1:"Singhana",17:"Shimla Royals",9:"Jailaaf",25:"Bhankhari",5:"Ranwa Team",21:"Bhirr"};
+
+const SEASONS = [
+  {n:1,dates:"31 Oct – 8 Nov 2021",a:"Shimla Royals",b:"Khatoti XI",ov:15,win:null,res:null,views:"11.7k",url:"https://cricheroes.com/tournament/305370/jaakh-baba-cricket-pratiyogita/matches/past-matches"},
+  {n:2,dates:"22 – 29 Oct 2022",a:"Thatwari Team",b:"Jamalpur",ov:12,win:null,res:null,views:"13.9k",url:"https://cricheroes.com/tournament/496204/jaakh-baba-cricket-pratiyogita-2/matches/past-matches"},
+  {n:3,dates:"5 – 14 Nov 2023",a:"Bhirr",b:"Shimla Royals",ov:12,win:null,res:null,views:"14.9k",url:"https://cricheroes.com/tournament/795886/jaakh-baba-cricket-pratiyogita-3/matches/past-matches"},
+  {n:4,dates:"27 Oct – 4 Nov 2024",a:"Shimla Royals",b:"Jailaaf",ov:15,win:"Shimla Royals",res:{en:"won by 8 wickets",hi:"8 विकेट से जीते"},views:"19.5k",url:"https://cricheroes.com/tournament/1162028/jakh-baba-cricket-pratiyogita-4/matches/past-matches"},
+  {n:5,dates:"14 – 21 Oct 2025",a:"Singhana",b:"Shimla Royals",ov:12,win:"Singhana",res:{en:"won by 9 runs",hi:"9 रन से जीते"},views:"29.8k",url:"https://cricheroes.com/tournament/1647782/jaakh-baba-cricket-pratiyogita-season-5/matches/past-matches"}
+];
+
+/* ===== Text ===== */
+const T = {
+ en:{
+  eyebrow:"Shimla · Khetri · Jhunjhunu",title:"Jaakh Baba Cricket Pratiyogita",season:"Season",venue:"Girls School Ground, Shimla",teamsShort:"32 teams · 31 matches",
+  watchLive:"Live scores on CricHeroes",registerTeam:"Register your team",
+  navFormat:"Format",navBracket:"Bracket",navSchedule:"Schedule",navHistory:"Hall of Fame",navRules:"Rules & Awards",navVisit:"For Spectators",navRegister:"Register",navSponsors:"Sponsors",
+  formatH:"Same format, sixth year",formatLead:"Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over eight days decide the champion.",
+  bracketH:"Tournament bracket",bracketLead:"The draw will be held publicly before the season. Seeded teams are kept apart so the strongest sides meet late.",
+  proposed:"Proposed",seedNote:"Seeds are based on Season 4 and 5 results. Other slots fill after the draw.",scrollNote:"Scroll sideways to see all rounds.",
+  schedH:"Day-by-day schedule",schedLead:"Four matches a day in the early rounds. Teams must report 30 minutes before their start time.",tentative:"Tentative",datesNote:"Dates and times will be confirmed by the committee.",
+  hofH:"Hall of Fame",hofLead:"Five seasons of finals at the Girls School Ground. Shimla Royals have reached four of them.",hofNote:"Winners of Seasons 1 to 3 will be added once confirmed by the committee.",
+  rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",
+  regH:"Register your team",regLead:"Fill this in and send it to the organisers on WhatsApp. Your place is confirmed only when the committee replies and the entry fee is paid.",
+  fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
+  fSubmit:"Prepare WhatsApp message",sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
+  errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
+  spH:"Sponsors",spLead:"Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.",
+  footer:"Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan",pastOn:"Past seasons on CricHeroes",
+  startsIn:"First ball in",d:"days",h:"hours",m:"min",s:"sec",liveNow:"Live now",dayOf:"Day {d} of {n}",todayMatches:"Today's matches are on the schedule below.",over:"Season 6 is complete. Thank you for watching.",
+  rounds:["Round 1","Round 2","Quarter-finals","Semi-finals","Final"],ov:"overs",matches:"matches",match:"match",
+  w:"Winner",seedLbl:"Seed",slot:"Slot",today:"Today",lights:"under lights",
+  final:"Final",won:"Champion",finalists:"Finalists",result:"result to be added",see:"See on CricHeroes",views:"views",
+  days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],months:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  rules:[
+   "32 teams play a straight knockout. A team that loses is out.",
+   "Rounds 1, 2 and quarter-finals are 10 overs a side. Semi-finals and the final are 12 overs a side.",
+   "A bowler may bowl at most one-fifth of the overs: 2 in a 10-over game, 3 in a 12-over game.",
+   "Every no-ball is followed by a free hit.",
+   "A tie is decided by a Super Over. If the Super Over is tied, another Super Over is played.",
+   "Overs can be reduced only by the umpires, and only for bad light or weather.",
+   "Teams report 30 minutes before start. A team more than 15 minutes late forfeits the match.",
+   "A player can play for one team only. The committee may ask for ID.",
+   "Umpires' decisions on the field are final. Complaints go to the tournament committee in writing.",
+   "Betting, abuse or fighting leads to disqualification of the player or the team."
+  ],
+  awards:[["Champions","Trophy and prize money"],["Runners-up","Trophy and prize money"],["Player of the Match","Every match"],["Player of the Series","Across all 31 matches"],["Best Batter","Most runs"],["Best Bowler","Most wickets"],["Best Fielder","Catches and run-outs"],["Six Machine","Most sixes"],["Emerging Player","Best player under 19"],["Fair Play Team","Best conduct on and off the field"]],
+  info:[["Venue","Girls School Ground, Shimla, Khetri, Jhunjhunu."],["Match times","First match 8:30 AM. Last match around 3 PM. Final day ends with the final under lights."],["Watch from home","Every match is scored live on CricHeroes, ball by ball."],["Water & first aid","Drinking water and a first-aid desk at the pavilion. Ambulance number on the notice board."],["Food stalls","Local stalls near the entrance from 10 AM."],["Parking","Two-wheelers and tractors on the school side. Keep the boundary rope clear."]],
+  tiers:[["Title sponsor","Name on the trophy, banners and every live stream"],["Powered by","Logo on jerseys and the scoreboard"],["Player of the Match","Your name with every award, 31 times"],["Six & wicket sponsor","Announced with every six or wicket"],["Boundary banner","Banner on the boundary for all 8 days"]],
+  formatCards:[["32","teams"],["31","matches"],["5","rounds"],["10 / 12","overs (league / semis & final)"],["8","days"]]
+ },
+ hi:{
+  eyebrow:"शिमला · खेतड़ी · झुंझुनूं",title:"जाख बाबा क्रिकेट प्रतियोगिता",season:"सीज़न",venue:"गर्ल्स स्कूल ग्राउंड, शिमला",teamsShort:"32 टीमें · 31 मैच",
+  watchLive:"CricHeroes पर लाइव स्कोर",registerTeam:"अपनी टीम रजिस्टर करें",
+  navFormat:"फॉर्मेट",navBracket:"ड्रॉ",navSchedule:"कार्यक्रम",navHistory:"हॉल ऑफ फेम",navRules:"नियम व पुरस्कार",navVisit:"दर्शकों के लिए",navRegister:"रजिस्ट्रेशन",navSponsors:"प्रायोजक",
+  formatH:"वही फॉर्मेट, छठा साल",formatLead:"32 टीमें, सीधा नॉकआउट। एक हार और टीम बाहर। आठ दिन में पाँच राउंड के बाद विजेता तय होगा।",
+  bracketH:"टूर्नामेंट ड्रॉ",bracketLead:"ड्रॉ सीज़न से पहले सबके सामने निकाला जाएगा। सीडेड टीमें अलग-अलग रखी गई हैं ताकि मज़बूत टीमें आख़िर में भिड़ें।",
+  proposed:"प्रस्तावित",seedNote:"सीड सीज़न 4 और 5 के नतीजों पर आधारित हैं। बाकी स्थान ड्रॉ के बाद भरे जाएँगे।",scrollNote:"सभी राउंड देखने के लिए बगल में स्क्रॉल करें।",
+  schedH:"दिनवार कार्यक्रम",schedLead:"शुरुआती राउंड में रोज़ चार मैच। टीमें अपने मैच से 30 मिनट पहले पहुँचें।",tentative:"संभावित",datesNote:"तारीख़ और समय कमेटी तय करेगी।",
+  hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच सीज़न के फाइनल। शिमला रॉयल्स चार फाइनल खेल चुकी है।",hofNote:"सीज़न 1 से 3 के विजेता कमेटी की पुष्टि के बाद जोड़े जाएँगे।",
+  rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",
+  regH:"अपनी टीम रजिस्टर करें",regLead:"यह फॉर्म भरें और WhatsApp पर आयोजकों को भेजें। कमेटी के जवाब और एंट्री फीस जमा होने के बाद ही जगह पक्की होगी।",
+  fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
+  fSubmit:"WhatsApp संदेश तैयार करें",sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
+  errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
+  spH:"प्रायोजक",spLead:"पिछले सीज़न को लगभग 30,000 बार देखा गया। अपनी दुकान या व्यापार को पूरे इलाके तक पहुँचाएँ।",
+  footer:"जाख बाबा क्रिकेट प्रतियोगिता · सीज़न 6 · शिमला, खेतड़ी, झुंझुनूं, राजस्थान",pastOn:"पिछले सीज़न CricHeroes पर",
+  startsIn:"पहली गेंद में बाकी",d:"दिन",h:"घंटे",m:"मिनट",s:"सेकंड",liveNow:"अभी लाइव",dayOf:"दिन {d} / {n}",todayMatches:"आज के मैच नीचे कार्यक्रम में देखें।",over:"सीज़न 6 पूरा हुआ। देखने के लिए धन्यवाद।",
+  rounds:["पहला राउंड","दूसरा राउंड","क्वार्टर फाइनल","सेमी फाइनल","फाइनल"],ov:"ओवर",matches:"मैच",match:"मैच",
+  w:"विजेता",seedLbl:"सीड",slot:"स्थान",today:"आज",lights:"फ्लडलाइट में",
+  final:"फाइनल",won:"चैंपियन",finalists:"फाइनलिस्ट",result:"नतीजा जल्द जोड़ा जाएगा",see:"CricHeroes पर देखें",views:"व्यूज़",
+  days:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"],months:["जन","फ़र","मार्च","अप्रै","मई","जून","जुला","अग","सित","अक्टू","नव","दिस"],
+  rules:[
+   "32 टीमें सीधा नॉकआउट खेलेंगी। हारने वाली टीम बाहर।",
+   "पहला, दूसरा राउंड और क्वार्टर फाइनल 10-10 ओवर के। सेमी फाइनल और फाइनल 12-12 ओवर के।",
+   "एक गेंदबाज़ अधिकतम पाँचवाँ हिस्सा ओवर डालेगा: 10 ओवर में 2, 12 ओवर में 3।",
+   "हर नो-बॉल के बाद फ्री हिट।",
+   "मैच टाई होने पर सुपर ओवर। सुपर ओवर भी टाई हो तो एक और सुपर ओवर।",
+   "ओवर सिर्फ़ अंपायर कम कर सकते हैं, और सिर्फ़ रोशनी या मौसम की वजह से।",
+   "टीमें 30 मिनट पहले पहुँचें। 15 मिनट से ज़्यादा देरी पर मैच हार माना जाएगा।",
+   "एक खिलाड़ी सिर्फ़ एक टीम से खेलेगा। कमेटी पहचान पत्र माँग सकती है।",
+   "मैदान पर अंपायर का फ़ैसला अंतिम। शिकायत लिखित में टूर्नामेंट कमेटी को दें।",
+   "सट्टा, गाली-गलौज या झगड़ा करने पर खिलाड़ी या टीम बाहर।"
+  ],
+  awards:[["चैंपियन","ट्रॉफी और इनाम राशि"],["उपविजेता","ट्रॉफी और इनाम राशि"],["मैन ऑफ द मैच","हर मैच में"],["मैन ऑफ द सीरीज़","सभी 31 मैचों में"],["सर्वश्रेष्ठ बल्लेबाज़","सबसे ज़्यादा रन"],["सर्वश्रेष्ठ गेंदबाज़","सबसे ज़्यादा विकेट"],["सर्वश्रेष्ठ फील्डर","कैच और रन-आउट"],["सिक्सर किंग","सबसे ज़्यादा छक्के"],["उभरता खिलाड़ी","19 साल से कम उम्र का सबसे अच्छा खिलाड़ी"],["फेयर प्ले टीम","मैदान के अंदर और बाहर सबसे अच्छा व्यवहार"]],
+  info:[["स्थान","गर्ल्स स्कूल ग्राउंड, शिमला, खेतड़ी, झुंझुनूं।"],["मैच का समय","पहला मैच सुबह 8:30 बजे। आख़िरी मैच लगभग 3 बजे। आख़िरी दिन फाइनल फ्लडलाइट में।"],["घर से देखें","हर मैच CricHeroes पर गेंद-दर-गेंद लाइव।"],["पानी और प्राथमिक उपचार","पवेलियन पर पीने का पानी और फर्स्ट-एड। एंबुलेंस नंबर नोटिस बोर्ड पर।"],["खाने के स्टॉल","सुबह 10 बजे से गेट के पास स्टॉल।"],["पार्किंग","दोपहिया और ट्रैक्टर स्कूल की तरफ़। बाउंड्री रस्सी के पास जगह खाली रखें।"]],
+  tiers:[["टाइटल प्रायोजक","ट्रॉफी, बैनर और हर लाइव स्ट्रीम पर नाम"],["पावर्ड बाय","जर्सी और स्कोरबोर्ड पर लोगो"],["मैन ऑफ द मैच","हर पुरस्कार के साथ आपका नाम, 31 बार"],["छक्का और विकेट प्रायोजक","हर छक्के और विकेट पर घोषणा"],["बाउंड्री बैनर","आठों दिन बाउंड्री पर बैनर"]],
+  formatCards:[["32","टीमें"],["31","मैच"],["5","राउंड"],["10 / 12","ओवर (लीग / सेमी व फाइनल)"],["8","दिन"]]
+ }
+};
+
+/* ===== Fixtures: match number, round, day index, time ===== */
+const ROUND_OVERS=[10,10,10,12,12];
+const ROUND_DAYS=[[0,1,2,3],[4,5],[6],[7],[7]];
+function buildFixtures(){
+  const fx=[];let no=1;
+  // Round 1: 16 matches, 4 per day on days 0-3
+  const times=["8:30","10:30","13:00","15:00"];
+  for(let i=0;i<16;i++){fx.push({no:no++,r:0,day:Math.floor(i/4),time:times[i%4],a:{slot:2*i+1},b:{slot:2*i+2}});}
+  for(let i=0;i<8;i++){fx.push({no:no++,r:1,day:4+Math.floor(i/4),time:times[i%4],a:{from:2*i+1},b:{from:2*i+2}});}
+  for(let i=0;i<4;i++){fx.push({no:no++,r:2,day:6,time:times[i],a:{from:17+2*i},b:{from:18+2*i}});}
+  fx.push({no:no++,r:3,day:7,time:"9:00",a:{from:25},b:{from:26}});
+  fx.push({no:no++,r:3,day:7,time:"11:30",a:{from:27},b:{from:28}});
+  fx.push({no:no++,r:4,day:7,time:"18:30",a:{from:29},b:{from:30},lights:true});
+  return fx;
+}
+const FIX=buildFixtures();
+
+let lang="en";
+try{const s=localStorage.getItem("jb-lang");if(s==="hi"||s==="en")lang=s;}catch(e){}
+const t=k=>T[lang][k];
+const start=new Date(CONFIG.startISO);
+const dayDate=i=>new Date(start.getTime()+i*86400000);
+const fmtDay=d=>{const x=new Date(d.toLocaleString("en-US",{timeZone:"Asia/Kolkata"}));return `${t("days")[x.getDay()]} ${x.getDate()} ${t("months")[x.getMonth()]}`;};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function sideHtml(s){
+  if(s.slot){const seed=SEEDS[s.slot];
+    return seed?`<div class="t seed"><span>${esc(seed)}</span><span class="seedb">${t("seedLbl")}</span></div>`
+               :`<div class="t tbd"><span>${t("slot")} ${s.slot}</span></div>`;}
+  return `<div class="t tbd"><span>${t("w")} M${s.from}</span></div>`;
+}
+function renderBracket(){
+  const g=document.getElementById("bracketGrid");let h="";
+  for(let r=0;r<5;r++){
+    const ms=FIX.filter(f=>f.r===r);
+    h+=`<div class="rcol"><div class="rhead">${t("rounds")[r]}<small class="num">${ROUND_OVERS[r]} ${t("ov")} · ${ms.length} ${ms.length>1?t("matches"):t("match")}</small></div><div class="rbody">`;
+    for(const m of ms){h+=`<div class="m${r===4?" final":""}"><div class="mid num"><span>M${m.no}</span><span>${fmtDay(dayDate(m.day))} · ${m.time}</span></div>${sideHtml(m.a)}${sideHtml(m.b)}</div>`;}
+    h+=`</div></div>`;
+  }
+  g.innerHTML=h;
+}
+function nowDayIndex(){const n=Date.now(),s=start.getTime()-8.5*3600000;if(n<s)return -1;const i=Math.floor((n-s)/86400000);return i<CONFIG.days?i:CONFIG.days;}
+function renderDays(){
+  const el=document.getElementById("days");const today=nowDayIndex();let h="";
+  for(let d=0;d<CONFIG.days;d++){
+    const ms=FIX.filter(f=>f.day===d);
+    const rounds=[...new Set(ms.map(m=>t("rounds")[m.r]))].join(" + ");
+    h+=`<div class="day${d===today?" today":""}"><h3><span>${fmtDay(dayDate(d))}</span><small>${d===today?`<span class="tag">${t("today")}</span> `:""}${rounds}</small></h3><ul>`;
+    for(const m of ms){const who=m.a.slot?`${sideTxt(m.a)} v ${sideTxt(m.b)}`:`${t("w")} M${m.a.from} v ${t("w")} M${m.b.from}`;
+      h+=`<li><b>${m.time}</b><span>M${m.no} · ${who}${m.lights?` (${t("lights")})`:""}</span></li>`;}
+    h+=`</ul></div>`;
+  }
+  el.innerHTML=h;
+}
+const sideTxt=s=>SEEDS[s.slot]?esc(SEEDS[s.slot]):`${t("slot")} ${s.slot}`;
+
+function renderHof(){
+  let h="";
+  for(const s of [...SEASONS].reverse()){
+    const loser=s.win===s.a?s.b:s.a;
+    const res=s.win?`<span class="win">${esc(s.win)}</span> ${s.res[lang]} · ${esc(loser)}`:`${esc(s.a)} v ${esc(s.b)} <span class="yr">(${t("result")})</span>`;
+    h+=`<div class="hrow"><div><div class="sn num">${s.n}</div></div>
+      <div><b>${s.win?t("won"):t("finalists")}</b><div class="yr num">${s.dates}</div></div>
+      <div class="res">${res}<div class="yr">${t("final")} · ${s.ov} ${t("ov")} · <a href="${s.url}" target="_blank" rel="noopener">${t("see")}</a></div></div>
+      <div class="views num">${s.views} ${t("views")}</div></div>`;
+  }
+  document.getElementById("hof").innerHTML=h;
+}
+function renderLists(){
+  document.getElementById("rulesList").innerHTML=t("rules").map(r=>`<li>${r}</li>`).join("");
+  document.getElementById("awards").innerHTML=t("awards").map((a,i)=>`<div class="aw${i===0?" big":""}"><b>${a[0]}</b><span>${a[1]}</span></div>`).join("");
+  document.getElementById("info").innerHTML=t("info").map(a=>`<div><b>${a[0]}</b><p>${a[1]}</p></div>`).join("");
+  document.getElementById("tiers").innerHTML=t("tiers").map(a=>`<div class="tier"><b>${a[0]}</b><span>${a[1]}</span></div>`).join("");
+  document.getElementById("formatGrid").innerHTML=t("formatCards").map(a=>`<div class="fmt"><b class="num">${a[0]}</b><span>${a[1]}</span></div>`).join("");
+  const end=dayDate(CONFIG.days-1);
+  document.getElementById("dateRange").textContent=`${fmtDay(start)} – ${fmtDay(end)} ${end.getFullYear()}`;
+}
+function tick(){
+  const body=document.getElementById("clockBody");const di=nowDayIndex();
+  if(di<0){
+    let s=Math.max(0,Math.floor((start-Date.now())/1000));
+    const d=Math.floor(s/86400);s%=86400;const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;
+    body.innerHTML=`<div class="lbl">${t("startsIn")}</div><div class="cd num"><div><b>${d}</b><small>${t("d")}</small></div><div><b>${h}</b><small>${t("h")}</small></div><div><b>${m}</b><small>${t("m")}</small></div><div><b>${s}</b><small>${t("s")}</small></div></div>`;
+  } else if(di<CONFIG.days){
+    body.innerHTML=`<span class="livepill"><i></i>${t("liveNow")}</span><p style="margin:10px 0 0;font-weight:700">${t("dayOf").replace("{d}",di+1).replace("{n}",CONFIG.days)}</p><p style="margin:4px 0 0;opacity:.85">${t("todayMatches")}</p>`;
+  } else {
+    body.innerHTML=`<p style="margin:0;font-weight:700">${t("over")}</p>`;
+  }
+}
+function applyLang(){
+  document.documentElement.lang=lang==="hi"?"hi":"en";
+  document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
+  document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
+  document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
+  renderBracket();renderDays();renderHof();renderLists();tick();
+}
+function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
+document.getElementById("langEn").onclick=()=>setLang("en");
+document.getElementById("langHi").onclick=()=>setLang("hi");
+document.getElementById("liveLink").href=CONFIG.liveUrl;
+
+/* Registration -> WhatsApp text */
+document.getElementById("regForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=id=>document.getElementById(id).value.trim();
+  const err=document.getElementById("fErr");
+  const phone=v("fPhone").replace(/\D/g,"");
+  if(!v("fTeam")||!v("fVillage")||!v("fCaptain")||phone.length!==10){err.textContent=t("errFill");err.hidden=false;return;}
+  err.hidden=true;
+  const prevSel=document.getElementById("fPrev");
+  const msg=`${T[lang].title} – ${t("season")} 6\n${t("fTeam")}: ${v("fTeam")}\n${t("fVillage")}: ${v("fVillage")}\n${t("fCaptain")}: ${v("fCaptain")}\n${t("fPhone")}: ${phone}\n${t("fPlayers")}: ${v("fPlayers")}\n${t("fPrev")}: ${prevSel.options[prevSel.selectedIndex].text}`;
+  document.getElementById("fMsg").textContent=msg;
+  const wa=document.getElementById("waLink");
+  if(CONFIG.organiserWhatsApp){wa.href=`https://wa.me/${CONFIG.organiserWhatsApp}?text=${encodeURIComponent(msg)}`;wa.hidden=false;}
+  else{wa.hidden=true;document.getElementById("fMsg").textContent=msg+"\n\n— "+t("noWa");}
+  document.getElementById("fOut").hidden=false;
+});
+document.getElementById("copyBtn").addEventListener("click",()=>{
+  const el=document.getElementById("fMsg");const btn=document.getElementById("copyBtn");
+  navigator.clipboard.writeText(el.textContent).then(()=>{btn.textContent=t("copied");setTimeout(()=>btn.textContent=t("copy"),1500);})
+   .catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);});
+});
+
+/* Highlight nav item for the section in view */
+const links=[...document.querySelectorAll("#navlinks a")];
+const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+en.target.id));}});},{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("main section").forEach(s=>io.observe(s));
+
+applyLang();
+setInterval(tick,1000);
+</script>
+
+</body>
+
+</html>
