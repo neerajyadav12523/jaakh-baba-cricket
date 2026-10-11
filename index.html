@@ -45,39 +45,45 @@ h2{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--indigo)}
 .num{font-variant-numeric:tabular-nums}
 :focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
 
-/* Masthead */
-.mast{background:var(--indigo);color:var(--on-indigo);position:relative;overflow:hidden}
-.mast::before{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;
+/* Masthead: compact band. Thin top row, title + season badge, one facts line, countdown + actions */
+.mast{background:var(--indigo);color:var(--on-indigo);position:relative;overflow:hidden;border-bottom:3px solid var(--marigold)}
+.mast::before{content:"";position:absolute;inset:0;opacity:.1;pointer-events:none;
   background-image:radial-gradient(circle at 20px 20px,var(--marigold) 3px,transparent 4px),
   radial-gradient(circle at 0 0,transparent 14px,var(--marigold) 15px,transparent 16px);
   background-size:40px 40px}
-.arch{position:relative;padding-block:28px 34px;display:grid;gap:22px;grid-template-columns:1fr}
-@media(min-width:820px){.arch{grid-template-columns:1.4fr 1fr;align-items:end}}
-.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:var(--marigold)}
-.mast h1{font-size:clamp(2.3rem,7vw,4.2rem);margin-top:8px}
-.season{display:inline-flex;align-items:baseline;gap:8px;margin-top:6px;font-family:var(--display);font-size:1.5rem;color:var(--marigold)}
-.season b{font-size:3rem;line-height:1}
-.facts{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-weight:500}
-.facts span{white-space:nowrap}
-.maplink{display:inline-flex;align-items:center;gap:3px;margin-left:6px;padding:1px 9px;border-radius:999px;border:1px solid var(--marigold);color:var(--marigold);font-size:.8rem;font-weight:800;text-decoration:none;vertical-align:1px}
-.maplink:hover{background:var(--marigold);color:#1f2340}
-.toggles{display:flex;gap:6px}
-.chipbtn{font:inherit;font-size:.85rem;font-weight:700;border:1px solid rgba(251,244,228,.45);background:transparent;color:var(--on-indigo);border-radius:999px;padding:4px 12px;cursor:pointer}
+.mast .wrap{position:relative}
+.mtop{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:8px 0}
+.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:700;color:var(--marigold)}
+.toggles{display:flex;gap:4px}
+.chipbtn{font:inherit;font-size:.75rem;font-weight:700;border:1px solid rgba(251,244,228,.4);background:transparent;color:var(--on-indigo);border-radius:999px;padding:2px 10px;cursor:pointer}
 .chipbtn[aria-pressed="true"]{background:var(--marigold);border-color:var(--marigold);color:#1f2340}
-
-.clock{background:rgba(0,0,0,.22);border:1px solid rgba(251,244,228,.25);border-radius:14px;padding:16px}
-.clock .lbl{font-size:.85rem;opacity:.85}
-.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;text-align:center}
-.cd div{background:rgba(251,244,228,.1);border-radius:10px;padding:8px 2px}
-.cd b{display:block;font-size:2rem;line-height:1;font-weight:800}
-.cd small{font-size:.75rem;opacity:.8}
+.mmain{display:grid;gap:10px 24px;padding-block:6px 14px;align-items:center}
+@media(min-width:860px){.mmain{grid-template-columns:1fr auto}}
+.mast h1{font-size:clamp(1.45rem,4.4vw,2.35rem);display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px}
+.schip{display:inline-flex;align-items:baseline;gap:5px;font-family:var(--body);font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--marigold);color:#1f2340;border-radius:8px;padding:3px 9px}
+.schip b{font-size:1.15rem;line-height:1}
+.facts{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;margin-top:6px;font-size:.9rem;font-weight:500;opacity:.95}
+.facts>span{white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+@media(min-width:600px){.facts>span+span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--marigold);margin-right:8px}}
+.maplink{display:inline-flex;align-items:center;gap:3px;padding:1px 8px;border-radius:999px;border:1px solid var(--marigold);color:var(--marigold);font-size:.75rem;font-weight:800;text-decoration:none}
+.maplink:hover{background:var(--marigold);color:#1f2340}
+.mside{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+@media(min-width:860px){.mside{flex-direction:column;align-items:flex-end}}
+.clock{display:flex;align-items:center;gap:10px}
+.clock .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;opacity:.8;max-width:6.5em;line-height:1.2}
+.cd{display:flex;gap:4px}
+.cd div{background:rgba(251,244,228,.12);border-radius:8px;min-width:44px;padding:4px 4px 3px;text-align:center}
+.cd b{display:block;font-size:1.15rem;line-height:1;font-weight:800}
+.cd small{font-size:.62rem;opacity:.8;text-transform:uppercase;letter-spacing:.04em}
+.clock .day{font-weight:700;font-size:.9rem}
+.ctas{display:flex;flex-wrap:wrap;gap:8px}
 .livepill{display:inline-flex;align-items:center;gap:8px;background:var(--fresco);color:#fff;font-weight:800;border-radius:999px;padding:4px 14px}
 .livepill i{width:9px;height:9px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
 @keyframes pulse{50%{opacity:.25}}
 @media (prefers-reduced-motion:reduce){.livepill i{animation:none}}
 .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .btn{display:inline-flex;align-items:center;gap:6px;font:inherit;font-weight:700;text-decoration:none;border-radius:10px;padding:10px 16px;cursor:pointer;border:2px solid transparent}
+.mast .btn{padding:6px 12px;font-size:.85rem;border-radius:8px}
 .btn.pri{background:var(--marigold);color:#1f2340}
 .btn.sec{border-color:currentColor;background:transparent;color:inherit}
 
@@ -219,29 +225,28 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 </style>
 
 <header class="mast">
-  <div class="wrap arch">
+  <div class="wrap mtop">
+    <span class="eyebrow" data-i="eyebrow">Shimla · Khetri · Jhunjhunu</span>
+    <div class="toggles">
+      <button class="chipbtn" id="langEn" aria-pressed="true">English</button>
+      <button class="chipbtn" id="langHi" aria-pressed="false">हिन्दी</button>
+    </div>
+  </div>
+  <div class="wrap mmain">
     <div>
-      <div class="top">
-        <span class="eyebrow" data-i="eyebrow">Shimla · Khetri · Jhunjhunu</span>
-      </div>
-      <h1 data-i="title">Jaakh Baba Cricket Pratiyogita</h1>
-      <div class="season"><span data-i="season">Season</span> <b class="num">6</b></div>
+      <h1><span data-i="title">Jaakh Baba Cricket Pratiyogita</span><span class="schip"><span data-i="season">Season</span> <b class="num">6</b></span></h1>
       <div class="facts">
         <span class="num" id="dateRange">1 – 9 Nov 2026</span>
-        <span><span data-i="venue">Girls School Ground, Shimla</span> <a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span>
+        <span><span data-i="venue">Girls School Ground, Shimla</span><a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span>
         <span data-i="teamsShort">32 teams · 31 matches</span>
       </div>
+    </div>
+    <div class="mside">
+      <div class="clock" id="clockBody" aria-live="polite"></div>
       <div class="ctas">
         <a class="btn pri" id="liveLink" target="_blank" rel="noopener noreferrer" data-i="watchLive">Live scores on CricHeroes</a>
         <a class="btn sec" href="#register" data-i="registerTeam">Register your team</a>
       </div>
-    </div>
-    <div class="clock" id="clock" aria-live="polite">
-      <div class="toggles" style="justify-content:flex-end;margin-bottom:10px">
-        <button class="chipbtn" id="langEn" aria-pressed="true">English</button>
-        <button class="chipbtn" id="langHi" aria-pressed="false">हिन्दी</button>
-      </div>
-      <div id="clockBody"></div>
     </div>
   </div>
 </header>
@@ -629,11 +634,11 @@ function tick(){
   if(di<0){
     let s=Math.max(0,Math.floor((start-Date.now())/1000));
     const d=Math.floor(s/86400);s%=86400;const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;
-    body.innerHTML=`<div class="lbl">${t("startsIn")}</div><div class="cd num"><div><b>${d}</b><small>${t("d")}</small></div><div><b>${h}</b><small>${t("h")}</small></div><div><b>${m}</b><small>${t("m")}</small></div><div><b>${s}</b><small>${t("s")}</small></div></div>`;
+    body.innerHTML=`<span class="lbl">${t("startsIn")}</span><div class="cd num"><div><b>${d}</b><small>${t("d")}</small></div><div><b>${h}</b><small>${t("h")}</small></div><div><b>${m}</b><small>${t("m")}</small></div><div><b>${s}</b><small>${t("s")}</small></div></div>`;
   } else if(di<CONFIG.days){
-    body.innerHTML=`<span class="livepill"><i></i>${t("liveNow")}</span><p style="margin:10px 0 0;font-weight:700">${t("dayOf").replace("{d}",di+1).replace("{n}",CONFIG.days)}</p><p style="margin:4px 0 0;opacity:.85">${t("todayMatches")}</p>`;
+    body.innerHTML=`<span class="livepill"><i></i>${t("liveNow")}</span><span class="day">${t("dayOf").replace("{d}",di+1).replace("{n}",CONFIG.days)}</span>`;
   } else {
-    body.innerHTML=`<p style="margin:0;font-weight:700">${t("over")}</p>`;
+    body.innerHTML=`<span class="day">${t("over")}</span>`;
   }
 }
 function applyLang(){
