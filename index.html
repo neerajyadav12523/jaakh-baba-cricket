@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Bracket, schedule, records, registration.">
+<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, registration.">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -23,14 +23,16 @@
   --marigold:#e39b16;  /* accent */
   --fresco:#a8322b;    /* fresco red, for winners / live */
   --line:#d9c7a3;
+  --label:#23306b;
+  --b0:#23306b;--b1:#a8322b;--b2:#1f7a5a;--b3:#b26a00;--b4:#6b2f7a;--b5:#0f6b8a;--b6:#7a4a2a;--b7:#4a5a1f;
   --on-indigo:#fbf4e4;
   --display:"Yatra One","Mukta",Georgia,serif;
   --body:"Mukta",system-ui,-apple-system,"Segoe UI",sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --sand:#14172b;--paper:#1d2140;--ink:#f1e8d6;--muted:#b4adc4;--indigo:#2c3a85;--marigold:#f2b33d;--fresco:#ef6a5c;--line:#363c66;--on-indigo:#fbf4e4;color-scheme:dark}}
-:root[data-theme="dark"]{--sand:#14172b;--paper:#1d2140;--ink:#f1e8d6;--muted:#b4adc4;--indigo:#2c3a85;--marigold:#f2b33d;--fresco:#ef6a5c;--line:#363c66;--on-indigo:#fbf4e4;color-scheme:dark}
+  --sand:#14172b;--paper:#1d2140;--ink:#f1e8d6;--muted:#b4adc4;--indigo:#2c3a85;--marigold:#f2b33d;--fresco:#ef6a5c;--line:#363c66;--on-indigo:#fbf4e4;--label:#f2b33d;color-scheme:dark}}
+:root[data-theme="dark"]{--sand:#14172b;--paper:#1d2140;--ink:#f1e8d6;--muted:#b4adc4;--indigo:#2c3a85;--marigold:#f2b33d;--fresco:#ef6a5c;--line:#363c66;--on-indigo:#fbf4e4;--label:#f2b33d;color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--sand);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
@@ -98,32 +100,44 @@ section+section{border-top:1px dashed var(--line)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .fmt b{color:var(--marigold)}}
 .fmt span{font-size:.9rem;color:var(--muted)}
 
-/* Bracket */
-.brframe{overflow-x:auto;margin-top:22px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
-.bracket{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:14px;padding:16px;min-width:1040px}
-.rcol{display:flex;flex-direction:column}
-.rhead{font-weight:800;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-bottom:8px;border-bottom:2px solid var(--marigold);margin-bottom:8px}
-.rhead small{display:block;text-transform:none;letter-spacing:0;font-weight:500}
-.rbody{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:6px}
-.m{border:1px solid var(--line);border-radius:8px;background:var(--sand);font-size:.84rem;overflow:hidden}
-.m .mid{display:flex;justify-content:space-between;padding:2px 8px;font-size:.7rem;font-weight:700;color:var(--muted);background:rgba(127,110,80,.08)}
-.m .t{display:flex;justify-content:space-between;gap:6px;padding:3px 8px;min-width:0}
-.m .t span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.m .t+.t{border-top:1px dashed var(--line)}
-.m .t.seed span:first-child{font-weight:800}
-.m .t.tbd{color:var(--muted);font-style:italic}
-.m.final{border:2px solid var(--marigold)}
-.seedb{font-size:.66rem;font-weight:800;color:var(--fresco)}
-
-/* Schedule */
-.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:22px}
-.day{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
-.day.today{border:2px solid var(--fresco)}
-.day h3{font-size:1.15rem;display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.day h3 small{font-family:var(--body);font-size:.8rem;color:var(--muted)}
-.day ul{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:4px;font-size:.92rem}
-.day li{display:flex;gap:10px}
-.day li b{min-width:70px;font-variant-numeric:tabular-nums}
+/* Matches: fixtures and results */
+.mtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:20px}
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{font:inherit;font-weight:800;border:0;background:transparent;color:var(--muted);padding:7px 18px;border-radius:999px;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--indigo);color:var(--on-indigo)}
+.msel{font:inherit;font-weight:700;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);width:auto}
+.chips{display:flex;gap:6px;overflow-x:auto;margin-top:12px;padding-bottom:4px;scrollbar-width:none}
+.chips button{flex:none;font:inherit;font-size:.85rem;font-weight:700;border:1px solid var(--line);background:transparent;color:var(--muted);padding:5px 12px;border-radius:999px;cursor:pointer}
+.chips button[aria-pressed="true"]{border-color:var(--marigold);background:var(--marigold);color:#1f2340}
+.mday{margin-top:26px}
+.mday h3{font-family:var(--body);font-weight:800;font-size:1rem;display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+.mlist{display:grid;gap:12px;margin-top:12px}
+.mc{background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.mc.today{border:2px solid var(--fresco)}
+.mc-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px;font-size:.8rem;font-weight:700;color:var(--muted);border-bottom:1px dashed var(--line)}
+.mc-top .lbl{text-transform:uppercase;letter-spacing:.08em;color:var(--label)}
+.mc-res{padding:9px 14px 0;font-weight:800;color:var(--fresco)}
+.mc-teams{display:grid;gap:8px;padding:12px 14px}
+.tm{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;min-width:0}
+.tm .tn{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.tm.lose .tn,.tm.lose .sc b{opacity:.6}
+.tm.win .tn{font-weight:800}
+.sc{text-align:right;font-variant-numeric:tabular-nums;line-height:1.1}
+.sc b{display:block;font-size:1.35rem;font-weight:800}
+.sc small{color:var(--muted);font-size:.78rem}
+.vs{display:none;font-family:var(--display);color:var(--muted);text-align:center}
+.badge{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;background:var(--b0)}
+.badge.q{background:var(--line);color:var(--muted)}
+.tm.tbd .tn{color:var(--muted);font-style:italic;font-weight:500}
+.mc-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;padding:9px 14px;font-size:.82rem;color:var(--muted);background:rgba(127,110,80,.07)}
+.btn.sm{padding:5px 12px;font-size:.82rem;border-radius:8px}
+.mempty{margin-top:22px;background:var(--paper);border:1px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted)}
+@media(min-width:640px){
+  .mc-teams{grid-template-columns:1fr auto 1fr;align-items:center}
+  .vs{display:block}
+  .tm.b{grid-template-columns:auto 1fr auto}
+  .tm.b .badge{order:3}.tm.b .tn{order:2;text-align:right}.tm.b .sc{order:1;text-align:left}
+}
 
 /* Hall of fame */
 .hof{display:grid;gap:10px;margin-top:22px}
@@ -234,8 +248,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div class="wrap" id="navlinks">
     <a href="#history" data-i="navHistory">Hall of Fame</a>
     <a href="#format" data-i="navFormat">Format</a>
-    <a href="#bracket" data-i="navBracket">Bracket</a>
-    <a href="#schedule" data-i="navSchedule">Schedule</a>
+    <a href="#matches" data-i="navMatches">Matches</a>
     <a href="#rules" data-i="navRules">Rules & Awards</a>
     <a href="#visit" data-i="navVisit">For Spectators</a>
     <a href="#register" data-i="navRegister">Register</a>
@@ -250,18 +263,19 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div class="format" id="formatGrid"></div>
 </div></section>
 
-<section id="bracket"><div class="wrap">
-  <h2 data-i="bracketH">Tournament bracket</h2>
-  <p class="lead" data-i="bracketLead">Teams will be placed in the bracket after the draw, which is held before the season starts.</p>
-  <div class="brframe"><div class="bracket" id="bracketGrid"></div></div>
-  <p class="note" data-i="scrollNote">Scroll sideways to see all rounds.</p>
-</div></section>
-
-<section id="schedule"><div class="wrap">
-  <h2 data-i="schedH">Day-by-day schedule</h2>
-  <p class="lead" data-i="schedLead">Four matches a day in the early rounds. Teams must report 30 minutes before their start time.</p>
-  <div class="days" id="days"></div>
-  <p class="note"><span class="tag alt" data-i="tentative">Tentative</span> <span data-i="datesNote">Dates and times will be confirmed by the committee.</span></p>
+<section id="matches"><div class="wrap">
+  <h2 data-i="matchesH">Matches</h2>
+  <p class="lead" data-i="matchesLead">Fixtures and results for Season 6. Pick an earlier season to see every result from Seasons 1 to 5.</p>
+  <div class="mtools">
+    <div class="seg" role="tablist" aria-label="Fixtures or results">
+      <button id="vFix" role="tab" data-i="fixtures">Fixtures</button>
+      <button id="vRes" role="tab" data-i="results">Results</button>
+    </div>
+    <select class="msel" id="seasonSel" aria-label="Season"></select>
+  </div>
+  <div class="chips" id="roundChips"></div>
+  <div id="mlist"></div>
+  <p class="note" id="mNote"><span class="tag alt" data-i="tentative">Tentative</span> <span data-i="datesNote">Dates and times will be confirmed by the committee.</span></p>
 </div></section>
 
 <section id="history"><div class="wrap">
@@ -349,6 +363,15 @@ const CONFIG = {
   organiserDisplay: "97369 08731"
 };
 
+/* Season 6 matches, keyed by match number (1-31). Fill in teams after the draw, then results as matches finish.
+   Example:
+   3: { teams: ["Shimla Royals", "Singhana"],
+        result: { first: ["Singhana", 98, 7, "10.0"], second: ["Shimla Royals", 99, 4, "9.2"], winner: 1,
+                  text: "Shimla Royals won by 6 wickets", url: "https://cricheroes.com/scorecard/..." } }
+   first/second = [team, runs, wickets, overs] in batting order; winner 0 = first, 1 = second. */
+const S6_MATCHES = {
+};
+
 const SEASONS = [
   {n:1,dates:"31 Oct – 8 Nov 2021",fdate:"7 Nov 2021",ov:15,win:"Khatoti XI",lose:"Shimla Royals",ws:"124/6 (13.4)",ls:"123/9 (15)",res:{en:"won by 4 wickets",hi:"4 विकेट से जीते"},
    pom:"Sandeep (Khatoti XI) · 3/30",top:"Rohit Kumar 38 (22) · Golu Kumra 31 (15)",views:"11.7k",url:"https://cricheroes.com/scorecard/2449255/jaakh-baba-cricket-pratiyogita/shimla-royals-vs-khatoti-xi/summary"},
@@ -370,11 +393,13 @@ const T = {
  en:{
   eyebrow:"Shimla · Khetri · Jhunjhunu",title:"Jaakh Baba Cricket Pratiyogita",season:"Season",venue:"Girls School Ground, Shimla",teamsShort:"32 teams · 31 matches",
   watchLive:"Live scores on CricHeroes",registerTeam:"Register your team",
-  navFormat:"Format",navBracket:"Bracket",navSchedule:"Schedule",navHistory:"Hall of Fame",navRules:"Rules & Awards",navVisit:"For Spectators",navRegister:"Register",navSponsors:"Sponsors",
+  navFormat:"Format",navMatches:"Matches",navHistory:"Hall of Fame",navRules:"Rules & Awards",navVisit:"For Spectators",navRegister:"Register",navSponsors:"Sponsors",
   formatH:"Same format, sixth year",formatLead:"Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.",
-  bracketH:"Tournament bracket",bracketLead:"Teams will be placed in the bracket after the draw, which is held before the season starts.",
-  tbd:"To be decided",tbdTeams:"Teams to be decided",scrollNote:"Scroll sideways to see all rounds.",
-  schedH:"Day-by-day schedule",schedLead:"Four matches a day in the early rounds. Teams must report 30 minutes before their start time.",tentative:"Tentative",datesNote:"Dates and times will be confirmed by the committee.",
+  matchesH:"Matches",matchesLead:"Fixtures and results for Season 6. Pick an earlier season to see every result from Seasons 1 to 5.",
+  fixtures:"Fixtures",results:"Results",allRounds:"All rounds",matchLbl:"Match",ovShort:"ov",venueShort:"Girls School Ground, Shimla",liveBtn:"Live on CricHeroes",
+  noResults6:"No results yet. Season 6 starts on {d}. Results appear here after each match.",seasonDone:"Season {n} is complete. Open Results to see all 31 matches.",
+  allPlayed:"All Season 6 matches have been played. Open Results.",noneInRound:"No matches in this round.",
+  tbd:"To be decided",tentative:"Tentative",datesNote:"Dates and times will be confirmed by the committee.",
   recH:"All-time records",recLead:"Added up from every scorecard of Seasons 1 to 5. Each player is counted by their CricHeroes profile, so their numbers follow them across teams.",
   fTop:"Highest score",fBowl:"Best bowling",fSix:"Most sixes",fApps:"Most matches",
   bRuns:"Most runs",bWkts:"Most wickets",bPom:"Most Player of the Match awards",bSeason:"Season by season",
@@ -412,11 +437,13 @@ const T = {
  hi:{
   eyebrow:"शिमला · खेतड़ी · झुंझुनूं",title:"जाख बाबा क्रिकेट प्रतियोगिता",season:"सीज़न",venue:"गर्ल्स स्कूल ग्राउंड, शिमला",teamsShort:"32 टीमें · 31 मैच",
   watchLive:"CricHeroes पर लाइव स्कोर",registerTeam:"अपनी टीम रजिस्टर करें",
-  navFormat:"फॉर्मेट",navBracket:"ड्रॉ",navSchedule:"कार्यक्रम",navHistory:"हॉल ऑफ फेम",navRules:"नियम व पुरस्कार",navVisit:"दर्शकों के लिए",navRegister:"रजिस्ट्रेशन",navSponsors:"प्रायोजक",
+  navFormat:"फॉर्मेट",navMatches:"मैच",navHistory:"हॉल ऑफ फेम",navRules:"नियम व पुरस्कार",navVisit:"दर्शकों के लिए",navRegister:"रजिस्ट्रेशन",navSponsors:"प्रायोजक",
   formatH:"वही फॉर्मेट, छठा साल",formatLead:"32 टीमें, सीधा नॉकआउट। एक हार और टीम बाहर। नौ दिन में पाँच राउंड के बाद विजेता तय होगा।",
-  bracketH:"टूर्नामेंट ड्रॉ",bracketLead:"सीज़न शुरू होने से पहले ड्रॉ निकाला जाएगा, उसके बाद टीमें ड्रॉ में रखी जाएँगी।",
-  tbd:"तय होना बाकी",tbdTeams:"टीमें तय होना बाकी",scrollNote:"सभी राउंड देखने के लिए बगल में स्क्रॉल करें।",
-  schedH:"दिनवार कार्यक्रम",schedLead:"शुरुआती राउंड में रोज़ चार मैच। टीमें अपने मैच से 30 मिनट पहले पहुँचें।",tentative:"संभावित",datesNote:"तारीख़ और समय कमेटी तय करेगी।",
+  matchesH:"मैच",matchesLead:"सीज़न 6 के आगामी मैच और नतीजे। सीज़न 1 से 5 के सारे नतीजे देखने के लिए पुराना सीज़न चुनें।",
+  fixtures:"आगामी मैच",results:"नतीजे",allRounds:"सभी राउंड",matchLbl:"मैच",ovShort:"ओवर",venueShort:"गर्ल्स स्कूल ग्राउंड, शिमला",liveBtn:"CricHeroes पर लाइव",
+  noResults6:"अभी कोई नतीजा नहीं। सीज़न 6 {d} से शुरू होगा। हर मैच के बाद नतीजा यहाँ दिखेगा।",seasonDone:"सीज़न {n} पूरा हो चुका है। सभी 31 मैच देखने के लिए नतीजे खोलें।",
+  allPlayed:"सीज़न 6 के सभी मैच हो चुके हैं। नतीजे खोलें।",noneInRound:"इस राउंड में कोई मैच नहीं।",
+  tbd:"तय होना बाकी",tentative:"संभावित",datesNote:"तारीख़ और समय कमेटी तय करेगी।",
   recH:"अब तक के रिकॉर्ड",recLead:"सीज़न 1 से 5 के हर स्कोरकार्ड को जोड़कर। हर खिलाड़ी उसकी CricHeroes प्रोफ़ाइल से गिना गया है, इसलिए टीम बदलने पर भी उसके आँकड़े साथ रहते हैं।",
   fTop:"सबसे बड़ी पारी",fBowl:"सबसे अच्छी गेंदबाज़ी",fSix:"सबसे ज़्यादा छक्के",fApps:"सबसे ज़्यादा मैच",
   bRuns:"सबसे ज़्यादा रन",bWkts:"सबसे ज़्यादा विकेट",bPom:"सबसे ज़्यादा मैन ऑफ द मैच",bSeason:"सीज़न दर सीज़न",
@@ -455,7 +482,6 @@ const T = {
 
 /* ===== Fixtures: match number, round, day index, time ===== */
 const ROUND_OVERS=[10,10,10,12,12];
-const ROUND_DAYS=[[0,1,2,3],[4,5],[6],[7],[7]];
 function buildFixtures(){
   const fx=[];let no=1;
   // Round 1: 16 matches, 4 per day on days 0-3
@@ -478,30 +504,79 @@ const dayDate=i=>new Date(start.getTime()+i*86400000);
 const fmtDay=d=>{const x=new Date(d.toLocaleString("en-US",{timeZone:"Asia/Kolkata"}));return `${t("days")[x.getDay()]} ${x.getDate()} ${t("months")[x.getMonth()]}`;};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-const sideHtml=()=>`<div class="t tbd"><span>${t("tbd")}</span></div>`;
-function renderBracket(){
-  const g=document.getElementById("bracketGrid");let h="";
-  for(let r=0;r<5;r++){
-    const ms=FIX.filter(f=>f.r===r);
-    h+=`<div class="rcol"><div class="rhead">${t("rounds")[r]}<small class="num">${ROUND_OVERS[r]} ${t("ov")} · ${ms.length} ${ms.length>1?t("matches"):t("match")}</small></div><div class="rbody">`;
-    for(const m of ms){h+=`<div class="m${r===4?" final":""}"><div class="mid num"><span>M${m.no}</span><span>${fmtDay(dayDate(m.day))} · ${m.time}</span></div>${sideHtml(m.a)}${sideHtml(m.b)}</div>`;}
-    h+=`</div></div>`;
-  }
-  g.innerHTML=h;
-}
 function nowDayIndex(){const n=Date.now(),s=start.getTime()-8.5*3600000;if(n<s)return -1;const i=Math.floor((n-s)/86400000);return i<CONFIG.days?i:CONFIG.days;}
-function renderDays(){
-  const el=document.getElementById("days");const today=nowDayIndex();let h="";
-  for(let d=0;d<CONFIG.days;d++){
-    const ms=FIX.filter(f=>f.day===d);
-    const rounds=[...new Set(ms.map(m=>t("rounds")[m.r]))].join(" + ");
-    h+=`<div class="day${d===today?" today":""}"><h3><span>${fmtDay(dayDate(d))}</span><small>${d===today?`<span class="tag">${t("today")}</span> `:""}${rounds}</small></h3><ul>`;
-    for(const m of ms){
-      h+=`<li><b>${m.time}</b><span>M${m.no} · ${t("rounds")[m.r]} · <i>${t("tbdTeams")}</i></span></li>`;}
-    h+=`</ul></div>`;
-  }
-  el.innerHTML=h;
+/* ===== Matches tab (IPL-style fixtures and results) ===== */
+/*RESULTS*/const PAST_RESULTS = [[1,1,0,"2021-10-31T05:04:05.000Z",["Khatipura Team",90,5,"10.0"],["Dochana Team",84,4,"10.0"],0,"Khatipura Team won by 6 runs","https://cricheroes.com/scorecard/2407844/jaakh-baba-cricket-pratiyogita/khatipura-team-vs-dochana-team/scorecard"],[1,2,0,"2021-10-31T06:45:58.000Z",["Kishanpura Team",108,5,"10.0"],["Pacheri Bari Team",97,6,"10.0"],0,"Kishanpura Team won by 11 runs","https://cricheroes.com/scorecard/2407896/jaakh-baba-cricket-pratiyogita/kishanpura-team-vs-pacheri-bari-team/scorecard"],[1,3,0,"2021-10-31T08:22:20.000Z",["Dancholi Team",112,3,"10.0"],["Khatoti Team",88,6,"10.0"],0,"Dancholi Team won by 24 runs","https://cricheroes.com/scorecard/2413914/jaakh-baba-cricket-pratiyogita/dancholi-team-vs-khatoti-team/scorecard"],[1,4,0,"2021-10-31T16:55:07.000Z",["Dudhwa Team",124,0,"0.0"],["Devta Team",68,0,"0.0"],0,"Dudhwa Team won by 125 runs","https://cricheroes.com/scorecard/2416355/jaakh-baba-cricket-pratiyogita/dudhwa-team-vs-devta-team/scorecard"],[1,5,0,"2021-11-01T04:12:04.000Z",["Pacheri Bari Azad Mohalla",79,8,"10.0"],["Nihaloth Team",85,5,"9.5"],1,"Nihaloth Team won by 5 wickets","https://cricheroes.com/scorecard/2416444/jaakh-baba-cricket-pratiyogita/pacheri-bari-azad-mohalla-vs-nihaloth-team/scorecard"],[1,6,0,"2021-11-01T05:52:33.000Z",["Nayanagar Team",109,2,"10.0"],["Thatwari Team",110,4,"7.0"],1,"Thatwari Team won by 6 wickets","https://cricheroes.com/scorecard/2417763/jaakh-baba-cricket-pratiyogita/nayanagar-team-vs-thatwari-team/scorecard"],[1,7,0,"2021-11-01T07:40:53.000Z",["Dhana Pacheri Team",78,8,"10.0"],["JHCC Dumoli",79,4,"7.2"],1,"JHCC Dumoli won by 6 wickets","https://cricheroes.com/scorecard/2416451/jaakh-baba-cricket-pratiyogita/dhana-pacheri-team-vs-jhcc-dumoli/scorecard"],[1,8,0,"2021-11-01T09:09:53.000Z",["Thana Team",91,6,"10.0"],["Copper 1 Team",94,2,"7.4"],1,"Copper 1 Team won by 8 wickets","https://cricheroes.com/scorecard/2416454/jaakh-baba-cricket-pratiyogita/thana-team-vs-copper-1-team/scorecard"],[1,9,0,"2021-11-01T10:37:36.000Z",["Badalwas Team",101,4,"10.0"],["Shrikant Shimla Team",52,7,"10.0"],0,"Badalwas Team won by 49 runs","https://cricheroes.com/scorecard/2418860/jaakh-baba-cricket-pratiyogita/badalwas-team-vs-shrikant-shimla-team/scorecard"],[1,10,0,"2021-11-02T03:23:30.000Z",["Chhoti Pacheri",59,8,"10.0"],["Crony Shimla",61,8,"9.0"],1,"Crony Shimla won by 2 wickets","https://cricheroes.com/scorecard/2421012/jaakh-baba-cricket-pratiyogita/chhoti-pacheri-vs-crony-shimla/scorecard"],[1,11,0,"2021-11-02T05:07:21.000Z",["Balaha",109,5,"10.0"],["Dudhwa Surendra Rawat",79,10,"9.4"],0,"Balaha won by 30 runs","https://cricheroes.com/scorecard/2421566/jaakh-baba-cricket-pratiyogita/balaha-vs-dudhwa-surendra-rawat/scorecard"],[1,12,0,"2021-11-02T07:17:58.000Z",["Lathar Club Shimla",61,9,"10.0"],["Gothra khetri",63,4,"5.0"],1,"Gothra khetri won by 6 wickets","https://cricheroes.com/scorecard/2422120/jaakh-baba-cricket-pratiyogita/lathar-club-shimla-vs-gothra-khetri/scorecard"],[1,13,0,"2021-11-02T08:22:35.000Z",["Major Lathi Tod Fod Shimla",107,7,"10.0"],["God Balaha",67,10,"9.1"],0,"Major Lathi Tod Fod Shimla won by 40 runs","https://cricheroes.com/scorecard/2422365/jaakh-baba-cricket-pratiyogita/major-lathi-tod-fod-shimla-vs-god-balaha/scorecard"],[1,14,0,"2021-11-03T03:14:58.000Z",["Kakrai Team",67,10,"9.3"],["Ranwa Team",71,0,"6.1"],1,"Ranwa Team won by 10 wickets","https://cricheroes.com/scorecard/2424743/jaakh-baba-cricket-pratiyogita/kakrai-team-vs-ranwa-team/scorecard"],[1,15,0,"2021-11-03T04:31:23.000Z",["Rambass Team",70,8,"10.0"],["Shimla Royals",74,1,"4.0"],1,"Shimla Royals won by 9 wickets","https://cricheroes.com/scorecard/2424764/jaakh-baba-cricket-pratiyogita/rambass-team-vs-shimla-royals/scorecard"],[1,16,0,"2021-11-03T05:58:21.000Z",["Dohar Team",97,7,"9.1"],["Khatoti XI",99,3,"8.3"],1,"Khatoti XI won by 7 wickets","https://cricheroes.com/scorecard/2425697/jaakh-baba-cricket-pratiyogita/dohar-team-vs-khatoti-xi/scorecard"],[1,17,1,"2021-11-03T07:19:28.000Z",["Khatipura Team",104,7,"10.0"],["Kishanpura Team",41,10,"8.1"],0,"Khatipura Team won by 63 runs","https://cricheroes.com/scorecard/2426002/jaakh-baba-cricket-pratiyogita/khatipura-team-vs-kishanpura-team/scorecard"],[1,18,1,"2021-11-03T09:10:18.000Z",["Crony Shimla",74,7,"10.0"],["JHCC Dumoli",80,4,"7.4"],1,"JHCC Dumoli won by 6 wickets","https://cricheroes.com/scorecard/2426512/jaakh-baba-cricket-pratiyogita/crony-shimla-vs-jhcc-dumoli/scorecard"],[1,19,1,"2021-11-04T03:47:00.000Z",["Ranwa Team",76,7,"10.0"],["Gothra khetri",71,7,"10.0"],0,"Ranwa Team won by 5 runs","https://cricheroes.com/scorecard/2429303/jaakh-baba-cricket-pratiyogita/ranwa-team-vs-gothra-khetri/scorecard"],[1,20,1,"2021-11-04T05:09:00.000Z",["Shimla Royals",88,6,"10.0"],["Nihaloth Team",39,10,"6.3"],0,"Shimla Royals won by 49 runs","https://cricheroes.com/scorecard/2429799/jaakh-baba-cricket-pratiyogita/shimla-royals-vs-nihaloth-team/scorecard"],[1,21,1,"2021-11-04T06:40:42.000Z",["Badalwas Team",143,8,"10.0"],["Major Lathi Tod Fod Shimla",49,7,"8.2"],0,"Badalwas Team won by 94 runs","https://cricheroes.com/scorecard/2430457/jaakh-baba-cricket-pratiyogita/badalwas-team-vs-major-lathi-tod-fod-shimla/scorecard"],[1,22,1,"2021-11-04T08:19:00.000Z",["Dudhwa Team",82,9,"10.0"],["Thatwari Team",85,3,"8.2"],1,"Thatwari Team won by 7 wickets","https://cricheroes.com/scorecard/2431018/jaakh-baba-cricket-pratiyogita/dudhwa-team-vs-thatwari-team/scorecard"],[1,23,1,"2021-11-05T05:13:13.000Z",["Balaha",88,7,"10.0"],["Khatoti XI",89,6,"8.3"],1,"Khatoti XI won by 4 wickets","https://cricheroes.com/scorecard/2435066/jaakh-baba-cricket-pratiyogita/balaha-vs-khatoti-xi/scorecard"],[1,24,1,"2021-11-05T07:14:29.000Z",["Dancholi",57,5,"8.0"],["Copper 1 Team",61,4,"6.3"],1,"Copper 1 Team won by 6 wickets","https://cricheroes.com/scorecard/2435882/jaakh-baba-cricket-pratiyogita/dancholi-vs-copper-1-team/scorecard"],[1,25,2,"2021-11-05T08:26:02.000Z",["Khatipura Team",75,5,"10.0"],["Ranwa Team",77,5,"9.4"],1,"Ranwa Team won by 5 wickets","https://cricheroes.com/scorecard/2436259/jaakh-baba-cricket-pratiyogita/khatipura-team-vs-ranwa-team/scorecard"],[1,26,2,"2021-11-05T10:06:00.000Z",["Major Lathi Tod Fod Shimla",28,10,"7.0"],["Copper 1 Team",34,3,"3.1"],1,"Copper 1 Team won by 7 wickets","https://cricheroes.com/scorecard/2436855/jaakh-baba-cricket-pratiyogita/major-lathi-tod-fod-shimla-vs-copper-1-team/scorecard"],[1,27,2,"2021-11-06T04:32:08.000Z",["Khatoti XI",107,9,"10.0"],["Thatwari Team",86,8,"10.0"],0,"Khatoti XI won by 21 runs","https://cricheroes.com/scorecard/2440066/jaakh-baba-cricket-pratiyogita/khatoti-xi-vs-thatwari-team/scorecard"],[1,28,2,"2021-11-06T06:03:53.000Z",["Shimla Royals",88,10,"10.0"],["JHCC Dumoli",64,9,"10.0"],0,"Shimla Royals won by 24 runs","https://cricheroes.com/scorecard/2440847/jaakh-baba-cricket-pratiyogita/shimla-royals-vs-jhcc-dumoli/scorecard"],[1,29,3,"2021-11-06T08:34:53.000Z",["Ranwa Team",100,8,"12.0"],["Khatoti XI",102,9,"11.4"],1,"Khatoti XI won by 1 wicket","https://cricheroes.com/scorecard/2441623/jaakh-baba-cricket-pratiyogita/ranwa-team-vs-khatoti-xi/scorecard"],[1,30,3,"2021-11-06T10:01:24.000Z",["Shimla Royals",92,6,"12.0"],["Copper 1 Team",57,10,"10.0"],0,"Shimla Royals won by 35 runs","https://cricheroes.com/scorecard/2442206/jaakh-baba-cricket-pratiyogita/shimla-royals-vs-copper-1-team/scorecard"],[1,31,4,"2021-11-07T07:13:05.000Z",["Shimla Royals",123,9,"15.0"],["Khatoti XI",124,6,"13.4"],1,"Khatoti XI won by 4 wickets","https://cricheroes.com/scorecard/2449255/jaakh-baba-cricket-pratiyogita/shimla-royals-vs-khatoti-xi/scorecard"],[2,1,0,"2022-10-22T05:01:14.000Z",["Balaha",62,10,"10.0"],["Dochana Team",58,6,"10.0"],0,"Balaha won by 4 runs","https://cricheroes.com/scorecard/4604776/jaakh-baba-cricket-pratiyogita-2/balaha-vs-dochana-team/scorecard"],[2,2,0,"2022-10-22T06:35:09.000Z",["Dohar Team",140,3,"10.0"],["Nayanagar Team",100,3,"10.0"],0,"Dohar Team won by 40 runs","https://cricheroes.com/scorecard/4604783/jaakh-baba-cricket-pratiyogita-2/dohar-team-vs-nayanagar-team/scorecard"],[2,3,0,"2022-10-22T08:03:47.000Z",["JHCC Dumoli",84,10,"9.2"],["Papurana",70,4,"10.0"],0,"JHCC Dumoli won by 14 runs","https://cricheroes.com/scorecard/4610991/jaakh-baba-cricket-pratiyogita-2/jhcc-dumoli-vs-papurana/scorecard"],[2,4,0,"2022-10-22T09:36:10.000Z",["Pathroli",83,3,"10.0"],["Bhankhari",79,6,"10.0"],0,"Pathroli won by 4 runs","https://cricheroes.com/scorecard/4604809/jaakh-baba-cricket-pratiyogita-2/pathroli-vs-bhankhari/scorecard"],[2,5,0,"2022-10-23T03:11:04.000Z",["Kakrai Team",95,7,"10.0"],["Shimla Jhona Team",64,6,"10.0"],0,"Kakrai Team won by 31 runs","https://cricheroes.com/scorecard/4614367/jaakh-baba-cricket-pratiyogita-2/kakrai-team-vs-shimla-jhona-team/scorecard"],[2,6,0,"2022-10-23T05:16:16.000Z",["Khatipura Team",53,7,"10.0"],["Khatoti XI",54,6,"9.2"],1,"Khatoti XI won by 4 wickets","https://cricheroes.com/scorecard/4614392/jaakh-baba-cricket-pratiyogita-2/khatipura-team-vs-khatoti-xi/scorecard"],[2,7,0,"2022-10-23T06:45:20.000Z",["Gorir",90,8,"10.0"],["Gujarwas",91,7,"8.2"],1,"Gujarwas won by 3 wickets","https://cricheroes.com/scorecard/4622911/jaakh-baba-cricket-pratiyogita-2/gorir-vs-gujarwas/scorecard"],[2,8,0,"2022-10-23T08:14:58.000Z",["Shimla Bablu Team",99,4,"10.0"],["Shimla Sumit Team",79,3,"10.0"],0,"Shimla Bablu Team won by 20 runs","https://cricheroes.com/scorecard/4614443/jaakh-baba-cricket-pratiyogita-2/shimla-bablu-team-vs-shimla-sumit-team/scorecard"],[2,9,0,"2022-10-23T09:34:18.000Z",["Copper 1 Team",66,10,"9.3"],["Sihar",67,6,"9.3"],1,"Sihar won by 4 wickets","https://cricheroes.com/scorecard/4624775/jaakh-baba-cricket-pratiyogita-2/copper-1-team-vs-sihar/scorecard"],[2,10,0,"2022-10-24T04:05:18.000Z",["Dudhwa Surendra Rawat",69,7,"8.0"],["Thatwari Team",71,2,"7.2"],1,"Thatwari Team won by 8 wickets","https://cricheroes.com/scorecard/4629212/jaakh-baba-cricket-pratiyogita-2/dudhwa-surendra-rawat-vs-thatwari-team/scorecard"],[2,11,0,"2022-10-24T05:11:20.000Z",["Rambass Team",63,10,"9.5"],["Shimla Royals",65,3,"9.0"],1,"Shimla Royals won by 7 wickets","https://cricheroes.com/scorecard/4630361/jaakh-baba-cricket-pratiyogita-2/rambass-team-vs-shimla-royals/scorecard"],[2,12,0,"2022-10-24T06:45:28.000Z",["Jamalpur",149,4,"10.0"],["Meghpur",98,7,"10.0"],0,"Jamalpur won by 51 runs","https://cricheroes.com/scorecard/4629235/jaakh-baba-cricket-pratiyogita-2/jamalpur-vs-meghpur/scorecard"],[2,13,0,"2022-10-24T08:25:32.000Z",["Maroli",83,10,"10.0"],["Ranwa Team",86,8,"9.1"],1,"Ranwa Team won by 2 wickets","https://cricheroes.com/scorecard/4629259/jaakh-baba-cricket-pratiyogita-2/maroli-vs-ranwa-team/scorecard"],[2,14,0,"2022-10-25T03:41:23.000Z",["Bachhod",75,5,"10.0"],["Gehli",76,1,"7.1"],1,"Gehli won by 9 wickets","https://cricheroes.com/scorecard/4636570/jaakh-baba-cricket-pratiyogita-2/bachhod-vs-gehli/scorecard"],[2,15,0,"2022-10-25T05:00:00.000Z",["Sagwa XI",78,10,"9.4"],["Maandi",79,7,"8.3"],1,"Maandi won by 3 wickets","https://cricheroes.com/scorecard/4637166/jaakh-baba-cricket-pratiyogita-2/sagwa-xi-vs-maandi/scorecard"],[2,16,0,"2022-10-25T06:50:57.000Z",["Nihaloth Team",63,10,"6.2"],["Sagwa B",64,2,"4.2"],1,"Sagwa B won by 8 wickets","https://cricheroes.com/scorecard/4637178/jaakh-baba-cricket-pratiyogita-2/nihaloth-team-vs-sagwa-b/scorecard"],[2,17,1,"2022-10-25T07:43:41.000Z",["Gehli",113,9,"10.0"],["Maandi",114,7,"9.3"],1,"Maandi won by 3 wickets","https://cricheroes.com/scorecard/4639021/jaakh-baba-cricket-pratiyogita-2/gehli-vs-maandi/scorecard"],[2,18,1,"2022-10-25T09:26:51.000Z",["Pathroli",56,10,"7.0"],["Sagwa B",59,2,"5.1"],1,"Sagwa B won by 8 wickets","https://cricheroes.com/scorecard/4640057/jaakh-baba-cricket-pratiyogita-2/pathroli-vs-sagwa-b/scorecard"],[2,19,1,"2022-10-26T03:01:00.000Z",["Kakrai Team",66,9,"10.0"],["Shimla Royals",69,4,"9.2"],1,"Shimla Royals won by 6 wickets","https://cricheroes.com/scorecard/4644057/jaakh-baba-cricket-pratiyogita-2/kakrai-team-vs-shimla-royals/scorecard"],[2,20,1,"2022-10-26T05:13:32.000Z",["Gujarwas",65,10,"9.4"],["Khatoti XI",66,5,"6.5"],1,"Khatoti XI won by 5 wickets","https://cricheroes.com/scorecard/4645207/jaakh-baba-cricket-pratiyogita-2/gujarwas-vs-khatoti-xi/scorecard"],[2,21,1,"2022-10-26T06:36:35.000Z",["Dohar Team",87,7,"10.0"],["Sihar",74,5,"10.0"],0,"Dohar Team won by 13 runs","https://cricheroes.com/scorecard/4646027/jaakh-baba-cricket-pratiyogita-2/dohar-team-vs-sihar/scorecard"],[2,22,1,"2022-10-26T08:22:25.000Z",["Ranwa Team",140,5,"10.0"],["Balaha",52,10,"9.1"],0,"Ranwa Team won by 88 runs","https://cricheroes.com/scorecard/4646881/jaakh-baba-cricket-pratiyogita-2/ranwa-team-vs-balaha/scorecard"],[2,23,1,"2022-10-27T03:24:50.000Z",["Shimla Bablu Team",79,7,"10.0"],["Thatwari Team",80,4,"7.2"],1,"Thatwari Team won by 6 wickets","https://cricheroes.com/scorecard/4651377/jaakh-baba-cricket-pratiyogita-2/shimla-bablu-team-vs-thatwari-team/scorecard"],[2,24,1,"2022-10-27T04:46:38.000Z",["JHCC Dumoli",116,5,"10.0"],["Jamalpur",119,6,"9.3"],1,"Jamalpur won by 4 wickets","https://cricheroes.com/scorecard/4651899/jaakh-baba-cricket-pratiyogita-2/jhcc-dumoli-vs-jamalpur/scorecard"],[2,25,2,"2022-10-27T06:20:34.000Z",["Shimla Royals",87,9,"10.0"],["Sagwa B",70,9,"10.0"],0,"Shimla Royals won by 17 runs","https://cricheroes.com/scorecard/4652704/jaakh-baba-cricket-pratiyogita-2/shimla-royals-vs-sagwa-b/scorecard"],[2,26,2,"2022-10-27T08:10:18.000Z",["Jamalpur",109,7,"10.0"],["Ranwa Team",83,8,"10.0"],0,"Jamalpur won by 26 runs","https://cricheroes.com/scorecard/4653345/jaakh-baba-cricket-pratiyogita-2/jamalpur-vs-ranwa-team/scorecard"],[2,27,2,"2022-10-28T04:18:20.000Z",["Maandi",95,6,"10.0"],["Khatoti XI",69,8,"10.0"],0,"Maandi won by 26 runs","https://cricheroes.com/scorecard/4658330/jaakh-baba-cricket-pratiyogita-2/maandi-vs-khatoti-xi/scorecard"],[2,28,2,"2022-10-28T06:05:00.000Z",["Dohar Team",48,10,"8.1"],["Thatwari Team",51,3,"5.5"],1,"Thatwari Team won by 7 wickets","https://cricheroes.com/scorecard/4659116/jaakh-baba-cricket-pratiyogita-2/dohar-team-vs-thatwari-team/scorecard"],[2,29,3,"2022-10-28T07:46:00.000Z",["Shimla Royals",129,5,"12.0"],["Thatwari Team",132,2,"9.1"],1,"Thatwari Team won by 8 wickets","https://cricheroes.com/scorecard/4659797/jaakh-baba-cricket-pratiyogita-2/shimla-royals-vs-thatwari-team/scorecard"],[2,30,3,"2022-10-28T09:48:57.000Z",["Maandi",100,10,"12.0"],["Jamalpur",102,5,"10.4"],1,"Jamalpur won by 5 wickets","https://cricheroes.com/scorecard/4660784/jaakh-baba-cricket-pratiyogita-2/maandi-vs-jamalpur/scorecard"],[2,31,4,"2022-10-29T04:51:00.000Z",["Thatwari Team",78,10,"12.0"],["Jamalpur",81,8,"12.0"],1,"Jamalpur won by 2 wickets","https://cricheroes.com/scorecard/4667777/jaakh-baba-cricket-pratiyogita-2/thatwari-team-vs-jamalpur/scorecard"],[3,1,0,"2023-11-05T05:37:58.000Z",["Hasanpur Team",86,8,"10.0"],["Gehli",89,2,"6.2"],1,"Gehli won by 8 wickets","https://cricheroes.com/scorecard/8360162/jaakh-baba-cricket-pratiyogita-3/hasanpur-team-vs-gehli/scorecard"],[3,2,0,"2023-11-05T06:43:28.000Z",["Rambass Team",73,10,"9.5"],["Meghpur",71,10,"9.1"],0,"Rambass Team won by 2 runs","https://cricheroes.com/scorecard/8360191/jaakh-baba-cricket-pratiyogita-3/rambass-team-vs-meghpur/scorecard"],[3,3,0,"2023-11-05T08:34:39.000Z",["Jakhni Team",56,10,"9.3"],["Dohar Team",62,1,"6.3"],1,"Dohar Team won by 9 wickets","https://cricheroes.com/scorecard/8360210/jaakh-baba-cricket-pratiyogita-3/jakhni-team-vs-dohar-team/scorecard"],[3,4,0,"2023-11-05T09:43:03.000Z",["Dalota Team",48,10,"8.5"],["Khatipura Team",52,3,"4.2"],1,"Khatipura Team won by 7 wickets","https://cricheroes.com/scorecard/8375188/jaakh-baba-cricket-pratiyogita-3/dalota-team-vs-khatipura-team/scorecard"],[3,5,0,"2023-11-06T04:22:41.000Z",["Nawata Team",44,10,"8.4"],["Dudhwa Team",48,2,"7.0"],1,"Dudhwa Team won by 8 wickets","https://cricheroes.com/scorecard/8380109/jaakh-baba-cricket-pratiyogita-3/nawata-team-vs-dudhwa-team/scorecard"],[3,6,0,"2023-11-06T05:27:26.000Z",["Bhirr",106,7,"10.0"],["Ranwa Team",77,7,"10.0"],0,"Bhirr won by 29 runs","https://cricheroes.com/scorecard/8380141/jaakh-baba-cricket-pratiyogita-3/bhirr-vs-ranwa-team/scorecard"],[3,7,0,"2023-11-06T07:11:37.000Z",["Singhana",85,8,"9.3"],["Jamalpur",76,8,"10.0"],0,"Singhana won by 9 runs","https://cricheroes.com/scorecard/8380150/jaakh-baba-cricket-pratiyogita-3/singhana-vs-jamalpur/scorecard"],[3,8,0,"2023-11-07T03:53:04.000Z",["Mukandpura",1,0,"0.1"],["Thana Team",0,0,"0.0"],0,"Mukandpura won by 3 wickets","https://cricheroes.com/scorecard/8380173/jaakh-baba-cricket-pratiyogita-3/mukandpura-vs-thana-team/scorecard"],[3,9,0,"2023-11-07T03:54:21.000Z",["Gutii",75,5,"10.0"],["Thatwari Team",78,2,"7.0"],1,"Thatwari Team won by 8 wickets","https://cricheroes.com/scorecard/8391062/jaakh-baba-cricket-pratiyogita-3/gutii-vs-thatwari-team/scorecard"],[3,10,0,"2023-11-07T05:28:54.000Z",["Shimla Royals",71,8,"10.0"],["Maroli",38,10,"8.5"],0,"Shimla Royals won by 33 runs","https://cricheroes.com/scorecard/8391560/jaakh-baba-cricket-pratiyogita-3/shimla-royals-vs-maroli/scorecard"],[3,11,0,"2023-11-07T07:26:48.000Z",["Dabla",119,4,"10.0"],["Mandri",87,6,"10.0"],0,"Dabla won by 32 runs","https://cricheroes.com/scorecard/8392670/jaakh-baba-cricket-pratiyogita-3/dabla-vs-mandri/scorecard"],[3,12,0,"2023-11-07T09:12:33.000Z",["Shreekant Warriors",59,7,"10.0"],["Pithola Ki Dhani",60,1,"6.1"],1,"Pithola Ki Dhani won by 9 wickets","https://cricheroes.com/scorecard/8393673/jaakh-baba-cricket-pratiyogita-3/shreekant-warriors-vs-pithola-ki-dhani/scorecard"],[3,13,0,"2023-11-08T04:55:00.000Z",["Maandi",89,8,"10.0"],["Khatoti XI",90,7,"9.3"],1,"Khatoti XI won by 3 wickets","https://cricheroes.com/scorecard/8398247/jaakh-baba-cricket-pratiyogita-3/maandi-vs-khatoti-xi/scorecard"],[3,14,0,"2023-11-08T06:40:13.000Z",["Major Lathi Tod Fod Shimla",114,6,"10.0"],["Dhani Shimla",64,10,"8.2"],0,"Major Lathi Tod Fod Shimla won by 50 runs","https://cricheroes.com/scorecard/8398262/jaakh-baba-cricket-pratiyogita-3/major-lathi-tod-fod-shimla-vs-dhani-shimla/scorecard"],[3,15,0,"2023-11-08T08:01:00.000Z",["Nayanagar Team",77,10,"10.0"],["Mehara Gujarwas",78,5,"9.3"],1,"Mehara Gujarwas won by 5 wickets","https://cricheroes.com/scorecard/8400705/jaakh-baba-cricket-pratiyogita-3/nayanagar-team-vs-mehara-gujarwas/scorecard"],[3,16,1,"2023-11-08T09:44:00.000Z",["Mehara Gujarwas",62,9,"10.0"],["Khatoti XI",62,10,"10.0"],1,"Match Tied (Khatoti XI won the super over)","https://cricheroes.com/scorecard/8401564/jaakh-baba-cricket-pratiyogita-3/mehara-gujarwas-vs-khatoti-xi/scorecard"],[3,17,0,"2023-11-09T04:00:00.000Z",["Dochana Team",72,4,"10.0"],["Dumoli",73,6,"9.4"],1,"Dumoli won by 4 wickets","https://cricheroes.com/scorecard/8407033/jaakh-baba-cricket-pratiyogita-3/dochana-team-vs-dumoli/scorecard"],[3,18,1,"2023-11-09T05:41:46.000Z",["Bhirr",94,6,"10.0"],["Gehli",89,7,"10.0"],0,"Bhirr won by 5 runs","https://cricheroes.com/scorecard/8407895/jaakh-baba-cricket-pratiyogita-3/bhirr-vs-gehli/scorecard"],[3,19,1,"2023-11-09T07:28:00.000Z",["Dabla",58,10,"10.0"],["Dudhwa Team",61,2,"8.1"],1,"Dudhwa Team won by 8 wickets","https://cricheroes.com/scorecard/8408947/jaakh-baba-cricket-pratiyogita-3/dabla-vs-dudhwa-team/scorecard"],[3,20,1,"2023-11-09T09:43:57.000Z",["Dohar Team",110,7,"10.0"],["Mukandpura",85,2,"10.0"],0,"Dohar Team won by 25 runs","https://cricheroes.com/scorecard/8409911/jaakh-baba-cricket-pratiyogita-3/dohar-team-vs-mukandpura/scorecard"],[3,21,1,"2023-11-10T05:09:40.000Z",["Rambass Team",69,8,"10.0"],["Shimla Royals",73,3,"9.1"],1,"Shimla Royals won by 7 wickets","https://cricheroes.com/scorecard/8416200/jaakh-baba-cricket-pratiyogita-3/rambass-team-vs-shimla-royals/scorecard"],[3,22,1,"2023-11-10T07:01:35.000Z",["Major Lathi Tod Fod Shimla",73,10,"10.0"],["Pithola Ki Dhani",77,5,"8.0"],1,"Pithola Ki Dhani won by 5 wickets","https://cricheroes.com/scorecard/8417335/jaakh-baba-cricket-pratiyogita-3/major-lathi-tod-fod-shimla-vs-pithola-ki-dhani/scorecard"],[3,23,1,"2023-11-10T08:39:23.000Z",["Singhana",89,6,"10.0"],["Thatwari Team",93,7,"9.5"],1,"Thatwari Team won by 3 wickets","https://cricheroes.com/scorecard/8418113/jaakh-baba-cricket-pratiyogita-3/singhana-vs-thatwari-team/scorecard"],[3,24,2,"2023-11-11T04:24:35.000Z",["Dohar Team",113,4,"10.0"],["Dudhwa Team",51,10,"9.0"],0,"Dohar Team won by 62 runs","https://cricheroes.com/scorecard/8426561/jaakh-baba-cricket-pratiyogita-3/dohar-team-vs-dudhwa-team/scorecard"],[3,25,1,"2023-11-11T05:57:37.000Z",["Dumoli",60,8,"10.0"],["Khatipura Team",61,2,"6.0"],1,"Khatipura Team won by 8 wickets","https://cricheroes.com/scorecard/8428128/jaakh-baba-cricket-pratiyogita-3/dumoli-vs-khatipura-team/scorecard"],[3,26,2,"2023-11-11T07:16:05.000Z",["Bhirr",82,9,"10.0"],["Khatoti XI",74,9,"10.0"],0,"Bhirr won by 8 runs","https://cricheroes.com/scorecard/8429141/jaakh-baba-cricket-pratiyogita-3/bhirr-vs-khatoti-xi/scorecard"],[3,27,2,"2023-11-11T09:14:10.000Z",["Thatwari Team",74,9,"10.0"],["Khatipura Team",79,8,"10.0"],1,"Khatipura Team won by 2 wickets","https://cricheroes.com/scorecard/8430817/jaakh-baba-cricket-pratiyogita-3/thatwari-team-vs-khatipura-team/scorecard"],[3,28,2,"2023-11-12T04:42:00.000Z",["Shimla Royals",93,5,"10.0"],["Pithola Ki Dhani",16,10,"5.4"],0,"Shimla Royals won by 77 runs","https://cricheroes.com/scorecard/8440493/jaakh-baba-cricket-pratiyogita-3/shimla-royals-vs-pithola-ki-dhani/scorecard"],[3,29,3,"2023-11-12T08:05:39.000Z",["Shimla Royals",62,10,"9.5"],["Khatipura Team",33,10,"8.2"],0,"Shimla Royals won by 29 runs","https://cricheroes.com/scorecard/8444325/jaakh-baba-cricket-pratiyogita-3/shimla-royals-vs-khatipura-team/scorecard"],[3,30,3,"2023-11-13T05:13:00.000Z",["Bhirr",111,9,"12.0"],["Dohar Team",101,6,"12.0"],0,"Bhirr won by 10 runs","https://cricheroes.com/scorecard/8453392/jaakh-baba-cricket-pratiyogita-3/bhirr-vs-dohar-team/scorecard"],[3,31,4,"2023-11-13T08:35:52.000Z",["Bhirr",89,10,"12.0"],["Shimla Royals",90,3,"11.3"],1,"Shimla Royals won by 7 wickets","https://cricheroes.com/scorecard/8456407/jaakh-baba-cricket-pratiyogita-3/bhirr-vs-shimla-royals/scorecard"],[4,1,0,"2024-10-27T05:20:13.000Z",["Gehli",82,6,"10.0"],["Jailaaf",82,7,"10.0"],1,"Match Tied (Jailaaf won the super over)","https://cricheroes.com/scorecard/13240516/jakh-baba-cricket-pratiyogita-4/gehli-vs-jailaaf/scorecard"],[4,2,0,"2024-10-27T07:10:44.000Z",["Rambass Team",121,3,"10.0"],["Dochana Team",100,8,"10.0"],0,"Rambass Team won by 21 runs","https://cricheroes.com/scorecard/13243732/jakh-baba-cricket-pratiyogita-4/rambass-team-vs-dochana-team/scorecard"],[4,3,0,"2024-10-27T08:39:06.000Z",["Dohar Team",124,5,"10.0"],["Jakhni",106,3,"10.0"],0,"Dohar Team won by 18 runs","https://cricheroes.com/scorecard/13246465/jakh-baba-cricket-pratiyogita-4/dohar-team-vs-jakhni/scorecard"],[4,4,0,"2024-10-28T04:08:41.000Z",["Pathroli",58,10,"5.4"],["Dancholi Team",59,6,"8.5"],1,"Dancholi Team won by 4 wickets","https://cricheroes.com/scorecard/13259530/jakh-baba-cricket-pratiyogita-4/pathroli-vs-dancholi-team/scorecard"],[4,5,0,"2024-10-28T05:40:11.000Z",["Maroli",90,8,"10.0"],["Shyampura Mainana",92,2,"7.3"],1,"Shyampura Mainana won by 8 wickets","https://cricheroes.com/scorecard/13260559/jakh-baba-cricket-pratiyogita-4/maroli-vs-shyampura-mainana/scorecard"],[4,6,0,"2024-10-28T07:18:00.000Z",["Mukandpura",67,5,"10.0"],["Bhankhari",68,2,"4.3"],1,"Bhankhari won by 8 wickets","https://cricheroes.com/scorecard/13261543/jakh-baba-cricket-pratiyogita-4/mukandpura-vs-bhankhari/scorecard"],[4,7,0,"2024-10-28T09:03:26.000Z",["Khatipura Team",89,6,"10.0"],["Gujarwas",90,5,"10.0"],1,"Gujarwas won by 5 wickets","https://cricheroes.com/scorecard/13262731/jakh-baba-cricket-pratiyogita-4/khatipura-team-vs-gujarwas/scorecard"],[4,8,0,"2024-10-28T10:40:50.000Z",["Dhani Shimla",97,6,"10.0"],["Shimla Bans Mohalla",102,4,"9.4"],1,"Shimla Bans Mohalla won by 6 wickets","https://cricheroes.com/scorecard/13263722/jakh-baba-cricket-pratiyogita-4/dhani-shimla-vs-shimla-bans-mohalla/scorecard"],[4,9,0,"2024-10-29T03:37:00.000Z",["Thatwari Team",62,6,"10.0"],["Shimla Royals",64,0,"4.1"],1,"Shimla Royals won by 10 wickets","https://cricheroes.com/scorecard/13269967/jakh-baba-cricket-pratiyogita-4/thatwari-team-vs-shimla-royals/scorecard"],[4,10,0,"2024-10-29T05:17:19.000Z",["JHCC Dumoli",82,5,"10.0"],["Rasulpura",17,4,"3.3"],0,"JHCC Dumoli won by 65 runs","https://cricheroes.com/scorecard/13271435/jakh-baba-cricket-pratiyogita-4/jhcc-dumoli-vs-rasulpura/scorecard"],[4,11,0,"2024-10-29T06:36:00.000Z",["Dudhwa Team",130,6,"10.0"],["Ranwa Team",86,4,"10.0"],0,"Dudhwa Team won by 44 runs","https://cricheroes.com/scorecard/13272301/jakh-baba-cricket-pratiyogita-4/dudhwa-team-vs-ranwa-team/scorecard"],[4,12,0,"2024-10-29T08:27:36.000Z",["Papurana",89,8,"10.0"],["Bhirr",91,2,"8.4"],1,"Bhirr won by 8 wickets","https://cricheroes.com/scorecard/13273632/jakh-baba-cricket-pratiyogita-4/papurana-vs-bhirr/scorecard"],[4,13,0,"2024-10-29T10:04:57.000Z",["Shimla Bablu Team",88,10,"10.0"],["Shimla Lathi Tod Fod",89,6,"9.4"],1,"Shimla Lathi Tod Fod won by 4 wickets","https://cricheroes.com/scorecard/13274656/jakh-baba-cricket-pratiyogita-4/shimla-bablu-team-vs-shimla-lathi-tod-fod/scorecard"],[4,14,0,"2024-10-30T04:40:24.000Z",["Dalota",52,10,"8.3"],["Khatoti XI",53,0,"2.4"],1,"Khatoti XI won by 10 wickets","https://cricheroes.com/scorecard/13282798/jakh-baba-cricket-pratiyogita-4/dalota-vs-khatoti-xi/scorecard"],[4,15,0,"2024-10-30T05:40:46.000Z",["Dabla",87,8,"10.0"],["Sihar",88,3,"9.0"],1,"Sihar won by 7 wickets","https://cricheroes.com/scorecard/13283622/jakh-baba-cricket-pratiyogita-4/dabla-vs-sihar/scorecard"],[4,16,0,"2024-10-30T07:26:42.000Z",["Mukabla Cricket Club Shimla",80,3,"10.0"],["Khodma",81,0,"4.1"],1,"Khodma won by 10 wickets","https://cricheroes.com/scorecard/13285367/jakh-baba-cricket-pratiyogita-4/mukabla-cricket-club-shimla-vs-khodma/scorecard"],[4,17,1,"2024-10-30T08:33:00.000Z",["Khatoti XI",81,10,"9.2"],["Sihar",57,10,"7.5"],0,"Khatoti XI won by 24 runs","https://cricheroes.com/scorecard/13286009/jakh-baba-cricket-pratiyogita-4/khatoti-xi-vs-sihar/scorecard"],[4,18,1,"2024-10-31T03:26:00.000Z",["Dohar Team",101,3,"10.0"],["Bhankhari",71,9,"9.2"],0,"Dohar Team won by 30 runs","https://cricheroes.com/scorecard/13295007/jakh-baba-cricket-pratiyogita-4/dohar-team-vs-bhankhari/scorecard"],[4,19,1,"2024-10-31T05:10:41.000Z",["Khodma",59,9,"10.0"],["Shimla Royals",61,0,"5.4"],1,"Shimla Royals won by 10 wickets","https://cricheroes.com/scorecard/13296739/jakh-baba-cricket-pratiyogita-4/khodma-vs-shimla-royals/scorecard"],[4,20,1,"2024-10-31T06:33:18.000Z",["Shimla Lathi Tod Fod",128,5,"10.0"],["Shimla Bans Mohalla",95,7,"10.0"],0,"Shimla Lathi Tod Fod won by 33 runs","https://cricheroes.com/scorecard/13298479/jakh-baba-cricket-pratiyogita-4/shimla-lathi-tod-fod-vs-shimla-bans-mohalla/scorecard"],[4,21,1,"2024-10-31T08:18:39.000Z",["Bhirr",108,7,"10.0"],["Shyampura Mainana",103,4,"10.0"],0,"Bhirr won by 5 runs","https://cricheroes.com/scorecard/13299821/jakh-baba-cricket-pratiyogita-4/bhirr-vs-shyampura-mainana/scorecard"],[4,22,1,"2024-11-01T03:48:00.000Z",["Dudhwa Team",78,9,"10.0"],["Jailaaf",79,4,"8.5"],1,"Jailaaf won by 6 wickets","https://cricheroes.com/scorecard/13309756/jakh-baba-cricket-pratiyogita-4/dudhwa-team-vs-jailaaf/scorecard"],[4,23,1,"2024-11-01T05:44:02.000Z",["JHCC Dumoli",90,3,"8.0"],["Gujarwas",62,6,"8.0"],0,"JHCC Dumoli won by 28 runs","https://cricheroes.com/scorecard/13312094/jakh-baba-cricket-pratiyogita-4/jhcc-dumoli-vs-gujarwas/scorecard"],[4,24,1,"2024-11-01T06:49:13.000Z",["Dancholi Team",68,7,"10.0"],["Rambass Team",69,1,"5.1"],1,"Rambass Team won by 9 wickets","https://cricheroes.com/scorecard/13313451/jakh-baba-cricket-pratiyogita-4/dancholi-team-vs-rambass-team/scorecard"],[4,25,2,"2024-11-01T08:07:56.000Z",["JHCC Dumoli",68,9,"10.0"],["Shimla Royals",71,2,"6.4"],1,"Shimla Royals won by 8 wickets","https://cricheroes.com/scorecard/13314893/jakh-baba-cricket-pratiyogita-4/jhcc-dumoli-vs-shimla-royals/scorecard"],[4,26,2,"2024-11-02T04:30:55.000Z",["Shimla Lathi Tod Fod",0,0,"0.0"],["Rambass Team",0,0,"0.0"],0,"Shimla Lathi Tod Fod won by Super Over","https://cricheroes.com/scorecard/13329173/jakh-baba-cricket-pratiyogita-4/shimla-lathi-tod-fod-vs-rambass-team/scorecard"],[4,27,2,"2024-11-02T05:00:59.000Z",["Dohar Team",96,6,"10.0"],["Jailaaf",97,1,"8.3"],1,"Jailaaf won by 9 wickets","https://cricheroes.com/scorecard/13318877/jakh-baba-cricket-pratiyogita-4/dohar-team-vs-jailaaf/scorecard"],[4,28,2,"2024-11-02T06:52:45.000Z",["Bhirr",123,6,"10.0"],["Khatoti XI",99,8,"10.0"],0,"Bhirr won by 24 runs","https://cricheroes.com/scorecard/13318913/jakh-baba-cricket-pratiyogita-4/bhirr-vs-khatoti-xi/scorecard"],[4,29,3,"2024-11-02T08:50:00.000Z",["Shimla Royals",134,4,"10.0"],["Shimla Lathi Tod Fod",98,7,"10.0"],0,"Shimla Royals won by 36 runs","https://cricheroes.com/scorecard/13333600/jakh-baba-cricket-pratiyogita-4/shimla-royals-vs-shimla-lathi-tod-fod/scorecard"],[4,30,3,"2024-11-02T10:50:37.000Z",["Jailaaf",106,6,"8.0"],["Bhirr",96,9,"8.0"],0,"Jailaaf won by 10 runs","https://cricheroes.com/scorecard/13336209/jakh-baba-cricket-pratiyogita-4/jailaaf-vs-bhirr/scorecard"],[4,31,4,"2024-11-03T05:13:11.000Z",["Jailaaf",99,10,"14.3"],["Shimla Royals",101,2,"9.0"],1,"Shimla Royals won by 8 wickets","https://cricheroes.com/scorecard/13350922/jakh-baba-cricket-pratiyogita-4/jailaaf-vs-shimla-royals/scorecard"],[5,1,0,"2025-10-14T04:35:39.000Z",["Gothra",64,8,"10.0"],["Sihodiyan Ki Dhani",65,6,"6.1"],1,"Sihodiyan Ki Dhani won by 4 wickets","https://cricheroes.com/scorecard/19586448/jaakh-baba-cricket-pratiyogita-season-5/gothra-vs-sihodiyan-ki-dhani/scorecard"],[5,2,0,"2025-10-14T06:00:55.000Z",["Bhirr",79,8,"10.0"],["Bhankhari",83,2,"7.5"],1,"Bhankhari won by 8 wickets","https://cricheroes.com/scorecard/19586454/jaakh-baba-cricket-pratiyogita-season-5/bhirr-vs-bhankhari/scorecard"],[5,3,0,"2025-10-14T07:33:09.000Z",["Ranwa Team",88,6,"10.0"],["Khatipura Team",87,8,"10.0"],0,"Ranwa Team won by 1 run","https://cricheroes.com/scorecard/19586500/jaakh-baba-cricket-pratiyogita-season-5/ranwa-team-vs-khatipura-team/scorecard"],[5,4,0,"2025-10-14T09:30:48.000Z",["Copper",75,7,"10.0"],["Jamalpur",66,8,"10.0"],0,"Copper won by 9 runs","https://cricheroes.com/scorecard/19586507/jaakh-baba-cricket-pratiyogita-season-5/copper-vs-jamalpur/scorecard"],[5,5,0,"2025-10-15T04:04:09.000Z",["JHCC Dumoli",103,5,"10.0"],["Meghpur A",95,5,"10.0"],0,"JHCC Dumoli won by 8 runs","https://cricheroes.com/scorecard/19601202/jaakh-baba-cricket-pratiyogita-season-5/jhcc-dumoli-vs-meghpur-a/scorecard"],[5,6,0,"2025-10-15T06:10:17.000Z",["Pathana",106,6,"10.0"],["Maroli",111,5,"9.1"],1,"Maroli won by 5 wickets","https://cricheroes.com/scorecard/19606894/jaakh-baba-cricket-pratiyogita-season-5/pathana-vs-maroli/scorecard"],[5,7,0,"2025-10-15T07:57:00.000Z",["Dohar Team",62,6,"7.2"],["Rambass Team",63,5,"5.5"],1,"Rambass Team won by 5 wickets","https://cricheroes.com/scorecard/19607993/jaakh-baba-cricket-pratiyogita-season-5/dohar-team-vs-rambass-team/scorecard"],[5,8,0,"2025-10-15T09:13:00.000Z",["SIHAR XI",57,8,"7.4"],["Singhana",63,1,"4.3"],1,"Singhana won by 9 wickets","https://cricheroes.com/scorecard/19608875/jaakh-baba-cricket-pratiyogita-season-5/sihar-xi-vs-singhana/scorecard"],[5,9,0,"2025-10-15T10:23:46.000Z",["Nihaloth Royals",90,8,"8.2"],["Thatwari Team",91,3,"9.5"],1,"Thatwari Team won by 7 wickets","https://cricheroes.com/scorecard/19609709/jaakh-baba-cricket-pratiyogita-season-5/nihaloth-royals-vs-thatwari-team/scorecard"],[5,10,0,"2025-10-16T04:03:58.000Z",["Dudhwa Team",109,6,"10.0"],["Sagwa 11",14,1,"1.1"],0,"Dudhwa Team won by 95 runs","https://cricheroes.com/scorecard/19612826/jaakh-baba-cricket-pratiyogita-season-5/dudhwa-team-vs-sagwa-11/scorecard"],[5,11,0,"2025-10-16T05:26:27.000Z",["Fattu Warriors Shimla",72,5,"10.0"],["Dhani Bindass Shimla",41,10,"8.4"],0,"Fattu Warriors Shimla won by 31 runs","https://cricheroes.com/scorecard/19612858/jaakh-baba-cricket-pratiyogita-season-5/fattu-warriors-shimla-vs-dhani-bindass-shimla/scorecard"],[5,12,0,"2025-10-16T07:23:15.000Z",["Dochana Team",93,4,"10.0"],["Balaha",33,7,"5.0"],0,"Dochana Team won by 60 runs","https://cricheroes.com/scorecard/19612878/jaakh-baba-cricket-pratiyogita-season-5/dochana-team-vs-balaha/scorecard"],[5,13,0,"2025-10-16T09:06:47.000Z",["Gehli",77,9,"10.0"],["Khatoti XI",78,3,"8.0"],1,"Khatoti XI won by 7 wickets","https://cricheroes.com/scorecard/19612894/jaakh-baba-cricket-pratiyogita-season-5/gehli-vs-khatoti-xi/scorecard"],[5,14,0,"2025-10-17T03:59:10.000Z",["Jailaaf",109,4,"10.0"],["Baba Umad Singh Cricket Badbar",86,9,"10.0"],0,"Jailaaf won by 23 runs","https://cricheroes.com/scorecard/19632816/jaakh-baba-cricket-pratiyogita-season-5/jailaaf-vs-baba-umad-singh-cricket-badbar/scorecard"],[5,15,0,"2025-10-17T06:39:47.000Z",["Dabla",90,5,"8.0"],["Papurana",82,4,"8.0"],0,"Dabla won by 8 runs","https://cricheroes.com/scorecard/19634960/jaakh-baba-cricket-pratiyogita-season-5/dabla-vs-papurana/scorecard"],[5,16,1,"2025-10-17T08:36:32.000Z",["JHCC Dumoli",72,5,"10.0"],["Bhankhari",76,2,"6.4"],1,"Bhankhari won by 8 wickets","https://cricheroes.com/scorecard/19636797/jaakh-baba-cricket-pratiyogita-season-5/jhcc-dumoli-vs-bhankhari/scorecard"],[5,17,0,"2025-10-17T10:04:56.000Z",["Shimla Bans Mohalla",67,10,"8.4"],["Shimla Royals",69,2,"5.5"],1,"Shimla Royals won by 8 wickets","https://cricheroes.com/scorecard/19638253/jaakh-baba-cricket-pratiyogita-season-5/shimla-bans-mohalla-vs-shimla-royals/scorecard"],[5,18,1,"2025-10-18T02:51:00.000Z",["Rambass Team",53,10,"9.4"],["Thatwari Team",56,6,"8.5"],1,"Thatwari Team won by 4 wickets","https://cricheroes.com/scorecard/19643077/jaakh-baba-cricket-pratiyogita-season-5/rambass-team-vs-thatwari-team/scorecard"],[5,19,1,"2025-10-18T04:30:37.000Z",["Dudhwa Team",58,10,"9.1"],["Ranwa Team",62,3,"5.2"],1,"Ranwa Team won by 7 wickets","https://cricheroes.com/scorecard/19643130/jaakh-baba-cricket-pratiyogita-season-5/dudhwa-team-vs-ranwa-team/scorecard"],[5,20,1,"2025-10-18T06:07:42.000Z",["Copper",91,7,"10.0"],["Maroli",92,7,"9.4"],1,"Maroli won by 3 wickets","https://cricheroes.com/scorecard/19643230/jaakh-baba-cricket-pratiyogita-season-5/copper-vs-maroli/scorecard"],[5,21,1,"2025-10-18T08:02:35.000Z",["Fattu Warriors Shimla",68,10,"6.5"],["Sihodiyan Ki Dhani",70,4,"6.0"],1,"Sihodiyan Ki Dhani won by 6 wickets","https://cricheroes.com/scorecard/19643248/jaakh-baba-cricket-pratiyogita-season-5/fattu-warriors-shimla-vs-sihodiyan-ki-dhani/scorecard"],[5,22,1,"2025-10-18T09:30:00.000Z",["Dochana Team",68,7,"10.0"],["Shimla Royals",73,2,"7.3"],1,"Shimla Royals won by 8 wickets","https://cricheroes.com/scorecard/19643463/jaakh-baba-cricket-pratiyogita-season-5/dochana-team-vs-shimla-royals/scorecard"],[5,23,2,"2025-10-19T03:03:53.000Z",["Bhankhari",95,5,"10.0"],["Thatwari Team",82,6,"10.0"],0,"Bhankhari won by 13 runs","https://cricheroes.com/scorecard/19660962/jaakh-baba-cricket-pratiyogita-season-5/bhankhari-vs-thatwari-team/scorecard"],[5,24,1,"2025-10-19T04:59:32.000Z",["Khatoti XI",83,7,"10.0"],["Singhana",84,3,"7.0"],1,"Singhana won by 7 wickets","https://cricheroes.com/scorecard/19661045/jaakh-baba-cricket-pratiyogita-season-5/khatoti-xi-vs-singhana/scorecard"],[5,25,1,"2025-10-19T06:37:00.000Z",["Dabla",88,9,"10.0"],["Jailaaf",89,6,"8.5"],1,"Jailaaf won by 4 wickets","https://cricheroes.com/scorecard/19661099/jaakh-baba-cricket-pratiyogita-season-5/dabla-vs-jailaaf/scorecard"],[5,26,2,"2025-10-19T08:42:32.000Z",["Jailaaf",74,3,"8.0"],["Singhana",75,6,"7.3"],1,"Singhana won by 4 wickets","https://cricheroes.com/scorecard/19684630/jaakh-baba-cricket-pratiyogita-season-5/jailaaf-vs-singhana/scorecard"],[5,27,2,"2025-10-19T10:19:29.000Z",["Shimla Royals",90,6,"10.0"],["Sihodiyan Ki Dhani",56,7,"10.0"],0,"Shimla Royals won by 34 runs","https://cricheroes.com/scorecard/19661211/jaakh-baba-cricket-pratiyogita-season-5/shimla-royals-vs-sihodiyan-ki-dhani/scorecard"],[5,28,2,"2025-10-20T03:26:18.000Z",["Maroli",33,10,"7.5"],["Ranwa Team",34,7,"5.1"],1,"Ranwa Team won by 3 wickets","https://cricheroes.com/scorecard/19696233/jaakh-baba-cricket-pratiyogita-season-5/maroli-vs-ranwa-team/scorecard"],[5,29,3,"2025-10-20T05:32:00.000Z",["Singhana",122,2,"12.0"],["Ranwa Team",66,6,"11.0"],0,"Singhana won by 56 runs","https://cricheroes.com/scorecard/19699853/jaakh-baba-cricket-pratiyogita-season-5/singhana-vs-ranwa-team/scorecard"],[5,30,3,"2025-10-20T07:22:00.000Z",["Bhankhari",98,5,"12.0"],["Shimla Royals",101,6,"11.5"],1,"Shimla Royals won by 4 wickets","https://cricheroes.com/scorecard/19699883/jaakh-baba-cricket-pratiyogita-season-5/bhankhari-vs-shimla-royals/scorecard"],[5,31,4,"2025-10-21T07:12:00.000Z",["Singhana",123,10,"12.0"],["Shimla Royals",114,4,"12.0"],0,"Singhana won by 9 runs","https://cricheroes.com/scorecard/19710327/jaakh-baba-cricket-pratiyogita-season-5/singhana-vs-shimla-royals/scorecard"]];/*END RESULTS*/
+const mState={season:6,view:"fixtures",round:-1};
+const IST={timeZone:"Asia/Kolkata"};
+function istParts(d){const x=new Date(new Date(d).toLocaleString("en-US",IST));return x;}
+function longDay(d){const x=istParts(d);return `${t("days")[x.getDay()]}, ${x.getDate()} ${t("months")[x.getMonth()]} ${x.getFullYear()}`;}
+function clock(d){const x=istParts(d);let h=x.getHours(),m=String(x.getMinutes()).padStart(2,"0");const ap=h>=12?"PM":"AM";h=h%12||12;return `${h}:${m} ${ap}`;}
+function teamColor(name){let h=0;for(const c of name)h=(h*31+c.charCodeAt(0))>>>0;return "var(--b"+(h%8)+")";}
+function initials(name){const w=name.replace(/team|xi|11|club/gi,"").trim().split(/\s+/).filter(Boolean);return (w.length>1?w[0][0]+w[1][0]:(w[0]||name).slice(0,2)).toUpperCase();}
+function scoreHtml(s){
+  if(!s||s[1]==null||(s[1]===0&&s[3]==="0.0"))return `<span class="sc"><b>–</b></span>`;
+  return `<span class="sc"><b>${s[1]}${s[2]>=10?"":"/"+s[2]}</b><small>${s[3]} ${t("ovShort")}</small></span>`;
 }
+function teamHtml(side,name,score,state){
+  if(!name)return `<div class="tm ${side} tbd"><span class="badge q">?</span><span class="tn">${t("tbd")}</span>${score?scoreHtml(score):""}</div>`;
+  return `<div class="tm ${side} ${state}"><span class="badge" style="background:${teamColor(name)}">${esc(initials(name))}</span><span class="tn">${esc(name)}</span>${score?scoreHtml(score):""}</div>`;
+}
+/* Normalised match list for the chosen season: {no, r, date, a, b, sa, sb, win, text, url, today} */
+function seasonMatches(season){
+  if(season===6){
+    const today=nowDayIndex();
+    return FIX.map(m=>{
+      const d=S6_MATCHES[m.no]||{};const [hh,mm]=m.time.split(":").map(Number);
+      const date=new Date(start.getTime()+m.day*86400000+((hh*60+mm)-(8*60+30))*60000);
+      const r=d.result;
+      return {no:m.no,r:m.r,date,a:r?r.first[0]:(d.teams||[])[0],b:r?r.second[0]:(d.teams||[])[1],
+        sa:r&&r.first,sb:r&&r.second,win:r?r.winner:null,text:r&&r.text,url:r&&r.url,today:m.day===today,done:!!r};
+    });
+  }
+  return PAST_RESULTS.filter(x=>x[0]===season).map(x=>({no:x[1],r:x[2],date:new Date(x[3]),a:x[4][0],b:x[5][0],sa:x[4],sb:x[5],win:x[6],text:x[7],url:x[8],done:true}));
+}
+function cardHtml(m){
+  const st=i=>m.win==null||m.win<0?"":(m.win===i?"win":"lose");
+  const live=m.today&&!m.done?`<span class="livepill" style="font-size:.75rem;padding:2px 10px"><i></i>${t("today")}</span>`:"";
+  return `<article class="mc${m.today&&!m.done?" today":""}">
+    <div class="mc-top"><span class="lbl">${t("rounds")[m.r]} · ${t("matchLbl")} ${m.no}</span><span class="num">${live} ${clock(m.date)}</span></div>
+    ${m.done&&m.text?`<div class="mc-res">${esc(m.text)}</div>`:""}
+    <div class="mc-teams">${teamHtml("a",m.a,m.done?m.sa:null,st(0))}<span class="vs">VS</span>${teamHtml("b",m.b,m.done?m.sb:null,st(1))}</div>
+    <div class="mc-foot"><span>${t("venueShort")}${mState.season===6?" · "+ROUND_OVERS[m.r]+" "+t("ov"):""}</span>
+      ${m.url?`<a class="btn sec sm" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${t("scorecard")}</a>`:(m.today?`<a class="btn pri sm" href="${esc(CONFIG.liveUrl)}" target="_blank" rel="noopener noreferrer">${t("liveBtn")}</a>`:"")}</div>
+  </article>`;
+}
+function renderMatches(){
+  const sel=document.getElementById("seasonSel");
+  sel.innerHTML=[6,5,4,3,2,1].map(n=>`<option value="${n}"${n===mState.season?" selected":""}>${t("season")} ${n} · ${2020+n}</option>`).join("");
+  document.getElementById("vFix").setAttribute("aria-selected",mState.view==="fixtures");
+  document.getElementById("vRes").setAttribute("aria-selected",mState.view==="results");
+  document.getElementById("roundChips").innerHTML=[-1,0,1,2,3,4].map(r=>`<button data-r="${r}" aria-pressed="${mState.round===r}">${r<0?t("allRounds"):t("rounds")[r]}</button>`).join("");
+  document.getElementById("mNote").hidden=!(mState.season===6&&mState.view==="fixtures");
+  let ms=seasonMatches(mState.season).filter(m=>mState.view==="results"?m.done:!m.done);
+  if(mState.round>=0)ms=ms.filter(m=>m.r===mState.round);
+  ms.sort((a,b)=>mState.view==="results"?b.date-a.date||b.no-a.no:a.date-b.date||a.no-b.no);
+  const box=document.getElementById("mlist");
+  if(!ms.length){
+    let msg=t("noneInRound");
+    if(mState.round<0){
+      if(mState.season===6&&mState.view==="results")msg=t("noResults6").replace("{d}",longDay(start));
+      else if(mState.season!==6&&mState.view==="fixtures")msg=t("seasonDone").replace("{n}",mState.season);
+      else if(mState.season===6)msg=t("allPlayed");
+    }
+    box.innerHTML=`<div class="mempty">${msg}</div>`;return;
+  }
+  let h="",last="";
+  for(const m of ms){const day=longDay(m.date);
+    if(day!==last){if(last)h+="</div></div>";h+=`<div class="mday"><h3>${day}</h3><div class="mlist">`;last=day;}
+    h+=cardHtml(m);}
+  box.innerHTML=h+"</div></div>";
+}
+document.getElementById("vFix").onclick=()=>{mState.view="fixtures";renderMatches();};
+document.getElementById("vRes").onclick=()=>{mState.view="results";renderMatches();};
+document.getElementById("seasonSel").onchange=e=>{mState.season=Number(e.target.value);mState.view=mState.season===6?"fixtures":"results";mState.round=-1;renderMatches();};
+document.getElementById("roundChips").onclick=e=>{const b=e.target.closest("button");if(!b)return;mState.round=Number(b.dataset.r);renderMatches();};
 
 /* Round photo from the player's CricHeroes profile, or their initials when there is none */
 function avatar(id,name,cls){
@@ -564,7 +639,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderBracket();renderDays();renderHof();renderLists();tick();
+  renderMatches();renderHof();renderLists();tick();
 }
 function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
@@ -599,6 +674,7 @@ const DEFAULT_TAB="history";
 const links=[...document.querySelectorAll("#navlinks a")];
 const sections=[...document.querySelectorAll("main section")];
 function showTab(id,scroll){
+  if(id==="bracket"||id==="schedule")id="matches";
   if(!sections.some(s=>s.id===id))id=DEFAULT_TAB;
   sections.forEach(s=>s.hidden=s.id!==id);
   links.forEach(a=>{const on=a.getAttribute("href")==="#"+id;a.classList.toggle("on",on);a.setAttribute("aria-selected",on);if(on){const bar=a.parentElement;bar.scrollLeft=Math.max(0,a.offsetLeft-bar.clientWidth/2+a.offsetWidth/2);}});
