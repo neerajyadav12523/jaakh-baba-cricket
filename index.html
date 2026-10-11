@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. Bracket, schedule, rules, registration.">
+<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Bracket, schedule, rules, registration.">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -180,7 +180,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <h1 data-i="title">Jaakh Baba Cricket Pratiyogita</h1>
       <div class="season"><span data-i="season">Season</span> <b class="num">6</b></div>
       <div class="facts">
-        <span class="num" id="dateRange">24 – 31 Oct 2026</span>
+        <span class="num" id="dateRange">1 – 9 Nov 2026</span>
         <span data-i="venue">Girls School Ground, Shimla</span>
         <span data-i="teamsShort">32 teams · 31 matches</span>
       </div>
@@ -215,7 +215,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <main>
 <section id="format"><div class="wrap">
   <h2 data-i="formatH">Same format, sixth year</h2>
-  <p class="lead" data-i="formatLead">Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over eight days decide the champion.</p>
+  <p class="lead" data-i="formatLead">Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.</p>
   <div class="format" id="formatGrid"></div>
 </div></section>
 
@@ -236,9 +236,9 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
 <section id="history"><div class="wrap">
   <h2 data-i="hofH">Hall of Fame</h2>
-  <p class="lead" data-i="hofLead">Five seasons of finals at the Girls School Ground. Shimla Royals have reached four of them.</p>
+  <p class="lead" data-i="hofLead">Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.</p>
   <div class="hof" id="hof"></div>
-  <p class="note" data-i="hofNote">Winners of Seasons 1 to 3 will be added once confirmed by the committee.</p>
+  <p class="note" data-i="hofNote">Scores and Player of the Match from the CricHeroes scorecard of each final.</p>
 </div></section>
 
 <section id="rules"><div class="wrap">
@@ -278,6 +278,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <label><span data-i="fPrev">Played earlier seasons?</span>
         <select id="fPrev"><option value="yes" data-i="yes">Yes</option><option value="no" data-i="no">No, first time</option></select></label>
     </div>
+    <p class="note" style="margin:0"><span data-i="contact">Organisers on WhatsApp</span>: <b class="num" id="orgNum"></b></p>
     <div class="err" id="fErr" hidden></div>
     <div class="ctas" style="margin:0">
       <button class="btn pri" type="submit" data-i="fSubmit">Prepare WhatsApp message</button>
@@ -307,20 +308,27 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <script>
 /* ===== Settings the organisers edit ===== */
 const CONFIG = {
-  startISO: "2026-10-24T08:30:00+05:30",
-  days: 8,
+  startISO: "2026-11-01T08:30:00+05:30",
+  days: 9,
   liveUrl: "https://cricheroes.com/search/3/jaakh-baba",   // replace with the Season 6 CricHeroes link once created
-  organiserWhatsApp: ""                                      // e.g. "919876543210"; blank = message is shown for copying
+  organiserWhatsApp: "919736908731",                         // country code + number, no spaces
+  organiserDisplay: "97369 08731"
 };
 const SEEDS = {1:"Singhana",17:"Shimla Royals",9:"Jailaaf",25:"Bhankhari",5:"Ranwa Team",21:"Bhirr"};
 
 const SEASONS = [
-  {n:1,dates:"31 Oct – 8 Nov 2021",a:"Shimla Royals",b:"Khatoti XI",ov:15,win:null,res:null,views:"11.7k",url:"https://cricheroes.com/tournament/305370/jaakh-baba-cricket-pratiyogita/matches/past-matches"},
-  {n:2,dates:"22 – 29 Oct 2022",a:"Thatwari Team",b:"Jamalpur",ov:12,win:null,res:null,views:"13.9k",url:"https://cricheroes.com/tournament/496204/jaakh-baba-cricket-pratiyogita-2/matches/past-matches"},
-  {n:3,dates:"5 – 14 Nov 2023",a:"Bhirr",b:"Shimla Royals",ov:12,win:null,res:null,views:"14.9k",url:"https://cricheroes.com/tournament/795886/jaakh-baba-cricket-pratiyogita-3/matches/past-matches"},
-  {n:4,dates:"27 Oct – 4 Nov 2024",a:"Shimla Royals",b:"Jailaaf",ov:15,win:"Shimla Royals",res:{en:"won by 8 wickets",hi:"8 विकेट से जीते"},views:"19.5k",url:"https://cricheroes.com/tournament/1162028/jakh-baba-cricket-pratiyogita-4/matches/past-matches"},
-  {n:5,dates:"14 – 21 Oct 2025",a:"Singhana",b:"Shimla Royals",ov:12,win:"Singhana",res:{en:"won by 9 runs",hi:"9 रन से जीते"},views:"29.8k",url:"https://cricheroes.com/tournament/1647782/jaakh-baba-cricket-pratiyogita-season-5/matches/past-matches"}
+  {n:1,dates:"31 Oct – 8 Nov 2021",fdate:"7 Nov 2021",ov:15,win:"Khatoti XI",lose:"Shimla Royals",ws:"124/6 (13.4)",ls:"123/9 (15)",res:{en:"won by 4 wickets",hi:"4 विकेट से जीते"},
+   pom:"Sandeep (Khatoti XI) · 3/30",top:"Rohit Kumar 38 (22) · Golu Kumra 31 (15)",views:"11.7k",url:"https://cricheroes.com/scorecard/2449255/jaakh-baba-cricket-pratiyogita/shimla-royals-vs-khatoti-xi/summary"},
+  {n:2,dates:"22 – 29 Oct 2022",fdate:"29 Oct 2022",ov:12,win:"Jamalpur",lose:"Thatwari Team",ws:"81/8 (12)",ls:"78 all out (12)",res:{en:"won by 2 wickets",hi:"2 विकेट से जीते"},
+   pom:"Vijay (Jamalpur) · 3/3 in 2 overs",top:"Hansraj 28 (17) · Rohit 25 (20)",views:"13.9k",url:"https://cricheroes.com/scorecard/4667777/jaakh-baba-cricket-pratiyogita-2/thatwari-team-vs-jamalpur/summary"},
+  {n:3,dates:"5 – 14 Nov 2023",fdate:"13 Nov 2023",ov:12,win:"Shimla Royals",lose:"Bhirr",ws:"90/3 (11.3)",ls:"89 all out (12)",res:{en:"won by 7 wickets",hi:"7 विकेट से जीते"},
+   pom:"Ankit Surveer (Shimla Royals) · 45* (33)",top:"Shubham 4/9 · Vishu 3/9",views:"14.9k",url:"https://cricheroes.com/scorecard/8456407/jaakh-baba-cricket-pratiyogita-3/bhirr-vs-shimla-royals/summary"},
+  {n:4,dates:"27 Oct – 4 Nov 2024",fdate:"3 Nov 2024",ov:15,win:"Shimla Royals",lose:"Jailaaf",ws:"101/2 (9)",ls:"99 all out (14.3)",res:{en:"won by 8 wickets",hi:"8 विकेट से जीते"},
+   pom:"Rishi Yadav (Shimla Royals) · 76* (39), 7 sixes",top:"Fifty off 21 balls · Neeraj 3/20 · Sonu Rao 3/29",views:"19.5k",url:"https://cricheroes.com/scorecard/13350922/jakh-baba-cricket-pratiyogita-4/jailaaf-vs-shimla-royals/summary"},
+  {n:5,dates:"14 – 21 Oct 2025",fdate:"21 Oct 2025",ov:12,win:"Singhana",lose:"Shimla Royals",ws:"123 all out (12)",ls:"114/4 (12)",res:{en:"won by 9 runs",hi:"9 रन से जीते"},
+   pom:"Vishu (Shimla Royals) · 4/17",top:"Rohit Kumar 43 (29) · Ankit Saini 28 (15)",views:"29.8k",url:"https://cricheroes.com/scorecard/19710327/jaakh-baba-cricket-pratiyogita-season-5/singhana-vs-shimla-royals/summary"}
 ];
+const TITLES=[["Shimla Royals",2],["Khatoti XI",1],["Jamalpur",1],["Singhana",1]];
 
 /* ===== Text ===== */
 const T = {
@@ -328,22 +336,22 @@ const T = {
   eyebrow:"Shimla · Khetri · Jhunjhunu",title:"Jaakh Baba Cricket Pratiyogita",season:"Season",venue:"Girls School Ground, Shimla",teamsShort:"32 teams · 31 matches",
   watchLive:"Live scores on CricHeroes",registerTeam:"Register your team",
   navFormat:"Format",navBracket:"Bracket",navSchedule:"Schedule",navHistory:"Hall of Fame",navRules:"Rules & Awards",navVisit:"For Spectators",navRegister:"Register",navSponsors:"Sponsors",
-  formatH:"Same format, sixth year",formatLead:"Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over eight days decide the champion.",
+  formatH:"Same format, sixth year",formatLead:"Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.",
   bracketH:"Tournament bracket",bracketLead:"The draw will be held publicly before the season. Seeded teams are kept apart so the strongest sides meet late.",
   proposed:"Proposed",seedNote:"Seeds are based on Season 4 and 5 results. Other slots fill after the draw.",scrollNote:"Scroll sideways to see all rounds.",
   schedH:"Day-by-day schedule",schedLead:"Four matches a day in the early rounds. Teams must report 30 minutes before their start time.",tentative:"Tentative",datesNote:"Dates and times will be confirmed by the committee.",
-  hofH:"Hall of Fame",hofLead:"Five seasons of finals at the Girls School Ground. Shimla Royals have reached four of them.",hofNote:"Winners of Seasons 1 to 3 will be added once confirmed by the committee.",
+  hofH:"Hall of Fame",hofLead:"Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.",hofNote:"Scores and Player of the Match from the CricHeroes scorecard of each final.",
   rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",
   regH:"Register your team",regLead:"Fill this in and send it to the organisers on WhatsApp. Your place is confirmed only when the committee replies and the entry fee is paid.",
   fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
   fSubmit:"Prepare WhatsApp message",sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
   spH:"Sponsors",spLead:"Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.",
-  footer:"Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan",pastOn:"Past seasons on CricHeroes",
+  footer:"Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan",pastOn:"Past seasons on CricHeroes",contact:"Organisers on WhatsApp",
   startsIn:"First ball in",d:"days",h:"hours",m:"min",s:"sec",liveNow:"Live now",dayOf:"Day {d} of {n}",todayMatches:"Today's matches are on the schedule below.",over:"Season 6 is complete. Thank you for watching.",
   rounds:["Round 1","Round 2","Quarter-finals","Semi-finals","Final"],ov:"overs",matches:"matches",match:"match",
   w:"Winner",seedLbl:"Seed",slot:"Slot",today:"Today",lights:"under lights",
-  final:"Final",won:"Champion",finalists:"Finalists",result:"result to be added",see:"See on CricHeroes",views:"views",
+  final:"Final",vs:"vs",pom:"Player of the Match",scorecard:"Scorecard",won:"Champion",finalists:"Finalists",result:"result to be added",see:"See on CricHeroes",views:"views",
   days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],months:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   rules:[
    "32 teams play a straight knockout. A team that loses is out.",
@@ -358,30 +366,30 @@ const T = {
    "Betting, abuse or fighting leads to disqualification of the player or the team."
   ],
   awards:[["Champions","Trophy and prize money"],["Runners-up","Trophy and prize money"],["Player of the Match","Every match"],["Player of the Series","Across all 31 matches"],["Best Batter","Most runs"],["Best Bowler","Most wickets"],["Best Fielder","Catches and run-outs"],["Six Machine","Most sixes"],["Emerging Player","Best player under 19"],["Fair Play Team","Best conduct on and off the field"]],
-  info:[["Venue","Girls School Ground, Shimla, Khetri, Jhunjhunu."],["Match times","First match 8:30 AM. Last match around 3 PM. Final day ends with the final under lights."],["Watch from home","Every match is scored live on CricHeroes, ball by ball."],["Water & first aid","Drinking water and a first-aid desk at the pavilion. Ambulance number on the notice board."],["Food stalls","Local stalls near the entrance from 10 AM."],["Parking","Two-wheelers and tractors on the school side. Keep the boundary rope clear."]],
-  tiers:[["Title sponsor","Name on the trophy, banners and every live stream"],["Powered by","Logo on jerseys and the scoreboard"],["Player of the Match","Your name with every award, 31 times"],["Six & wicket sponsor","Announced with every six or wicket"],["Boundary banner","Banner on the boundary for all 8 days"]],
-  formatCards:[["32","teams"],["31","matches"],["5","rounds"],["10 / 12","overs (league / semis & final)"],["8","days"]]
+  info:[["Venue","Girls School Ground, Shimla, Khetri, Jhunjhunu."],["Match times","First match 8:30 AM. Last match around 3 PM. The final is on 9 November at noon."],["Watch from home","Every match is scored live on CricHeroes, ball by ball."],["Water & first aid","Drinking water and a first-aid desk at the pavilion. Ambulance number on the notice board."],["Food stalls","Local stalls near the entrance from 10 AM."],["Parking","Two-wheelers and tractors on the school side. Keep the boundary rope clear."]],
+  tiers:[["Title sponsor","Name on the trophy, banners and every live stream"],["Powered by","Logo on jerseys and the scoreboard"],["Player of the Match","Your name with every award, 31 times"],["Six & wicket sponsor","Announced with every six or wicket"],["Boundary banner","Banner on the boundary for all 9 days"]],
+  formatCards:[["32","teams"],["31","matches"],["5","rounds"],["10 / 12","overs (league / semis & final)"],["9","days"]]
  },
  hi:{
   eyebrow:"शिमला · खेतड़ी · झुंझुनूं",title:"जाख बाबा क्रिकेट प्रतियोगिता",season:"सीज़न",venue:"गर्ल्स स्कूल ग्राउंड, शिमला",teamsShort:"32 टीमें · 31 मैच",
   watchLive:"CricHeroes पर लाइव स्कोर",registerTeam:"अपनी टीम रजिस्टर करें",
   navFormat:"फॉर्मेट",navBracket:"ड्रॉ",navSchedule:"कार्यक्रम",navHistory:"हॉल ऑफ फेम",navRules:"नियम व पुरस्कार",navVisit:"दर्शकों के लिए",navRegister:"रजिस्ट्रेशन",navSponsors:"प्रायोजक",
-  formatH:"वही फॉर्मेट, छठा साल",formatLead:"32 टीमें, सीधा नॉकआउट। एक हार और टीम बाहर। आठ दिन में पाँच राउंड के बाद विजेता तय होगा।",
+  formatH:"वही फॉर्मेट, छठा साल",formatLead:"32 टीमें, सीधा नॉकआउट। एक हार और टीम बाहर। नौ दिन में पाँच राउंड के बाद विजेता तय होगा।",
   bracketH:"टूर्नामेंट ड्रॉ",bracketLead:"ड्रॉ सीज़न से पहले सबके सामने निकाला जाएगा। सीडेड टीमें अलग-अलग रखी गई हैं ताकि मज़बूत टीमें आख़िर में भिड़ें।",
   proposed:"प्रस्तावित",seedNote:"सीड सीज़न 4 और 5 के नतीजों पर आधारित हैं। बाकी स्थान ड्रॉ के बाद भरे जाएँगे।",scrollNote:"सभी राउंड देखने के लिए बगल में स्क्रॉल करें।",
   schedH:"दिनवार कार्यक्रम",schedLead:"शुरुआती राउंड में रोज़ चार मैच। टीमें अपने मैच से 30 मिनट पहले पहुँचें।",tentative:"संभावित",datesNote:"तारीख़ और समय कमेटी तय करेगी।",
-  hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच सीज़न के फाइनल। शिमला रॉयल्स चार फाइनल खेल चुकी है।",hofNote:"सीज़न 1 से 3 के विजेता कमेटी की पुष्टि के बाद जोड़े जाएँगे।",
+  hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच फाइनल। शिमला रॉयल्स चार फाइनल खेली और दो जीती।",hofNote:"हर फाइनल का स्कोर और मैन ऑफ द मैच CricHeroes स्कोरकार्ड से।",
   rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",
   regH:"अपनी टीम रजिस्टर करें",regLead:"यह फॉर्म भरें और WhatsApp पर आयोजकों को भेजें। कमेटी के जवाब और एंट्री फीस जमा होने के बाद ही जगह पक्की होगी।",
   fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
   fSubmit:"WhatsApp संदेश तैयार करें",sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
   spH:"प्रायोजक",spLead:"पिछले सीज़न को लगभग 30,000 बार देखा गया। अपनी दुकान या व्यापार को पूरे इलाके तक पहुँचाएँ।",
-  footer:"जाख बाबा क्रिकेट प्रतियोगिता · सीज़न 6 · शिमला, खेतड़ी, झुंझुनूं, राजस्थान",pastOn:"पिछले सीज़न CricHeroes पर",
+  footer:"जाख बाबा क्रिकेट प्रतियोगिता · सीज़न 6 · शिमला, खेतड़ी, झुंझुनूं, राजस्थान",pastOn:"पिछले सीज़न CricHeroes पर",contact:"आयोजक WhatsApp पर",
   startsIn:"पहली गेंद में बाकी",d:"दिन",h:"घंटे",m:"मिनट",s:"सेकंड",liveNow:"अभी लाइव",dayOf:"दिन {d} / {n}",todayMatches:"आज के मैच नीचे कार्यक्रम में देखें।",over:"सीज़न 6 पूरा हुआ। देखने के लिए धन्यवाद।",
   rounds:["पहला राउंड","दूसरा राउंड","क्वार्टर फाइनल","सेमी फाइनल","फाइनल"],ov:"ओवर",matches:"मैच",match:"मैच",
   w:"विजेता",seedLbl:"सीड",slot:"स्थान",today:"आज",lights:"फ्लडलाइट में",
-  final:"फाइनल",won:"चैंपियन",finalists:"फाइनलिस्ट",result:"नतीजा जल्द जोड़ा जाएगा",see:"CricHeroes पर देखें",views:"व्यूज़",
+  final:"फाइनल",vs:"बनाम",pom:"मैन ऑफ द मैच",scorecard:"स्कोरकार्ड",won:"चैंपियन",finalists:"फाइनलिस्ट",result:"नतीजा जल्द जोड़ा जाएगा",see:"CricHeroes पर देखें",views:"व्यूज़",
   days:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"],months:["जन","फ़र","मार्च","अप्रै","मई","जून","जुला","अग","सित","अक्टू","नव","दिस"],
   rules:[
    "32 टीमें सीधा नॉकआउट खेलेंगी। हारने वाली टीम बाहर।",
@@ -396,9 +404,9 @@ const T = {
    "सट्टा, गाली-गलौज या झगड़ा करने पर खिलाड़ी या टीम बाहर।"
   ],
   awards:[["चैंपियन","ट्रॉफी और इनाम राशि"],["उपविजेता","ट्रॉफी और इनाम राशि"],["मैन ऑफ द मैच","हर मैच में"],["मैन ऑफ द सीरीज़","सभी 31 मैचों में"],["सर्वश्रेष्ठ बल्लेबाज़","सबसे ज़्यादा रन"],["सर्वश्रेष्ठ गेंदबाज़","सबसे ज़्यादा विकेट"],["सर्वश्रेष्ठ फील्डर","कैच और रन-आउट"],["सिक्सर किंग","सबसे ज़्यादा छक्के"],["उभरता खिलाड़ी","19 साल से कम उम्र का सबसे अच्छा खिलाड़ी"],["फेयर प्ले टीम","मैदान के अंदर और बाहर सबसे अच्छा व्यवहार"]],
-  info:[["स्थान","गर्ल्स स्कूल ग्राउंड, शिमला, खेतड़ी, झुंझुनूं।"],["मैच का समय","पहला मैच सुबह 8:30 बजे। आख़िरी मैच लगभग 3 बजे। आख़िरी दिन फाइनल फ्लडलाइट में।"],["घर से देखें","हर मैच CricHeroes पर गेंद-दर-गेंद लाइव।"],["पानी और प्राथमिक उपचार","पवेलियन पर पीने का पानी और फर्स्ट-एड। एंबुलेंस नंबर नोटिस बोर्ड पर।"],["खाने के स्टॉल","सुबह 10 बजे से गेट के पास स्टॉल।"],["पार्किंग","दोपहिया और ट्रैक्टर स्कूल की तरफ़। बाउंड्री रस्सी के पास जगह खाली रखें।"]],
-  tiers:[["टाइटल प्रायोजक","ट्रॉफी, बैनर और हर लाइव स्ट्रीम पर नाम"],["पावर्ड बाय","जर्सी और स्कोरबोर्ड पर लोगो"],["मैन ऑफ द मैच","हर पुरस्कार के साथ आपका नाम, 31 बार"],["छक्का और विकेट प्रायोजक","हर छक्के और विकेट पर घोषणा"],["बाउंड्री बैनर","आठों दिन बाउंड्री पर बैनर"]],
-  formatCards:[["32","टीमें"],["31","मैच"],["5","राउंड"],["10 / 12","ओवर (लीग / सेमी व फाइनल)"],["8","दिन"]]
+  info:[["स्थान","गर्ल्स स्कूल ग्राउंड, शिमला, खेतड़ी, झुंझुनूं।"],["मैच का समय","पहला मैच सुबह 8:30 बजे। आख़िरी मैच लगभग 3 बजे। फाइनल 9 नवंबर को दोपहर 12 बजे।"],["घर से देखें","हर मैच CricHeroes पर गेंद-दर-गेंद लाइव।"],["पानी और प्राथमिक उपचार","पवेलियन पर पीने का पानी और फर्स्ट-एड। एंबुलेंस नंबर नोटिस बोर्ड पर।"],["खाने के स्टॉल","सुबह 10 बजे से गेट के पास स्टॉल।"],["पार्किंग","दोपहिया और ट्रैक्टर स्कूल की तरफ़। बाउंड्री रस्सी के पास जगह खाली रखें।"]],
+  tiers:[["टाइटल प्रायोजक","ट्रॉफी, बैनर और हर लाइव स्ट्रीम पर नाम"],["पावर्ड बाय","जर्सी और स्कोरबोर्ड पर लोगो"],["मैन ऑफ द मैच","हर पुरस्कार के साथ आपका नाम, 31 बार"],["छक्का और विकेट प्रायोजक","हर छक्के और विकेट पर घोषणा"],["बाउंड्री बैनर","नौ दिन बाउंड्री पर बैनर"]],
+  formatCards:[["32","टीमें"],["31","मैच"],["5","राउंड"],["10 / 12","ओवर (लीग / सेमी व फाइनल)"],["9","दिन"]]
  }
 };
 
@@ -414,7 +422,7 @@ function buildFixtures(){
   for(let i=0;i<4;i++){fx.push({no:no++,r:2,day:6,time:times[i],a:{from:17+2*i},b:{from:18+2*i}});}
   fx.push({no:no++,r:3,day:7,time:"9:00",a:{from:25},b:{from:26}});
   fx.push({no:no++,r:3,day:7,time:"11:30",a:{from:27},b:{from:28}});
-  fx.push({no:no++,r:4,day:7,time:"18:30",a:{from:29},b:{from:30},lights:true});
+  fx.push({no:no++,r:4,day:8,time:"12:00",a:{from:29},b:{from:30}});
   return fx;
 }
 const FIX=buildFixtures();
@@ -459,13 +467,11 @@ function renderDays(){
 const sideTxt=s=>SEEDS[s.slot]?esc(SEEDS[s.slot]):`${t("slot")} ${s.slot}`;
 
 function renderHof(){
-  let h="";
+  let h=`<div class="dyn">${TITLES.map(x=>`<span class="tag${x[1]>1?"":" alt"}">${esc(x[0])} × ${x[1]}</span>`).join("")}</div>`;
   for(const s of [...SEASONS].reverse()){
-    const loser=s.win===s.a?s.b:s.a;
-    const res=s.win?`<span class="win">${esc(s.win)}</span> ${s.res[lang]} · ${esc(loser)}`:`${esc(s.a)} v ${esc(s.b)} <span class="yr">(${t("result")})</span>`;
-    h+=`<div class="hrow"><div><div class="sn num">${s.n}</div></div>
-      <div><b>${s.win?t("won"):t("finalists")}</b><div class="yr num">${s.dates}</div></div>
-      <div class="res">${res}<div class="yr">${t("final")} · ${s.ov} ${t("ov")} · <a href="${s.url}" target="_blank" rel="noopener">${t("see")}</a></div></div>
+    h+=`<div class="hrow"><div><div class="sn num">${s.n}</div><div class="yr num">${s.dates}</div></div>
+      <div><b class="win">${esc(s.win)}</b><div class="num">${s.ws}</div><div class="yr">${s.res[lang]} · ${t("vs")} ${esc(s.lose)} <span class="num">${s.ls}</span></div></div>
+      <div class="res"><div><b>${t("pom")}:</b> ${esc(s.pom)}</div><div class="yr">${esc(s.top)}</div><div class="yr num">${t("final")} · ${s.fdate} · ${s.ov} ${t("ov")} · <a href="${s.url}" target="_blank" rel="noopener">${t("scorecard")}</a></div></div>
       <div class="views num">${s.views} ${t("views")}</div></div>`;
   }
   document.getElementById("hof").innerHTML=h;
@@ -502,6 +508,7 @@ function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}appl
 document.getElementById("langEn").onclick=()=>setLang("en");
 document.getElementById("langHi").onclick=()=>setLang("hi");
 document.getElementById("liveLink").href=CONFIG.liveUrl;
+document.getElementById("orgNum").textContent=CONFIG.organiserDisplay;
 
 /* Registration -> WhatsApp text */
 document.getElementById("regForm").addEventListener("submit",e=>{
