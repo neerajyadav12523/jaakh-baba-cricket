@@ -65,6 +65,11 @@ h2{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--indigo)}
 .facts{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;margin-top:6px;font-size:.9rem;font-weight:500;opacity:.95}
 .facts>span{white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 @media(min-width:600px){.facts>span+span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--marigold);margin-right:8px}}
+/* Phones: season badge and venue share one row under the title; wider screens keep them in the title/facts lines */
+.srow{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:6px}
+.srow .venue{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;font-weight:500}
+@media(max-width:599px){.mast .wide{display:none!important}}
+@media(min-width:600px){.srow{display:none}}
 .maplink{display:inline-flex;align-items:center;gap:3px;padding:1px 8px;border-radius:999px;border:1px solid var(--marigold);color:var(--marigold);font-size:.75rem;font-weight:800;text-decoration:none}
 .maplink:hover{background:var(--marigold);color:#1f2340}
 .mside{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
@@ -234,11 +239,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   </div>
   <div class="wrap mmain">
     <div>
-      <h1><span data-i="title">Jaakh Baba Cricket Pratiyogita</span><span class="schip"><span data-i="season">Season</span> <b class="num">6</b></span></h1>
+      <h1><span data-i="title">Jaakh Baba Cricket Pratiyogita</span><span class="schip wide"><span data-i="season">Season</span> <b class="num">6</b></span></h1>
+      <div class="srow"><span class="schip"><span data-i="season">Season</span> <b class="num">6</b></span><span class="venue"><span data-i="venue">Girls School Ground, Shimla</span><a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span></div>
       <div class="facts">
         <span class="num" id="dateRange">1 – 9 Nov 2026</span>
-        <span><span data-i="venue">Girls School Ground, Shimla</span><a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span>
-        <span data-i="teamsShort">32 teams · 31 matches</span>
+        <span class="wide"><span data-i="venue">Girls School Ground, Shimla</span><a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span>
       </div>
     </div>
     <div class="mside">
