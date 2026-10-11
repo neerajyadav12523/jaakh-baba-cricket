@@ -60,6 +60,8 @@ h2{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--indigo)}
 .season b{font-size:3rem;line-height:1}
 .facts{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-weight:500}
 .facts span{white-space:nowrap}
+.maplink{display:inline-flex;align-items:center;gap:3px;margin-left:6px;padding:1px 9px;border-radius:999px;border:1px solid var(--marigold);color:var(--marigold);font-size:.8rem;font-weight:800;text-decoration:none;vertical-align:1px}
+.maplink:hover{background:var(--marigold);color:#1f2340}
 .toggles{display:flex;gap:6px}
 .chipbtn{font:inherit;font-size:.85rem;font-weight:700;border:1px solid rgba(251,244,228,.45);background:transparent;color:var(--on-indigo);border-radius:999px;padding:4px 12px;cursor:pointer}
 .chipbtn[aria-pressed="true"]{background:var(--marigold);border-color:var(--marigold);color:#1f2340}
@@ -226,7 +228,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <div class="season"><span data-i="season">Season</span> <b class="num">6</b></div>
       <div class="facts">
         <span class="num" id="dateRange">1 – 9 Nov 2026</span>
-        <span data-i="venue">Girls School Ground, Shimla</span>
+        <span><span data-i="venue">Girls School Ground, Shimla</span> <a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span>
         <span data-i="teamsShort">32 teams · 31 matches</span>
       </div>
       <div class="ctas">
@@ -405,7 +407,7 @@ const T = {
   bRuns:"Most runs",bWkts:"Most wickets",bPom:"Most Player of the Match awards",bSeason:"Season by season",
   cPlayer:"Player",cTeam:"Team",cM:"M",cRuns:"Runs",cAvg:"Avg",cSR:"SR",cHS:"HS",c6:"6s",c4:"4s",cOv:"Overs",cW:"Wkts",cEco:"Econ",cBest:"Best",cAw:"Awards",cSeason:"Season",
   hofH:"Hall of Fame",hofLead:"Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.",hofNote:"Scores and Player of the Match from the CricHeroes scorecard of each final.",
-  rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",
+  rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",mapShort:"Map",
   regH:"Register your team",regLead:"Fill this in and send it to the organisers on WhatsApp. Your place is confirmed only when the committee replies and the entry fee is paid.",
   fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
   fSubmit:"Prepare WhatsApp message",sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
@@ -449,7 +451,7 @@ const T = {
   bRuns:"सबसे ज़्यादा रन",bWkts:"सबसे ज़्यादा विकेट",bPom:"सबसे ज़्यादा मैन ऑफ द मैच",bSeason:"सीज़न दर सीज़न",
   cPlayer:"खिलाड़ी",cTeam:"टीम",cM:"मैच",cRuns:"रन",cAvg:"औसत",cSR:"स्ट्राइक रेट",cHS:"सर्वोच्च",c6:"छक्के",c4:"चौके",cOv:"ओवर",cW:"विकेट",cEco:"इकॉनमी",cBest:"बेस्ट",cAw:"पुरस्कार",cSeason:"सीज़न",
   hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच फाइनल। शिमला रॉयल्स चार फाइनल खेली और दो जीती।",hofNote:"हर फाइनल का स्कोर और मैन ऑफ द मैच CricHeroes स्कोरकार्ड से।",
-  rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",
+  rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",mapShort:"नक्शा",
   regH:"अपनी टीम रजिस्टर करें",regLead:"यह फॉर्म भरें और WhatsApp पर आयोजकों को भेजें। कमेटी के जवाब और एंट्री फीस जमा होने के बाद ही जगह पक्की होगी।",
   fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
   fSubmit:"WhatsApp संदेश तैयार करें",sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
