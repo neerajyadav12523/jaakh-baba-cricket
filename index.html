@@ -232,10 +232,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
 <nav class="bar" aria-label="Sections">
   <div class="wrap" id="navlinks">
+    <a href="#history" data-i="navHistory">Hall of Fame</a>
     <a href="#format" data-i="navFormat">Format</a>
     <a href="#bracket" data-i="navBracket">Bracket</a>
     <a href="#schedule" data-i="navSchedule">Schedule</a>
-    <a href="#history" data-i="navHistory">Hall of Fame</a>
     <a href="#rules" data-i="navRules">Rules & Awards</a>
     <a href="#visit" data-i="navVisit">For Spectators</a>
     <a href="#register" data-i="navRegister">Register</a>
@@ -595,13 +595,13 @@ document.getElementById("copyBtn").addEventListener("click",()=>{
 });
 
 /* Tabs: only the clicked section is shown */
+const DEFAULT_TAB="history";
 const links=[...document.querySelectorAll("#navlinks a")];
 const sections=[...document.querySelectorAll("main section")];
 function showTab(id,scroll){
-  if(!sections.some(s=>s.id===id))id=sections[0].id;
+  if(!sections.some(s=>s.id===id))id=DEFAULT_TAB;
   sections.forEach(s=>s.hidden=s.id!==id);
   links.forEach(a=>{const on=a.getAttribute("href")==="#"+id;a.classList.toggle("on",on);a.setAttribute("aria-selected",on);if(on){const bar=a.parentElement;bar.scrollLeft=Math.max(0,a.offsetLeft-bar.clientWidth/2+a.offsetWidth/2);}});
-  try{localStorage.setItem("jb-tab",id);}catch(e){}
   if(scroll)document.querySelector("nav.bar").scrollIntoView({behavior:"smooth",block:"start"});
 }
 document.addEventListener("click",e=>{
@@ -609,9 +609,8 @@ document.addEventListener("click",e=>{
   const id=a.getAttribute("href").slice(1);if(!sections.some(s=>s.id===id))return;
   e.preventDefault();showTab(id,a.closest("#navlinks")===null);
 });
-let firstTab=location.hash.slice(1);
-if(!firstTab){try{firstTab=localStorage.getItem("jb-tab")||"";}catch(e){}}
-showTab(firstTab,false);
+/* Every visit opens on the Hall of Fame unless the link points to a tab, e.g. #schedule */
+showTab(location.hash.slice(1),false);
 
 applyLang();
 setInterval(tick,1000);
