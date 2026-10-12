@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -837,7 +837,7 @@ function buildFixtures(){
 }
 const FIX=buildFixtures();
 
-let lang="en";
+let lang="hi";   // Hindi by default; a visitor's own choice is remembered below
 try{const s=localStorage.getItem("jb-lang");if(s==="hi"||s==="en")lang=s;}catch(e){}
 const t=k=>T[lang][k];
 const start=new Date(CONFIG.startISO);
