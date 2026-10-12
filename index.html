@@ -262,6 +262,15 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .addrow input{flex:1 1 140px;min-width:0}
 .addrow #capNewPhone{flex:1 1 120px}
 .plist li .ph{color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums;font-weight:500}
+.plist li.editing{flex-wrap:wrap}
+.plist li .pe{display:flex;flex-wrap:wrap;gap:6px;flex:1;min-width:0}
+.plist li .pe input{flex:1 1 120px;min-width:0;padding:6px 8px}
+.plist li button.ok{border-color:#1f7a5a;color:#1f7a5a}
+.plist li button.ed{border-color:var(--indigo);color:var(--label)}
+.regsteps{margin-top:18px;background:var(--paper);border:2px solid var(--marigold);border-radius:14px;padding:14px 16px;max-width:720px}
+.regsteps b{display:block;font-size:1.02rem}
+.regsteps ol{margin:8px 0 0;padding-left:1.3em;display:grid;gap:6px}
+.regsteps .warn{margin-top:10px;color:var(--fresco);font-weight:800}
 .plist li .need{color:var(--fresco);font-size:.75rem;font-weight:800}
 .dirty{color:var(--fresco);font-weight:700;font-size:.85rem}
 .adm-edit{display:grid;gap:8px;background:var(--sand);border:1px solid var(--line);border-radius:8px;padding:10px}
@@ -387,6 +396,16 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
 <section id="register"><div class="wrap">
   <h2 data-i="regH">Register your team</h2>
+  <div class="regsteps">
+    <b data-i="stepsH">How registration works</b>
+    <ol>
+      <li data-i="step1">Fill in the form below and tap Submit registration.</li>
+      <li data-i="step2">WhatsApp opens with your team details. Pay the entry fee, attach the payment screenshot and send the message to the organisers.</li>
+      <li data-i="step3">When the payment is confirmed, your team is approved and the captain gets a 6-digit PIN on WhatsApp to add players.</li>
+    </ol>
+    <p class="warn" data-i="stepWarn">Teams are approved only after the entry fee is paid and the payment screenshot is sent on WhatsApp.</p>
+    <p class="note" style="margin:6px 0 0"><span data-i="contact">Organisers on WhatsApp</span>: <b class="num orgNum2"></b></p>
+  </div>
   <p class="lead" data-i="regLead">Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.</p>
   <div id="tmAdmin" class="admin" hidden>
     <div class="adm-h"><h3 data-i="tmAdminH">Manage teams</h3><a class="adm-link" href="#sponsors" data-i="toSponsors">Sponsors →</a></div>
@@ -417,7 +436,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div id="regDone" class="regok" hidden>
     <b data-i="regDoneH">Registration received</b>
     <p style="margin:6px 0 0" id="regDoneText"></p>
-    <div class="ctas"><a class="btn sec" id="waLink" target="_blank" rel="noopener noreferrer" data-i="tellOrg">Tell the organisers on WhatsApp</a>
+    <div class="ctas"><a class="btn pri" id="waLink" target="_blank" rel="noopener noreferrer" data-i="tellOrg">Send details and payment screenshot on WhatsApp</a>
       <button class="btn sec" type="button" id="regAgain" data-i="regAgain">Register another team</button></div>
   </div>
   <div class="capbox" id="capBox">
@@ -553,8 +572,15 @@ const T = {
   hofH:"Hall of Fame",hofLead:"Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.",hofNote:"Scores and Player of the Match from the CricHeroes scorecard of each final.",
   rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",mapShort:"Map",
   regH:"Register your team",regLead:"Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.",
-  fSubmit:"Submit registration",regDoneH:"Registration received",regDoneText:"{team} is waiting for approval. Once approved, the captain will get a 6-digit PIN on WhatsApp at {phone}.",
-  tellOrg:"Tell the organisers on WhatsApp",regAgain:"Register another team",regTeamsH:"Registered teams",regCountL:"{n} of {max}",regNone:"Approved teams will appear here.",
+  fSubmit:"Submit registration",regDoneH:"Registration received",regDoneText:"{team} is saved and waiting for approval. Send the WhatsApp message with the entry fee payment screenshot. After the payment is confirmed, the captain gets a 6-digit PIN on WhatsApp at {phone}.",
+  tellOrg:"Send details and payment screenshot on WhatsApp",
+  stepsH:"How registration works",step1:"Fill in the form below and tap Submit registration.",
+  step2:"WhatsApp opens with your team details. Pay the entry fee, attach the payment screenshot and send the message to the organisers.",
+  step3:"When the payment is confirmed, your team is approved and the captain gets a 6-digit PIN on WhatsApp to add players.",
+  stepWarn:"Teams are approved only after the entry fee is paid and the payment screenshot is sent on WhatsApp.",
+  regWaNote:"If WhatsApp did not open, tap the button below. Attach the entry fee payment screenshot before sending.",
+  regWaMsg:"New team registration – Jaakh Baba Cricket Pratiyogita, Season 6\n\nTeam: {team}\nVillage: {village}\nCaptain: {captain}\nCaptain mobile: {phone}\nRegistration ID: {id}\n\nEntry fee payment screenshot attached.",
+  capEdit:"Edit",capOk:"Done",capCancelEd:"Cancel",regAgain:"Register another team",regTeamsH:"Registered teams",regCountL:"{n} of {max}",regNone:"Approved teams will appear here.",
   regFull:"All 32 places are filled. Registration is closed.",capL:"Captain",sending:"Sending…",
   eName:"A team with this name is already registered. Choose a different name.",eFull:"All places are filled. Registration is closed.",
   eMany:"Too many registrations from this connection. Try again in an hour.",eNet:"Couldn't reach the registration server. Check your internet and try again.",eLoad:"Couldn't load registered teams.",
@@ -618,8 +644,15 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच फाइनल। शिमला रॉयल्स चार फाइनल खेली और दो जीती।",hofNote:"हर फाइनल का स्कोर और मैन ऑफ द मैच CricHeroes स्कोरकार्ड से।",
   rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",mapShort:"नक्शा",
   regH:"अपनी टीम रजिस्टर करें",regLead:"रजिस्टर करने के लिए यह फॉर्म भरें। आयोजक हर एंट्री जाँचते हैं। टीम मंज़ूर होने पर कप्तान को WhatsApp पर 6 अंकों का PIN मिलेगा, जिससे खिलाड़ी जोड़े जा सकेंगे।",
-  fSubmit:"रजिस्ट्रेशन भेजें",regDoneH:"रजिस्ट्रेशन मिल गया",regDoneText:"{team} मंज़ूरी का इंतज़ार कर रही है। मंज़ूर होने पर कप्तान को {phone} पर WhatsApp से 6 अंकों का PIN मिलेगा।",
-  tellOrg:"आयोजकों को WhatsApp पर बताएँ",regAgain:"दूसरी टीम रजिस्टर करें",regTeamsH:"रजिस्टर्ड टीमें",regCountL:"{max} में से {n}",regNone:"मंज़ूर टीमें यहाँ दिखेंगी।",
+  fSubmit:"रजिस्ट्रेशन भेजें",regDoneH:"रजिस्ट्रेशन मिल गया",regDoneText:"{team} सेव हो गई है और मंज़ूरी का इंतज़ार कर रही है। एंट्री फीस के भुगतान के स्क्रीनशॉट के साथ WhatsApp संदेश भेजें। भुगतान की पुष्टि के बाद कप्तान को {phone} पर WhatsApp से 6 अंकों का PIN मिलेगा।",
+  tellOrg:"विवरण और भुगतान का स्क्रीनशॉट WhatsApp पर भेजें",
+  stepsH:"रजिस्ट्रेशन कैसे होगा",step1:"नीचे फॉर्म भरें और रजिस्ट्रेशन भेजें दबाएँ।",
+  step2:"आपकी टीम के विवरण के साथ WhatsApp खुलेगा। एंट्री फीस भरें, भुगतान का स्क्रीनशॉट जोड़ें और संदेश आयोजकों को भेजें।",
+  step3:"भुगतान की पुष्टि होने पर आपकी टीम मंज़ूर होगी और कप्तान को खिलाड़ी जोड़ने के लिए WhatsApp पर 6 अंकों का PIN मिलेगा।",
+  stepWarn:"एंट्री फीस भरने और भुगतान का स्क्रीनशॉट WhatsApp पर भेजने के बाद ही टीम मंज़ूर होगी।",
+  regWaNote:"अगर WhatsApp नहीं खुला, तो नीचे का बटन दबाएँ। भेजने से पहले एंट्री फीस के भुगतान का स्क्रीनशॉट जोड़ें।",
+  regWaMsg:"नई टीम रजिस्ट्रेशन – जाख बाबा क्रिकेट प्रतियोगिता, सीज़न 6\n\nटीम: {team}\nगाँव: {village}\nकप्तान: {captain}\nकप्तान का मोबाइल: {phone}\nरजिस्ट्रेशन ID: {id}\n\nएंट्री फीस के भुगतान का स्क्रीनशॉट साथ में है।",
+  capEdit:"बदलें",capOk:"ठीक",capCancelEd:"रद्द करें",regAgain:"दूसरी टीम रजिस्टर करें",regTeamsH:"रजिस्टर्ड टीमें",regCountL:"{max} में से {n}",regNone:"मंज़ूर टीमें यहाँ दिखेंगी।",
   regFull:"सभी 32 जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",capL:"कप्तान",sending:"भेज रहे हैं…",
   eName:"इस नाम की टीम पहले से रजिस्टर्ड है। कोई दूसरा नाम चुनें।",eFull:"सभी जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",
   eMany:"इस कनेक्शन से बहुत ज़्यादा रजिस्ट्रेशन हुए। एक घंटे बाद कोशिश करें।",eNet:"रजिस्ट्रेशन सर्वर से जुड़ नहीं पाए। इंटरनेट जाँचकर फिर कोशिश करें।",eLoad:"रजिस्टर्ड टीमें लोड नहीं हुईं।",
@@ -834,6 +867,7 @@ document.getElementById("langEn").onclick=()=>setLang("en");
 document.getElementById("langHi").onclick=()=>setLang("hi");
 document.getElementById("liveLink").href=CONFIG.liveUrl;
 document.getElementById("orgNum").textContent=CONFIG.organiserDisplay;
+document.querySelectorAll(".orgNum2").forEach(el=>el.textContent=CONFIG.organiserDisplay);
 
 /* ===== Team registration (Cloudflare Worker API, see api/) ===== */
 const TM={teams:[],max:32,open:true,admin:[],key:"",pins:{},confirmDel:null,editId:null};
@@ -858,23 +892,27 @@ document.getElementById("regForm").addEventListener("submit",async e=>{
   if(v("fTeam").length<2||v("fVillage").length<2||v("fCaptain").length<2||phone.length!==10){showErr(t("errFill"));return;}
   err.hidden=true;
   const btn=document.getElementById("fSubmit");btn.disabled=true;btn.textContent=t("sending");
+  // Open the WhatsApp window now, while the tap still counts as the user's action; it is pointed at WhatsApp once the team is saved
+  let wa=null;try{wa=window.open("","_blank");}catch(x){}
   try{
     const r=await api("/register",{method:"POST",body:JSON.stringify({name:v("fTeam"),village:v("fVillage"),captain:v("fCaptain"),phone})});
     const j=await r.json().catch(()=>({}));
-    if(!r.ok){showErr({name_taken:t("eName"),full:t("eFull"),too_many:t("eMany"),invalid:t("errFill")}[j.error]||t("eNet"));}
+    if(!r.ok){if(wa)wa.close();showErr({name_taken:t("eName"),full:t("eFull"),too_many:t("eMany"),invalid:t("errFill")}[j.error]||t("eNet"));}
     else{
-      const msg=`${T[lang].title} – ${t("season")} 6\n${t("fTeam")}: ${v("fTeam")}\n${t("fVillage")}: ${v("fVillage")}\n${t("fCaptain")}: ${v("fCaptain")}\n${t("fPhone")}: ${phone}`;
-      document.getElementById("waLink").href=`https://wa.me/${CONFIG.organiserWhatsApp}?text=${encodeURIComponent(msg)}`;
-      document.getElementById("regDoneText").textContent=t("regDoneText").replace("{team}",v("fTeam")).replace("{phone}",phone);
+      const msg=t("regWaMsg").replace("{team}",v("fTeam")).replace("{village}",v("fVillage")).replace("{captain}",v("fCaptain")).replace("{phone}",phone).replace("{id}",j.id||"");
+      const link=`https://wa.me/${CONFIG.organiserWhatsApp}?text=${encodeURIComponent(msg)}`;
+      document.getElementById("waLink").href=link;
+      if(wa){try{wa.location.href=link;}catch(x){wa=null;}}
+      document.getElementById("regDoneText").textContent=t("regDoneText").replace("{team}",v("fTeam")).replace("{phone}",phone)+(wa?"":" "+t("regWaNote"));
       document.getElementById("regDone").hidden=false;document.getElementById("regForm").hidden=true;e.target.reset();
     }
-  }catch(ex){showErr(t("eNet"));}
+  }catch(ex){if(wa)wa.close();showErr(t("eNet"));}
   btn.disabled=false;btn.textContent=t("fSubmit");
 });
 document.getElementById("regAgain").addEventListener("click",()=>{document.getElementById("regDone").hidden=true;renderTeams();});
 
 /* --- Captain: open the team with the WhatsApp PIN, then add/remove player names --- */
-const CAP={id:"",pin:"",team:null,players:[],dirty:false,max:15};
+const CAP={id:"",pin:"",team:null,players:[],dirty:false,max:15,edit:-1};
 function capMsg(text,kind){const m=document.getElementById("capMsg");m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
 function renderCapPicker(){
   const sel=document.getElementById("capTeam");const cur=sel.value||CAP.id;
@@ -887,7 +925,7 @@ function renderCap(){
   if(!CAP.team)return;
   document.getElementById("capTitle").textContent=CAP.team.name;
   document.getElementById("capCount").textContent=t("capCountL").replace("{n}",CAP.players.length).replace("{max}",CAP.max);
-  document.getElementById("capList").innerHTML=CAP.players.map((p,i)=>`<li><span>${esc(p.name)} ${p.phone?`<span class="ph">· ${esc(p.phone)}</span>`:`<span class="need">${t("capNeedPhone")}</span>`}</span><button type="button" data-i2="${i}">${t("capRemove")}</button></li>`).join("");
+  document.getElementById("capList").innerHTML=CAP.players.map((p,i)=>CAP.edit===i?`<li class="editing"><div class="pe"><input id="peName" maxlength="40" value="${esc(p.name)}" placeholder="${t("capNewPh")}"><input id="pePhone" inputmode="numeric" maxlength="14" value="${esc(p.phone||"")}" placeholder="${t("capPhonePh")}"></div><button type="button" class="ok" data-ok="${i}">${t("capOk")}</button><button type="button" data-cancel="1">${t("capCancelEd")}</button></li>`:`<li><span>${esc(p.name)} ${p.phone?`<span class="ph">· ${esc(p.phone)}</span>`:`<span class="need">${t("capNeedPhone")}</span>`}</span><button type="button" class="ed" data-ed="${i}">${t("capEdit")}</button><button type="button" data-i2="${i}">${t("capRemove")}</button></li>`).join("");
   document.getElementById("capDirty").hidden=!CAP.dirty;
 }
 function capError(j){
@@ -931,20 +969,40 @@ document.getElementById("capAdd").addEventListener("submit",e=>{
   CAP.players.push({name,phone});CAP.dirty=true;inp.value="";ph.value="";capMsg("");renderCap();inp.focus();
 });
 document.getElementById("capList").addEventListener("click",e=>{
+  const ed=e.target.closest("button[data-ed]");
+  if(ed){CAP.edit=Number(ed.dataset.ed);capMsg("");renderCap();const p=document.getElementById(CAP.players[CAP.edit].phone?"peName":"pePhone");if(p)p.focus();return;}
+  if(e.target.closest("button[data-cancel]")){CAP.edit=-1;capMsg("");renderCap();return;}
+  const ok=e.target.closest("button[data-ok]");
+  if(ok){
+    const i=Number(ok.dataset.ok);
+    const name=document.getElementById("peName").value.replace(/\s+/g," ").trim();
+    const phone=document.getElementById("pePhone").value.replace(/\D/g,"").slice(-10);
+    if(name.length<2){capMsg(t("capShort"),"bad");return;}
+    if(phone.length!==10){capMsg(t("capBadPhone").replace("{name}",name),"bad");return;}
+    const dupN=CAP.players.find((p,k)=>k!==i&&p.name.toLowerCase()===name.toLowerCase());
+    if(dupN){capMsg(t("capDup").replace("{name}",name),"bad");return;}
+    const dupP=CAP.players.find((p,k)=>k!==i&&p.phone===phone);
+    if(dupP){capMsg(t("capPhoneDup").replace("{phone}",phone).replace("{name}",dupP.name),"bad");return;}
+    CAP.players[i]={name,phone};CAP.edit=-1;CAP.dirty=true;capMsg("");renderCap();return;
+  }
   const b=e.target.closest("button[data-i2]");if(!b)return;
-  CAP.players.splice(Number(b.dataset.i2),1);CAP.dirty=true;capMsg("");renderCap();
+  CAP.players.splice(Number(b.dataset.i2),1);CAP.edit=-1;CAP.dirty=true;capMsg("");renderCap();
+});
+document.getElementById("capList").addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&e.target.closest("li.editing")){e.preventDefault();e.target.closest("li.editing").querySelector("button.ok").click();}
+  if(e.key==="Escape"&&e.target.closest("li.editing")){CAP.edit=-1;renderCap();}
 });
 document.getElementById("capSave").addEventListener("click",async()=>{
   const btn=document.getElementById("capSave");btn.disabled=true;capMsg(t("sending"));
   try{
     const r=await api("/captain/players",{method:"POST",body:JSON.stringify({id:CAP.id,pin:CAP.pin,players:CAP.players})});const j=await r.json().catch(()=>({}));
     if(!r.ok){capMsg(capError(j),"bad");}
-    else{CAP.team=j.team;CAP.players=j.team.players.slice();CAP.dirty=false;renderCap();capMsg(t("capSaved"),"ok");loadTeams();}
+    else{CAP.team=j.team;CAP.players=j.team.players.slice();CAP.dirty=false;CAP.edit=-1;renderCap();capMsg(t("capSaved"),"ok");loadTeams();}
   }catch(e){capMsg(t("eNet"),"bad");}
   btn.disabled=false;
 });
 document.getElementById("capClose").addEventListener("click",()=>{
-  Object.assign(CAP,{id:"",pin:"",team:null,players:[],dirty:false});try{sessionStorage.removeItem("jb-cap");}catch(e){}
+  Object.assign(CAP,{id:"",pin:"",team:null,players:[],dirty:false,edit:-1});try{sessionStorage.removeItem("jb-cap");}catch(e){}
   document.getElementById("capPin").value="";capMsg("");renderCap();
 });
 (()=>{try{const c=JSON.parse(sessionStorage.getItem("jb-cap")||"null");if(c&&c.id&&c.pin)capOpen(c.id,c.pin);}catch(e){}})();
