@@ -374,23 +374,17 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <nav class="bar" aria-label="Sections">
   <div class="wrap" id="navlinks">
     <a href="#history" data-i="navHistory">Hall of Fame</a>
-    <a href="#format" data-i="navFormat">Format</a>
     <a href="#matches" data-i="navMatches">Matches</a>
     <a href="#gallery" data-i="navGallery">Gallery</a>
-    <a href="#rules" data-i="navRules">Rules & Awards</a>
-    <a href="#visit" data-i="navVisit">For Spectators</a>
     <a href="#register" data-i="navRegister">Register</a>
     <a href="#sponsors" data-i="navSponsors">Sponsors</a>
     <a href="#expenses" data-i="navExpenses">Expenses</a>
+    <a href="#rules" data-i="navRules">Rules & Awards</a>
+    <a href="#visit" data-i="navVisit">For Spectators</a>
   </div>
 </nav>
 
 <main>
-<section id="format"><div class="wrap">
-  <h2 data-i="formatH">Same format, sixth year</h2>
-  <p class="lead" data-i="formatLead">Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.</p>
-  <div class="format" id="formatGrid"></div>
-</div></section>
 
 <section id="matches"><div class="wrap">
   <h2 data-i="matchesH">Matches</h2>
@@ -419,7 +413,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 </div></section>
 
 <section id="rules"><div class="wrap">
-  <h2 data-i="rulesH">Rules & awards</h2>
+  <h2 data-i="rulesH">Format, rules & awards</h2>
+  <h3 class="sph3" style="margin-top:18px" data-i="formatH">Same format, sixth year</h3>
+  <p class="lead" data-i="formatLead">Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.</p>
+  <div class="format" id="formatGrid"></div>
+  <h3 class="sph3" data-i="rulesSubH">Rules and awards</h3>
   <div class="cols">
     <div>
       <p class="note" style="margin:0 0 10px"><span class="tag alt" data-i="draft">Draft</span></p>
@@ -666,7 +664,7 @@ const T = {
   bRuns:"Most runs",bWkts:"Most wickets",bPom:"Most Player of the Match awards",bSeason:"Season by season",
   cPlayer:"Player",cTeam:"Team",cM:"M",cRuns:"Runs",cAvg:"Avg",cSR:"SR",cHS:"HS",c6:"6s",c4:"4s",cOv:"Overs",cW:"Wkts",cEco:"Econ",cBest:"Best",cAw:"Awards",cSeason:"Season",
   hofH:"Hall of Fame",hofLead:"Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.",hofNote:"Scores and Player of the Match from the CricHeroes scorecard of each final.",
-  rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",mapShort:"Map",
+  rulesH:"Format, rules & awards",rulesSubH:"Rules and awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",mapShort:"Map",
   regH:"Register your team",regLead:"Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.",
   fSubmit:"Submit registration",regDoneH:"Registration received",regDoneText:"{team} is saved and waiting for approval. Send the WhatsApp message with the entry fee payment screenshot. After the payment is confirmed, the captain gets a 6-digit PIN on WhatsApp at {phone}.",
   tellOrg:"Send details and payment screenshot on WhatsApp",
@@ -751,7 +749,7 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   bRuns:"सबसे ज़्यादा रन",bWkts:"सबसे ज़्यादा विकेट",bPom:"सबसे ज़्यादा मैन ऑफ द मैच",bSeason:"सीज़न दर सीज़न",
   cPlayer:"खिलाड़ी",cTeam:"टीम",cM:"मैच",cRuns:"रन",cAvg:"औसत",cSR:"स्ट्राइक रेट",cHS:"सर्वोच्च",c6:"छक्के",c4:"चौके",cOv:"ओवर",cW:"विकेट",cEco:"इकॉनमी",cBest:"बेस्ट",cAw:"पुरस्कार",cSeason:"सीज़न",
   hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच फाइनल। शिमला रॉयल्स चार फाइनल खेली और दो जीती।",hofNote:"हर फाइनल का स्कोर और मैन ऑफ द मैच CricHeroes स्कोरकार्ड से।",
-  rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",mapShort:"नक्शा",
+  rulesH:"फॉर्मेट, नियम और पुरस्कार",rulesSubH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",mapShort:"नक्शा",
   regH:"अपनी टीम रजिस्टर करें",regLead:"रजिस्टर करने के लिए यह फॉर्म भरें। आयोजक हर एंट्री जाँचते हैं। टीम मंज़ूर होने पर कप्तान को WhatsApp पर 6 अंकों का PIN मिलेगा, जिससे खिलाड़ी जोड़े जा सकेंगे।",
   fSubmit:"रजिस्ट्रेशन भेजें",regDoneH:"रजिस्ट्रेशन मिल गया",regDoneText:"{team} सेव हो गई है और मंज़ूरी का इंतज़ार कर रही है। एंट्री फीस के भुगतान के स्क्रीनशॉट के साथ WhatsApp संदेश भेजें। भुगतान की पुष्टि के बाद कप्तान को {phone} पर WhatsApp से 6 अंकों का PIN मिलेगा।",
   tellOrg:"विवरण और भुगतान का स्क्रीनशॉट WhatsApp पर भेजें",
@@ -1528,6 +1526,7 @@ const sections=[...document.querySelectorAll("main section")];
 function showTab(id,scroll){
   if(id==="admin"){if(!SP.admin){initAdmin();initTeamsAdmin();}id="sponsors";}
   if(id==="bracket"||id==="schedule")id="matches";
+  if(id==="format")id="rules";
   if(!sections.some(s=>s.id===id))id=DEFAULT_TAB;
   sections.forEach(s=>s.hidden=s.id!==id);
   links.forEach(a=>{const on=a.getAttribute("href")==="#"+id;a.classList.toggle("on",on);a.setAttribute("aria-selected",on);if(on){const bar=a.parentElement;bar.scrollLeft=Math.max(0,a.offsetLeft-bar.clientWidth/2+a.offsetWidth/2);}});
