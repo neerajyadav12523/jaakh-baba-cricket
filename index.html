@@ -236,7 +236,10 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .spc b{display:block;margin-top:8px;font-size:1rem;overflow-wrap:anywhere}
 .spc .amt{display:block;font-family:var(--display);font-size:1.3rem;color:var(--fresco)}
 .spc small{display:block;color:var(--muted);font-size:.8rem;overflow-wrap:anywhere}
-.spc .del{position:absolute;top:6px;right:6px;font:inherit;font-size:.75rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
+.spc .acts{position:absolute;top:6px;right:6px;display:flex;gap:4px}
+.spc .ed{font:inherit;font-size:.75rem;font-weight:800;border:1px solid var(--indigo);color:var(--label);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
+.spc.editing{outline:3px solid var(--marigold)}
+.spc .del{font:inherit;font-size:.75rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
 .sph3{font-family:var(--display);font-size:1.4rem;margin-top:34px}
 .admin{margin-top:22px;background:var(--paper);border:2px solid var(--marigold);border-radius:14px;padding:16px}
 .admin h3{font-size:1.2rem}
@@ -386,6 +389,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       </form>
     </div>
     <div id="spEditor" hidden>
+      <p class="note" id="spEditing" hidden style="margin:0;font-weight:700"></p>
       <form id="spForm" novalidate>
         <div class="frow">
           <label><span data-i="spName">Name</span><input id="spName" required></label>
@@ -396,8 +400,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
           <label><span data-i="spPhoto">Photo (optional)</span><input id="spPhoto" type="file" accept="image/*"></label>
         </div>
         <img id="spPrev" class="prev" alt="" hidden>
+        <label id="spDropWrap" hidden style="display:flex;align-items:center;gap:8px;font-weight:500"><input id="spDrop" type="checkbox" style="width:auto"><span data-i="spDropPhoto">Remove current photo</span></label>
         <div class="ctas" style="margin:0">
           <button class="btn pri" type="submit" id="spSave" data-i="spSave">Add sponsor</button>
+          <button class="btn sec" type="button" id="spCancel" data-i="spCancel" hidden>Cancel</button>
           <button class="btn sec" type="button" id="spLogout" data-i="spLogout">Lock</button>
         </div>
       </form>
@@ -477,7 +483,7 @@ const T = {
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
   spH:"Sponsors",spBecome:"Become a sponsor",spTotalL:"raised from {n} sponsors",spNone:"Sponsors for Season 6 will appear here.",
   spAdminH:"Manage sponsors",spTokenHelp:"Paste your GitHub access token for this site. It stays only in this browser.",spToken:"GitHub token",spUnlock:"Unlock",
-  spName:"Name",spAmount:"Amount (₹)",spNote:"Village or business (optional)",spPhoto:"Photo (optional)",spSave:"Add sponsor",spLogout:"Lock",spDel:"Remove",
+  spName:"Name",spAmount:"Amount (₹)",spNote:"Village or business (optional)",spPhoto:"Photo (optional)",spSave:"Add sponsor",spLogout:"Lock",spDel:"Remove",spEdit:"Edit",spUpdate:"Save changes",spCancel:"Cancel",spEditingL:"Editing {n}",spDropPhoto:"Remove current photo",spUpdated:"Updated. Everyone will see it within about a minute.",spGoneErr:"This sponsor was removed in the meantime.",
   spBadToken:"That token can't change this site. Check it has Contents read and write access to the jaakh-baba-cricket repo.",
   spNeed:"Enter a name and an amount in rupees.",spSaving:"Saving…",spSaved:"Saved. Everyone will see it within about a minute.",spRemoved:"Removed. The site updates within about a minute.",
   spFail:"Couldn't save: {e}. Try again.",spConfirm:"Tap Remove again to confirm.",spLead:"Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.",
@@ -526,7 +532,7 @@ const T = {
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
   spH:"प्रायोजक",spBecome:"प्रायोजक बनें",spTotalL:"{n} प्रायोजकों से सहयोग",spNone:"सीज़न 6 के प्रायोजक यहाँ दिखेंगे।",
   spAdminH:"प्रायोजक जोड़ें",spTokenHelp:"इस साइट का GitHub टोकन डालें। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",spToken:"GitHub टोकन",spUnlock:"खोलें",
-  spName:"नाम",spAmount:"राशि (₹)",spNote:"गाँव या दुकान (वैकल्पिक)",spPhoto:"फ़ोटो (वैकल्पिक)",spSave:"प्रायोजक जोड़ें",spLogout:"बंद करें",spDel:"हटाएँ",
+  spName:"नाम",spAmount:"राशि (₹)",spNote:"गाँव या दुकान (वैकल्पिक)",spPhoto:"फ़ोटो (वैकल्पिक)",spSave:"प्रायोजक जोड़ें",spLogout:"बंद करें",spDel:"हटाएँ",spEdit:"बदलें",spUpdate:"बदलाव सेव करें",spCancel:"रद्द करें",spEditingL:"{n} बदल रहे हैं",spDropPhoto:"मौजूदा फ़ोटो हटाएँ",spUpdated:"बदल गया। लगभग एक मिनट में सबको दिखेगा।",spGoneErr:"यह प्रायोजक इस बीच हटा दिया गया।",
   spBadToken:"यह टोकन साइट नहीं बदल सकता। जाँचें कि jaakh-baba-cricket repo पर Contents read and write अनुमति है।",
   spNeed:"नाम और रुपये में राशि भरें।",spSaving:"सेव हो रहा है…",spSaved:"सेव हो गया। लगभग एक मिनट में सबको दिखेगा।",spRemoved:"हटा दिया। लगभग एक मिनट में साइट अपडेट होगी।",
   spFail:"सेव नहीं हुआ: {e}। फिर से कोशिश करें।",spConfirm:"पक्का करने के लिए फिर से हटाएँ दबाएँ।",spLead:"पिछले सीज़न को लगभग 30,000 बार देखा गया। अपनी दुकान या व्यापार को पूरे इलाके तक पहुँचाएँ।",
@@ -745,7 +751,7 @@ document.getElementById("copyBtn").addEventListener("click",()=>{
 });
 
 /* ===== Sponsors: public list from sponsors.json; owner adds/removes via #admin using a GitHub token ===== */
-const SP={list:[],admin:false,token:"",confirmId:null};
+const SP={list:[],admin:false,token:"",confirmId:null,editId:null};
 const inr=n=>"₹"+Number(n).toLocaleString("en-IN");
 function renderSponsors(){
   const list=[...SP.list].sort((a,b)=>b.amount-a.amount||String(a.added).localeCompare(String(b.added)));
@@ -754,8 +760,8 @@ function renderSponsors(){
   document.getElementById("spList").innerHTML=list.map(x=>{
     const ini=String(x.name).split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("");
     const pic=x.photo?`<img src="${esc(x.photo)}" alt="" loading="lazy">`:`<span class="ini">${esc(ini)}</span>`;
-    const del=SP.admin&&SP.token?`<button class="del" data-id="${esc(x.id)}">${SP.confirmId===x.id?t("spConfirm"):t("spDel")}</button>`:"";
-    return `<div class="spc">${del}${pic}<b>${esc(x.name)}</b><span class="amt num">${inr(x.amount)}</span>${x.note?`<small>${esc(x.note)}</small>`:""}</div>`;
+    const del=SP.admin&&SP.token?`<span class="acts"><button class="ed" data-id="${esc(x.id)}">${t("spEdit")}</button><button class="del" data-id="${esc(x.id)}">${SP.confirmId===x.id?t("spConfirm"):t("spDel")}</button></span>`:"";
+    return `<div class="spc${SP.editId===x.id?" editing":""}">${del}${pic}<b>${esc(x.name)}</b><span class="amt num">${inr(x.amount)}</span>${x.note?`<small>${esc(x.note)}</small>`:""}</div>`;
   }).join("");
 }
 async function loadSponsors(){
@@ -809,7 +815,7 @@ function initAdmin(){
   if(saved)unlock(saved);
 }
 document.getElementById("spTokenForm").addEventListener("submit",e=>{e.preventDefault();const v=document.getElementById("spToken").value.trim();if(v)unlock(v);});
-document.getElementById("spLogout").addEventListener("click",()=>{try{localStorage.removeItem("jb-gh-token");}catch(e){}SP.token="";
+document.getElementById("spLogout").addEventListener("click",()=>{SP.editId=null;document.getElementById("spCancel").hidden=true;document.getElementById("spEditing").hidden=true;document.getElementById("spDropWrap").hidden=true;document.getElementById("spSave").textContent=t("spSave");try{localStorage.removeItem("jb-gh-token");}catch(e){}SP.token="";
   document.getElementById("spEditor").hidden=true;document.getElementById("spLogin").hidden=false;document.getElementById("spToken").value="";renderSponsors();});
 document.getElementById("spPhoto").addEventListener("change",e=>{const f=e.target.files[0],p=document.getElementById("spPrev");
   if(f){p.src=URL.createObjectURL(f);p.hidden=false;}else p.hidden=true;});
@@ -819,6 +825,7 @@ document.getElementById("spForm").addEventListener("submit",async e=>{
   const amount=Number(document.getElementById("spAmount").value.replace(/[^0-9.]/g,""));
   if(!name||!(amount>0)){spMsg(t("spNeed"),"bad");return;}
   const btn=document.getElementById("spSave");btn.disabled=true;spMsg(t("spSaving"));
+  if(SP.editId){await saveEdit(name,amount,note);btn.disabled=false;return;}
   try{
     const id="s"+Date.now().toString(36);let photo="";
     const file=document.getElementById("spPhoto").files[0];
@@ -832,7 +839,47 @@ document.getElementById("spForm").addEventListener("submit",async e=>{
   }catch(err){spMsg(t("spFail").replace("{e}",err.message),"bad");}
   btn.disabled=false;
 });
+/* Edit an existing sponsor: load it into the form, then save changes in place */
+function setEditMode(x){
+  SP.editId=x?x.id:null;
+  const form=document.getElementById("spForm");form.reset();
+  document.getElementById("spPrev").hidden=true;
+  document.getElementById("spCancel").hidden=!x;
+  document.getElementById("spDropWrap").hidden=!(x&&x.photo);
+  const banner=document.getElementById("spEditing");banner.hidden=!x;
+  document.getElementById("spSave").textContent=x?t("spUpdate"):t("spSave");
+  if(x){
+    banner.textContent=t("spEditingL").replace("{n}",x.name);
+    document.getElementById("spName").value=x.name;
+    document.getElementById("spAmount").value=x.amount;
+    document.getElementById("spNote").value=x.note||"";
+    if(x.photo){const p=document.getElementById("spPrev");p.src=x.photo;p.hidden=false;}
+    document.getElementById("spAdmin").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  renderSponsors();
+}
+async function saveEdit(name,amount,note){
+  const id=SP.editId;
+  try{
+    const cur=await ghGetJson();const list=cur.data.sponsors||[];
+    const x=list.find(s=>s.id===id);
+    if(!x){spMsg(t("spGoneErr"),"bad");setEditMode(null);return;}
+    const old=x.photo;let photo=old;
+    const file=document.getElementById("spPhoto").files[0];
+    if(file){
+      const data=await shrinkPhoto(file);const p="sponsors/"+id+"-"+Date.now().toString(36)+".jpg";
+      await ghPut(p,data,"Sponsor photo: "+name);photo=p;
+    } else if(document.getElementById("spDrop").checked){photo="";}
+    Object.assign(x,{name,amount,note,photo,updated:new Date().toISOString().slice(0,10)});
+    await ghPut("sponsors.json",b64(JSON.stringify({sponsors:list},null,1)),"Edit sponsor: "+name,cur.sha);
+    if(old&&old!==photo)await ghDelete(old,"Remove old sponsor photo: "+name);
+    SP.list=list;setEditMode(null);spMsg(t("spUpdated"),"ok");
+  }catch(err){spMsg(t("spFail").replace("{e}",err.message),"bad");}
+}
+document.getElementById("spCancel").addEventListener("click",()=>{setEditMode(null);spMsg("");});
 document.getElementById("spList").addEventListener("click",async e=>{
+  const ed=e.target.closest(".ed");
+  if(ed&&SP.token){const x=SP.list.find(s=>s.id===ed.dataset.id);if(x){SP.confirmId=null;setEditMode(x);}return;}
   const b=e.target.closest(".del");if(!b||!SP.token)return;
   const id=b.dataset.id;
   if(SP.confirmId!==id){SP.confirmId=id;renderSponsors();return;}
@@ -842,7 +889,7 @@ document.getElementById("spList").addEventListener("click",async e=>{
     const list=(cur.data.sponsors||[]).filter(x=>x.id!==id);
     await ghPut("sponsors.json",b64(JSON.stringify({sponsors:list},null,1)),"Remove sponsor: "+(gone?gone.name:id),cur.sha);
     if(gone&&gone.photo)await ghDelete(gone.photo,"Remove sponsor photo: "+gone.name);
-    SP.list=list;renderSponsors();spMsg(t("spRemoved"),"ok");
+    SP.list=list;if(SP.editId===id)setEditMode(null);else renderSponsors();spMsg(t("spRemoved"),"ok");
   }catch(err){spMsg(t("spFail").replace("{e}",err.message),"bad");}
 });
 
