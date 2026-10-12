@@ -3,15 +3,19 @@
 // Public
 //   GET  /teams                  approved teams (no phone, no PIN) + places left
 //   POST /register               {name, village, captain, phone} -> pending team
+// Captain (approved team + PIN; 5 wrong PINs lock editing for 15 minutes)
+//   POST /captain/login          {id, pin} -> the team and its players
+//   POST /captain/players        {id, pin, players: [{name}]} -> saves the squad (max 15)
 // Admin (header "Authorization: Bearer <GitHub token with write access to GITHUB_REPO>", or the optional ADMIN_KEY)
 //   GET  /admin/teams            every team incl. phone numbers
 //   POST /admin/status           {id, status: "approved" | "rejected" | "pending"}; first approval returns a new 6-digit PIN
 //   POST /admin/newpin           {id} -> replaces the captain PIN and returns it (to send again on WhatsApp)
 //   POST /admin/delete           {id}
+//   POST /admin/update           {id, name?, village?, captain?, phone?, players?} -> edit any team
 //
 // Bindings (wrangler.toml): DB (D1). Secrets: PIN_PEPPER, optional ADMIN_KEY. Vars: ALLOWED_ORIGINS, MAX_TEAMS, GITHUB_REPO.
 
-const LIMITS = { text: 40, phoneDigits: 10, pinDigits: 6, regsPerIpPerHour: 5 };
+const LIMITS = { text: 40, phoneDigits: 10, pinDigits: 6, regsPerIpPerHour: 5, maxPlayers: 15, pinTries: 5, lockMinutes: 15 };
 
 export default {
   async fetch(request, env) {
@@ -34,6 +38,8 @@ async function route(request, env) {
 
   if (m === 'GET' && path === '/teams') return publicTeams(env);
   if (m === 'POST' && path === '/register') return register(request, env);
+  if (m === 'POST' && path === '/captain/login') return captainLogin(request, env);
+  if (m === 'POST' && path === '/captain/players') return captainPlayers(request, env);
 
   if (path.startsWith('/admin/')) {
     if (!(await isAdmin(request, env))) return json({ error: 'not_admin' }, 401);
@@ -41,6 +47,7 @@ async function route(request, env) {
     if (m === 'POST' && path === '/admin/status') return adminStatus(request, env);
     if (m === 'POST' && path === '/admin/newpin') return adminNewPin(request, env);
     if (m === 'POST' && path === '/admin/delete') return adminDelete(request, env);
+    if (m === 'POST' && path === '/admin/update') return adminUpdate(request, env);
   }
   return json({ error: 'not_found' }, 404);
 }
@@ -92,6 +99,65 @@ async function register(request, env) {
   return json({ ok: true, id, status: 'pending' }, 201);
 }
 
+/* ---------- captain ---------- */
+
+/* Checks the PIN for an approved team. Returns {team} or {res} (an error response to send back). */
+async function checkCaptain(env, id, pin) {
+  if (!id || !/^\d{6}$/.test(String(pin || ''))) return { res: json({ error: 'wrong_pin' }, 401) };
+  const team = await env.DB.prepare('SELECT * FROM teams WHERE id = ?').bind(id).first();
+  if (!team || team.status !== 'approved' || !team.pin_hash) return { res: json({ error: 'not_approved' }, 403) };
+  if (team.locked_until && team.locked_until > new Date().toISOString()) {
+    return { res: json({ error: 'locked', until: team.locked_until }, 429) };
+  }
+  const hash = await hmacHex(env.PIN_PEPPER, team.pin_salt + pin);
+  if (hash !== team.pin_hash) {
+    const fails = team.fail_count + 1;
+    const lock = fails >= LIMITS.pinTries ? new Date(Date.now() + LIMITS.lockMinutes * 60e3).toISOString() : null;
+    await env.DB.prepare('UPDATE teams SET fail_count = ?, locked_until = ? WHERE id = ?').bind(lock ? 0 : fails, lock, id).run();
+    return { res: json(lock ? { error: 'locked', until: lock } : { error: 'wrong_pin', triesLeft: LIMITS.pinTries - fails }, lock ? 429 : 401) };
+  }
+  if (team.fail_count || team.locked_until) await env.DB.prepare('UPDATE teams SET fail_count = 0, locked_until = NULL WHERE id = ?').bind(id).run();
+  return { team };
+}
+
+function captainView(t) {
+  return { id: t.id, name: t.name, village: t.village, captain: t.captain, players: parsePlayers(t.players), max: LIMITS.maxPlayers };
+}
+
+async function captainLogin(request, env) {
+  const body = await readJson(request);
+  if (!body) return json({ error: 'bad_request' }, 400);
+  const c = await checkCaptain(env, body.id, body.pin);
+  return c.res || json({ ok: true, team: captainView(c.team) });
+}
+
+async function captainPlayers(request, env) {
+  const body = await readJson(request);
+  if (!body) return json({ error: 'bad_request' }, 400);
+  const c = await checkCaptain(env, body.id, body.pin);
+  if (c.res) return c.res;
+  const players = cleanPlayers(body.players);
+  if (players.error) return json(players, 400);
+  await env.DB.prepare('UPDATE teams SET players = ?, updated_at = ? WHERE id = ?').bind(JSON.stringify(players), new Date().toISOString(), body.id).run();
+  return json({ ok: true, team: captainView({ ...c.team, players: JSON.stringify(players) }) });
+}
+
+/* Player list rules: names 2-40 characters, no duplicates, at most 15. Each player is {name}; more fields can be added later. */
+function cleanPlayers(list) {
+  if (!Array.isArray(list)) return { error: 'bad_players' };
+  const out = [], seen = new Set();
+  for (const p of list) {
+    const name = cleanText(p && typeof p === 'object' ? p.name : p);
+    if (name.length < 2) return { error: 'bad_player_name', name };
+    const key = name.toLowerCase();
+    if (seen.has(key)) return { error: 'duplicate_player', name };
+    seen.add(key);
+    out.push({ name });
+  }
+  if (out.length > LIMITS.maxPlayers) return { error: 'too_many_players', max: LIMITS.maxPlayers };
+  return out;
+}
+
 /* ---------- admin ---------- */
 
 async function adminTeams(env) {
@@ -134,6 +200,38 @@ async function adminDelete(request, env) {
   if (!body || !body.id) return json({ error: 'bad_request' }, 400);
   await env.DB.prepare('DELETE FROM teams WHERE id = ?').bind(body.id).run();
   return json({ ok: true, id: body.id });
+}
+
+async function adminUpdate(request, env) {
+  const body = await readJson(request);
+  if (!body || !body.id) return json({ error: 'bad_request' }, 400);
+  const team = await env.DB.prepare('SELECT * FROM teams WHERE id = ?').bind(body.id).first();
+  if (!team) return json({ error: 'not_found' }, 404);
+  const next = { name: team.name, village: team.village, captain: team.captain, phone: team.phone, players: team.players };
+  for (const k of ['name', 'village', 'captain']) {
+    if (body[k] !== undefined) {
+      const v = cleanText(body[k]);
+      if (v.length < 2) return json({ error: 'invalid', fields: [k] }, 400);
+      next[k] = v;
+    }
+  }
+  if (body.phone !== undefined) {
+    const p = String(body.phone).replace(/\D/g, '').slice(-LIMITS.phoneDigits);
+    if (p.length !== LIMITS.phoneDigits) return json({ error: 'invalid', fields: ['phone'] }, 400);
+    next.phone = p;
+  }
+  if (body.players !== undefined) {
+    const players = cleanPlayers(body.players);
+    if (players.error) return json(players, 400);
+    next.players = JSON.stringify(players);
+  }
+  if (next.name.toLowerCase() !== team.name.toLowerCase() && team.status !== 'rejected') {
+    const clash = await env.DB.prepare("SELECT id FROM teams WHERE lower(name) = lower(?) AND status != 'rejected' AND id != ?").bind(next.name, team.id).first();
+    if (clash) return json({ error: 'name_taken' }, 409);
+  }
+  await env.DB.prepare('UPDATE teams SET name = ?, village = ?, captain = ?, phone = ?, players = ?, updated_at = ? WHERE id = ?')
+    .bind(next.name, next.village, next.captain, next.phone, next.players, new Date().toISOString(), team.id).run();
+  return json({ ok: true, id: team.id });
 }
 
 /* Stores only a salted HMAC of the PIN and clears any wrong-PIN lock-out */

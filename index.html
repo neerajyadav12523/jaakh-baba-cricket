@@ -244,6 +244,25 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .adm-h{font-weight:800;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
 .adm-link{font-size:.82rem;font-weight:800}
 
+/* Captain squad editor and player lists */
+.tcard{flex-wrap:wrap}
+.tcard details{flex-basis:100%;font-size:.85rem}
+.tcard summary{cursor:pointer;color:var(--label);font-weight:700}
+.tcard ol{margin:6px 0 0;padding-left:1.4em;columns:2;column-gap:16px}
+.capbox{margin-top:26px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+.capbox h3{font-size:1.2rem}
+.capbox form{margin:12px 0 0;padding:0;border:0;background:none;max-width:none}
+.plist{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px;counter-reset:pl}
+.plist li{display:flex;align-items:center;gap:8px;background:var(--sand);border:1px solid var(--line);border-radius:8px;padding:6px 8px;counter-increment:pl}
+.plist li::before{content:counter(pl);min-width:1.6em;color:var(--muted);font-variant-numeric:tabular-nums}
+.plist li span{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:600}
+.plist li button{font:inherit;font-size:.78rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:2px 8px;cursor:pointer}
+.addrow{display:flex;gap:8px;margin-top:10px}
+.addrow input{flex:1;min-width:0}
+.dirty{color:var(--fresco);font-weight:700;font-size:.85rem}
+.adm-edit{display:grid;gap:8px;background:var(--sand);border:1px solid var(--line);border-radius:8px;padding:10px}
+.adm-edit textarea{min-height:140px}
+
 /* Sponsor list (public) and the owner-only manager (#admin) */
 .sptotal{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:20px}
 .sptotal b{font-family:var(--display);font-size:1.8rem;color:var(--fresco)}
@@ -397,6 +416,31 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <div class="ctas"><a class="btn sec" id="waLink" target="_blank" rel="noopener noreferrer" data-i="tellOrg">Tell the organisers on WhatsApp</a>
       <button class="btn sec" type="button" id="regAgain" data-i="regAgain">Register another team</button></div>
   </div>
+  <div class="capbox" id="capBox">
+    <h3 data-i="capH">Captains: add your players</h3>
+    <p class="note" style="margin:4px 0 0" data-i="capHelp">Choose your team and enter the 6-digit PIN you got on WhatsApp.</p>
+    <form id="capLogin" novalidate>
+      <div class="frow">
+        <label><span data-i="capTeam">Your team</span><select id="capTeam"></select></label>
+        <label><span data-i="capPin">PIN</span><input id="capPin" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></label>
+      </div>
+      <div class="ctas" style="margin:0"><button class="btn pri" type="submit" id="capOpen" data-i="capOpen">Open my team</button></div>
+    </form>
+    <div id="capEditor" hidden>
+      <div class="adm-h" style="margin-top:12px"><b id="capTitle"></b><span class="num" id="capCount"></span></div>
+      <ol class="plist" id="capList"></ol>
+      <form class="addrow" id="capAdd" novalidate>
+        <input id="capNew" maxlength="40" placeholder="Player name">
+        <button class="btn sec" type="submit" data-i="capAddBtn">Add</button>
+      </form>
+      <div class="ctas">
+        <button class="btn pri" type="button" id="capSave" data-i="capSave">Save players</button>
+        <button class="btn sec" type="button" id="capClose" data-i="capClose">Close</button>
+        <span class="dirty" id="capDirty" hidden data-i="capDirty">Unsaved changes</span>
+      </div>
+    </div>
+    <div class="msg" id="capMsg" aria-live="polite"></div>
+  </div>
   <h3 class="sph3"><span data-i="regTeamsH">Registered teams</span> <span class="num" id="regCount"></span></h3>
   <div class="tlist" id="teamList"></div>
 </div></section>
@@ -509,7 +553,13 @@ const T = {
   regFull:"All 32 places are filled. Registration is closed.",capL:"Captain",sending:"Sending…",
   eName:"A team with this name is already registered. Choose a different name.",eFull:"All places are filled. Registration is closed.",
   eMany:"Too many registrations from this connection. Try again in an hour.",eNet:"Couldn't reach the registration server. Check your internet and try again.",eLoad:"Couldn't load registered teams.",
-  tmAdminH:"Manage teams",toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub token you use for Sponsors. It stays only in this browser.",tmKey:"GitHub token",tmBadKey:"That token cannot manage this site. Use your GitHub token with write access to jaakh-baba-cricket.",
+  capH:"Captains: add your players",capHelp:"Choose your team and enter the 6-digit PIN you got on WhatsApp.",capTeam:"Your team",capPin:"PIN",capOpen:"Open my team",
+  capPick:"Choose your team",capNone:"No approved teams yet",capAddBtn:"Add",capNewPh:"Player name",capSave:"Save players",capClose:"Close",capDirty:"Unsaved changes",capRemove:"Remove",
+  capCountL:"{n} of {max} players",capSaved:"Players saved. Everyone can see them now.",capWrong:"Wrong PIN. {n} tries left.",capWrong0:"Wrong PIN.",
+  capLocked:"Too many wrong PINs. Try again after {t}, or ask the organisers for a new PIN.",capNotApproved:"This team is not approved yet.",
+  capDup:"{name} is already in the list.",capShort:"Enter a name with at least 2 letters.",capFull:"A team can have at most {max} players.",capNeedPin:"Choose your team and enter the 6-digit PIN.",
+  playersL:"Players ({n})",tmEdit:"Edit",tmSave:"Save",tmCancel:"Cancel",tmPlayersL:"Players, one per line",
+toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub token you use for Sponsors. It stays only in this browser.",tmKey:"GitHub token",tmBadKey:"That token cannot manage this site. Use your GitHub token with write access to jaakh-baba-cricket.",
   tmPending:"Waiting for approval",tmApproved:"Approved",tmRejected:"Rejected",tmApprove:"Approve",tmReject:"Reject",tmToPending:"Move to waiting",tmRestore:"Restore",
   tmNewPin:"New PIN",tmDelete:"Delete",tmConfirm:"Tap again to delete",tmPinL:"PIN",tmSendPin:"Send PIN on WhatsApp",tmPinNote:"Shown only now. Send it before leaving this page.",
   tmEmpty:"None",tmLock:"Lock",tmFull:"All 32 places are already approved.",tmDone:"Done.",
@@ -568,7 +618,13 @@ const T = {
   regFull:"सभी 32 जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",capL:"कप्तान",sending:"भेज रहे हैं…",
   eName:"इस नाम की टीम पहले से रजिस्टर्ड है। कोई दूसरा नाम चुनें।",eFull:"सभी जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",
   eMany:"इस कनेक्शन से बहुत ज़्यादा रजिस्ट्रेशन हुए। एक घंटे बाद कोशिश करें।",eNet:"रजिस्ट्रेशन सर्वर से जुड़ नहीं पाए। इंटरनेट जाँचकर फिर कोशिश करें।",eLoad:"रजिस्टर्ड टीमें लोड नहीं हुईं।",
-  tmAdminH:"टीमें मैनेज करें",toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHelp:"वही GitHub टोकन डालें जो प्रायोजकों के लिए इस्तेमाल करते हैं। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",tmKey:"GitHub टोकन",tmBadKey:"यह टोकन साइट नहीं बदल सकता। jaakh-baba-cricket पर लिखने की अनुमति वाला GitHub टोकन डालें।",
+  capH:"कप्तान: अपने खिलाड़ी जोड़ें",capHelp:"अपनी टीम चुनें और WhatsApp पर मिला 6 अंकों का PIN डालें।",capTeam:"आपकी टीम",capPin:"PIN",capOpen:"मेरी टीम खोलें",
+  capPick:"अपनी टीम चुनें",capNone:"अभी कोई टीम मंज़ूर नहीं",capAddBtn:"जोड़ें",capNewPh:"खिलाड़ी का नाम",capSave:"खिलाड़ी सेव करें",capClose:"बंद करें",capDirty:"बदलाव सेव नहीं हुए",capRemove:"हटाएँ",
+  capCountL:"{max} में से {n} खिलाड़ी",capSaved:"खिलाड़ी सेव हो गए। अब सबको दिखेंगे।",capWrong:"ग़लत PIN। {n} कोशिश बाकी।",capWrong0:"ग़लत PIN।",
+  capLocked:"बहुत बार ग़लत PIN। {t} के बाद कोशिश करें, या आयोजकों से नया PIN लें।",capNotApproved:"यह टीम अभी मंज़ूर नहीं है।",
+  capDup:"{name} पहले से सूची में है।",capShort:"कम से कम 2 अक्षर का नाम डालें।",capFull:"एक टीम में ज़्यादा से ज़्यादा {max} खिलाड़ी हो सकते हैं।",capNeedPin:"अपनी टीम चुनें और 6 अंकों का PIN डालें।",
+  playersL:"खिलाड़ी ({n})",tmEdit:"बदलें",tmSave:"सेव करें",tmCancel:"रद्द करें",tmPlayersL:"खिलाड़ी, हर लाइन में एक",
+toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHelp:"वही GitHub टोकन डालें जो प्रायोजकों के लिए इस्तेमाल करते हैं। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",tmKey:"GitHub टोकन",tmBadKey:"यह टोकन साइट नहीं बदल सकता। jaakh-baba-cricket पर लिखने की अनुमति वाला GitHub टोकन डालें।",
   tmPending:"मंज़ूरी बाकी",tmApproved:"मंज़ूर",tmRejected:"नामंज़ूर",tmApprove:"मंज़ूर करें",tmReject:"नामंज़ूर करें",tmToPending:"वापस बाकी में",tmRestore:"वापस लाएँ",
   tmNewPin:"नया PIN",tmDelete:"मिटाएँ",tmConfirm:"मिटाने के लिए फिर दबाएँ",tmPinL:"PIN",tmSendPin:"WhatsApp पर PIN भेजें",tmPinNote:"यह सिर्फ़ अभी दिखेगा। पेज छोड़ने से पहले भेज दें।",
   tmEmpty:"कोई नहीं",tmLock:"बंद करें",tmFull:"सभी 32 जगहें पहले से मंज़ूर हैं।",tmDone:"हो गया।",
@@ -766,7 +822,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderMatches();renderHof();renderSponsors();renderTeams();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
+  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
 }
 function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
@@ -775,11 +831,12 @@ document.getElementById("liveLink").href=CONFIG.liveUrl;
 document.getElementById("orgNum").textContent=CONFIG.organiserDisplay;
 
 /* ===== Team registration (Cloudflare Worker API, see api/) ===== */
-const TM={teams:[],max:32,open:true,admin:[],key:"",pins:{},confirmDel:null};
+const TM={teams:[],max:32,open:true,admin:[],key:"",pins:{},confirmDel:null,editId:null};
 const api=(path,opt={})=>fetch(CONFIG.api+path,{...opt,headers:{"Content-Type":"application/json",...(TM.key?{"Authorization":"Bearer "+TM.key}:{}),...(opt.headers||{})}});
 function renderTeams(){
   document.getElementById("regCount").textContent=t("regCountL").replace("{n}",TM.teams.length).replace("{max}",TM.max);
-  document.getElementById("teamList").innerHTML=TM.teams.length?TM.teams.map(x=>`<div class="tcard"><span class="badge" style="background:${teamColor(x.name)}">${esc(initials(x.name))}</span><div><b>${esc(x.name)}</b><small>${esc(x.village)} · ${t("capL")}: ${esc(x.captain)}</small></div></div>`).join(""):`<p class="note">${t("regNone")}</p>`;
+  document.getElementById("teamList").innerHTML=TM.teams.length?TM.teams.map(x=>`<div class="tcard"><span class="badge" style="background:${teamColor(x.name)}">${esc(initials(x.name))}</span><div><b>${esc(x.name)}</b><small>${esc(x.village)} · ${t("capL")}: ${esc(x.captain)}</small></div>${(x.players||[]).length?`<details><summary>${t("playersL").replace("{n}",x.players.length)}</summary><ol>${x.players.map(p=>`<li>${esc(p.name)}</li>`).join("")}</ol></details>`:""}</div>`).join(""):`<p class="note">${t("regNone")}</p>`;
+  renderCapPicker();
   const closed=!TM.open;
   document.getElementById("regClosed").hidden=!closed;
   document.getElementById("regForm").hidden=closed||!document.getElementById("regDone").hidden;
@@ -811,6 +868,76 @@ document.getElementById("regForm").addEventListener("submit",async e=>{
 });
 document.getElementById("regAgain").addEventListener("click",()=>{document.getElementById("regDone").hidden=true;renderTeams();});
 
+/* --- Captain: open the team with the WhatsApp PIN, then add/remove player names --- */
+const CAP={id:"",pin:"",team:null,players:[],dirty:false,max:15};
+function capMsg(text,kind){const m=document.getElementById("capMsg");m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
+function renderCapPicker(){
+  const sel=document.getElementById("capTeam");const cur=sel.value||CAP.id;
+  sel.innerHTML=TM.teams.length?`<option value="">${t("capPick")}</option>`+TM.teams.map(x=>`<option value="${esc(x.id)}">${esc(x.name)} · ${esc(x.village)}</option>`).join(""):`<option value="">${t("capNone")}</option>`;
+  sel.value=TM.teams.some(x=>x.id===cur)?cur:"";
+  document.getElementById("capNew").placeholder=t("capNewPh");
+}
+function renderCap(){
+  const box=document.getElementById("capEditor");box.hidden=!CAP.team;document.getElementById("capLogin").hidden=!!CAP.team;
+  if(!CAP.team)return;
+  document.getElementById("capTitle").textContent=CAP.team.name;
+  document.getElementById("capCount").textContent=t("capCountL").replace("{n}",CAP.players.length).replace("{max}",CAP.max);
+  document.getElementById("capList").innerHTML=CAP.players.map((p,i)=>`<li><span>${esc(p.name)}</span><button type="button" data-i2="${i}">${t("capRemove")}</button></li>`).join("");
+  document.getElementById("capDirty").hidden=!CAP.dirty;
+}
+function capError(j){
+  if(j.error==="wrong_pin")return j.triesLeft!=null?t("capWrong").replace("{n}",j.triesLeft):t("capWrong0");
+  if(j.error==="locked")return t("capLocked").replace("{t}",clock(new Date(j.until)));
+  if(j.error==="not_approved")return t("capNotApproved");
+  if(j.error==="duplicate_player")return t("capDup").replace("{name}",j.name);
+  if(j.error==="too_many_players")return t("capFull").replace("{max}",j.max);
+  if(j.error==="bad_player_name")return t("capShort");
+  return t("eNet");
+}
+async function capOpen(id,pin){
+  capMsg(t("sending"));
+  try{
+    const r=await api("/captain/login",{method:"POST",body:JSON.stringify({id,pin})});const j=await r.json().catch(()=>({}));
+    if(!r.ok){capMsg(capError(j),"bad");try{sessionStorage.removeItem("jb-cap");}catch(e){}return;}
+    Object.assign(CAP,{id,pin,team:j.team,players:j.team.players.slice(),dirty:false,max:j.team.max||15});
+    try{sessionStorage.setItem("jb-cap",JSON.stringify({id,pin}));}catch(e){}
+    capMsg("");renderCap();
+  }catch(e){capMsg(t("eNet"),"bad");}
+}
+document.getElementById("capLogin").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=document.getElementById("capTeam").value,pin=document.getElementById("capPin").value.replace(/\D/g,"");
+  if(!id||pin.length!==6){capMsg(t("capNeedPin"),"bad");return;}
+  capOpen(id,pin);
+});
+document.getElementById("capAdd").addEventListener("submit",e=>{
+  e.preventDefault();
+  const inp=document.getElementById("capNew");const name=inp.value.replace(/\s+/g," ").trim();
+  if(name.length<2){capMsg(t("capShort"),"bad");return;}
+  if(CAP.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){capMsg(t("capDup").replace("{name}",name),"bad");return;}
+  if(CAP.players.length>=CAP.max){capMsg(t("capFull").replace("{max}",CAP.max),"bad");return;}
+  CAP.players.push({name});CAP.dirty=true;inp.value="";capMsg("");renderCap();inp.focus();
+});
+document.getElementById("capList").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-i2]");if(!b)return;
+  CAP.players.splice(Number(b.dataset.i2),1);CAP.dirty=true;capMsg("");renderCap();
+});
+document.getElementById("capSave").addEventListener("click",async()=>{
+  const btn=document.getElementById("capSave");btn.disabled=true;capMsg(t("sending"));
+  try{
+    const r=await api("/captain/players",{method:"POST",body:JSON.stringify({id:CAP.id,pin:CAP.pin,players:CAP.players})});const j=await r.json().catch(()=>({}));
+    if(!r.ok){capMsg(capError(j),"bad");}
+    else{CAP.team=j.team;CAP.players=j.team.players.slice();CAP.dirty=false;renderCap();capMsg(t("capSaved"),"ok");loadTeams();}
+  }catch(e){capMsg(t("eNet"),"bad");}
+  btn.disabled=false;
+});
+document.getElementById("capClose").addEventListener("click",()=>{
+  Object.assign(CAP,{id:"",pin:"",team:null,players:[],dirty:false});try{sessionStorage.removeItem("jb-cap");}catch(e){}
+  document.getElementById("capPin").value="";capMsg("");renderCap();
+});
+(()=>{try{const c=JSON.parse(sessionStorage.getItem("jb-cap")||"null");if(c&&c.id&&c.pin)capOpen(c.id,c.pin);}catch(e){}})();
+addEventListener("beforeunload",e=>{if(CAP.dirty){e.preventDefault();e.returnValue="";}});
+
 /* --- Admin: approve / reject, and send the generated PIN on WhatsApp --- */
 function tmMsg(text,kind){const m=document.getElementById("tmMsg");m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
 function pinWaLink(x,pin){
@@ -822,11 +949,19 @@ function admRow(x){
   const btn=(act,label,cls)=>`<button class="btn ${cls||"sec"}" data-act="${act}" data-id="${esc(x.id)}">${label}</button>`;
   let acts="";
   if(x.status==="pending")acts=btn("approved",t("tmApprove"),"pri")+btn("rejected",t("tmReject"));
-  else if(x.status==="approved")acts=btn("newpin",t("tmNewPin"))+btn("pending",t("tmToPending"));
+  else if(x.status==="approved")acts=btn("edit",t("tmEdit"))+btn("newpin",t("tmNewPin"))+btn("pending",t("tmToPending"));
   else acts=btn("pending",t("tmRestore"))+btn("delete",TM.confirmDel===x.id?t("tmConfirm"):t("tmDelete"));
   const pin=TM.pins[x.id];
   const pinHtml=pin?`<div class="pinbox"><span>${t("tmPinL")}</span><b class="num">${pin}</b><a class="btn pri" href="${esc(pinWaLink(x,pin))}" target="_blank" rel="noopener noreferrer">${t("tmSendPin")}</a><small class="note" style="margin:0">${t("tmPinNote")}</small></div>`:"";
-  return `<div class="adm-row"><div class="who"><b>${esc(x.name)}</b><span>${esc(x.village)} · ${esc(x.captain)} · <span class="num">${esc(x.phone)}</span></span></div>${pinHtml}<div class="acts2">${acts}</div></div>`;
+  const players=(x.players||[]).map(p=>p.name);
+  const edit=TM.editId===x.id?`<form class="adm-edit" data-edit="${esc(x.id)}" novalidate>
+      <div class="frow"><label>${t("fTeam")}<input name="name" maxlength="40" value="${esc(x.name)}"></label><label>${t("fVillage")}<input name="village" maxlength="40" value="${esc(x.village)}"></label></div>
+      <div class="frow"><label>${t("fCaptain")}<input name="captain" maxlength="40" value="${esc(x.captain)}"></label><label>${t("fPhone")}<input name="phone" inputmode="numeric" maxlength="14" value="${esc(x.phone)}"></label></div>
+      <label>${t("tmPlayersL")}<textarea name="players">${esc(players.join("\n"))}</textarea></label>
+      <div class="acts2"><button class="btn pri" type="submit">${t("tmSave")}</button><button class="btn sec" type="button" data-act="editcancel" data-id="${esc(x.id)}">${t("tmCancel")}</button></div>
+    </form>`:"";
+  const plist=players.length&&TM.editId!==x.id?`<span class="note" style="margin:0">${t("playersL").replace("{n}",players.length)}: ${esc(players.join(", "))}</span>`:"";
+  return `<div class="adm-row"><div class="who"><b>${esc(x.name)}</b><span>${esc(x.village)} · ${esc(x.captain)} · <span class="num">${esc(x.phone)}</span></span></div>${plist}${pinHtml}${edit}<div class="acts2">${TM.editId===x.id?"":acts}</div></div>`;
 }
 function renderAdminTeams(){
   const by=st=>TM.admin.filter(x=>x.status===st);
@@ -849,12 +984,27 @@ function initTeamsAdmin(){
   let saved="";try{saved=localStorage.getItem("jb-gh-token")||"";}catch(e){}
   if(saved)unlockTeams(saved);
 }
+document.getElementById("tmBoard").addEventListener("submit",async e=>{
+  const form=e.target.closest("form[data-edit]");if(!form)return;
+  e.preventDefault();
+  const fd=new FormData(form);const id=form.dataset.edit;
+  const players=String(fd.get("players")||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(name=>({name}));
+  tmMsg(t("sending"));
+  try{
+    const r=await api("/admin/update",{method:"POST",body:JSON.stringify({id,name:fd.get("name"),village:fd.get("village"),captain:fd.get("captain"),phone:fd.get("phone"),players})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){tmMsg(j.error==="name_taken"?t("eName"):j.error==="invalid"?t("errFill"):capError(j),"bad");return;}
+    TM.editId=null;await loadAdminTeams();loadTeams();tmMsg(t("tmDone"),"ok");
+  }catch(ex){tmMsg(t("eNet"),"bad");}
+});
 document.getElementById("tmKeyForm").addEventListener("submit",e=>{e.preventDefault();const k=document.getElementById("tmKey").value.trim();if(k)unlockTeams(k);});
 document.getElementById("tmBoard").addEventListener("click",async e=>{
   if(e.target.id==="tmLock"){TM.key="";TM.pins={};try{localStorage.removeItem("jb-gh-token");}catch(x){}
     document.getElementById("tmBoard").hidden=true;document.getElementById("tmKeyForm").hidden=false;document.getElementById("tmKey").value="";tmMsg("");return;}
   const b=e.target.closest("button[data-act]");if(!b)return;
   const {act,id}=b.dataset;
+  if(act==="edit"){TM.editId=id;renderAdminTeams();return;}
+  if(act==="editcancel"){TM.editId=null;renderAdminTeams();return;}
   if(act==="delete"&&TM.confirmDel!==id){TM.confirmDel=id;renderAdminTeams();return;}
   TM.confirmDel=null;b.disabled=true;tmMsg(t("sending"));
   try{
