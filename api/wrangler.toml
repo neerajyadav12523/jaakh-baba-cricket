@@ -1,0 +1,18 @@
+name = "jaakh-baba-api"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://neerajyadav12523.github.io"
+MAX_TEAMS = "32"
+
+# created with: npx wrangler d1 create jaakh-baba
+[[d1_databases]]
+binding = "DB"
+database_name = "jaakh-baba"
+database_id = "eb335f4b-c359-4880-bb3f-a299a4db9a96"
+
+# Secrets (never in this file):
+#   npx wrangler secret put ADMIN_KEY    -> the owner types their admin key
+#   npx wrangler secret put PIN_PEPPER   -> a long random value used to hash captain PINs
+# Local testing reads them from .dev.vars (git-ignored).

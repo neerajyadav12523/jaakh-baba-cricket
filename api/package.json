@@ -1,0 +1,11 @@
+{
+  "name": "jaakh-baba-api",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --local --port 8787",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.114.0"
+  }
+}

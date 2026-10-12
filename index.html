@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, sponsors, registration.">
+<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, sponsors, team registration.">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -225,6 +225,25 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .tier b{display:block;font-family:var(--display);font-size:1.2rem}
 .tier span{font-size:.88rem;color:var(--muted)}
 
+/* Registered teams (public) and the owner-only team manager */
+.tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:14px}
+.tcard{display:flex;gap:10px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.tcard div{min-width:0}
+.tcard b{display:block;overflow-wrap:anywhere}
+.tcard small{display:block;color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}
+.regok{background:var(--paper);border:2px solid #1f7a5a;border-radius:12px;padding:14px;max-width:640px;margin-top:22px}
+.regclosed{margin-top:22px;background:var(--paper);border:1px dashed var(--line);border-radius:12px;padding:16px;font-weight:700}
+.adm-row{border-top:1px dashed var(--line);padding:10px 0;display:grid;gap:6px}
+.adm-row .who{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.adm-row .who b{font-size:1.02rem}
+.adm-row .who span{color:var(--muted);font-size:.85rem}
+.adm-row .acts2{display:flex;flex-wrap:wrap;gap:6px}
+.adm-row .acts2 button,.adm-row .acts2 a{padding:4px 10px;font-size:.8rem;border-radius:8px}
+.pinbox{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--sand);border:1px solid var(--marigold);border-radius:8px;padding:6px 10px}
+.pinbox b{font-family:var(--display);font-size:1.3rem;letter-spacing:.12em}
+.adm-h{font-weight:800;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
+.adm-link{font-size:.82rem;font-weight:800}
+
 /* Sponsor list (public) and the owner-only manager (#admin) */
 .sptotal{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:20px}
 .sptotal b{font-family:var(--display);font-size:1.8rem;color:var(--fresco)}
@@ -345,42 +364,48 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
 <section id="register"><div class="wrap">
   <h2 data-i="regH">Register your team</h2>
-  <p class="lead" data-i="regLead">Fill this in and send it to the organisers on WhatsApp. Your place is confirmed only when the committee replies and the entry fee is paid.</p>
+  <p class="lead" data-i="regLead">Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.</p>
+  <div id="tmAdmin" class="admin" hidden>
+    <div class="adm-h"><h3 data-i="tmAdminH">Manage teams</h3><a class="adm-link" href="#sponsors" data-i="toSponsors">Sponsors →</a></div>
+    <form id="tmKeyForm" novalidate>
+      <p class="note" style="margin:0" data-i="tmKeyHelp">Enter your admin key. It stays only in this browser.</p>
+      <label><span data-i="tmKey">Admin key</span><input id="tmKey" type="password" autocomplete="off"></label>
+      <div class="ctas" style="margin:0"><button class="btn pri" type="submit" data-i="spUnlock">Unlock</button></div>
+    </form>
+    <div id="tmBoard" hidden></div>
+    <div class="msg" id="tmMsg" aria-live="polite"></div>
+  </div>
+  <div id="regClosed" class="regclosed" hidden data-i="regFull">All 32 places are filled. Registration is closed.</div>
   <form id="regForm" novalidate>
     <div class="frow">
-      <label><span data-i="fTeam">Team name</span><input id="fTeam" required></label>
-      <label><span data-i="fVillage">Village</span><input id="fVillage" required></label>
+      <label><span data-i="fTeam">Team name</span><input id="fTeam" maxlength="40" required></label>
+      <label><span data-i="fVillage">Village</span><input id="fVillage" maxlength="40" required></label>
     </div>
     <div class="frow">
-      <label><span data-i="fCaptain">Captain's name</span><input id="fCaptain" required></label>
-      <label><span data-i="fPhone">Captain's mobile</span><input id="fPhone" inputmode="numeric" maxlength="10" required></label>
+      <label><span data-i="fCaptain">Captain's name</span><input id="fCaptain" maxlength="40" required></label>
+      <label><span data-i="fPhone">Captain's mobile (WhatsApp)</span><input id="fPhone" inputmode="numeric" maxlength="14" required></label>
     </div>
-    <div class="frow">
-      <label><span data-i="fPlayers">Squad size</span>
-        <select id="fPlayers"><option>11</option><option>12</option><option>13</option><option>14</option><option selected>15</option></select></label>
-      <label><span data-i="fPrev">Played earlier seasons?</span>
-        <select id="fPrev"><option value="yes" data-i="yes">Yes</option><option value="no" data-i="no">No, first time</option></select></label>
-    </div>
-    <p class="note" style="margin:0"><span data-i="contact">Organisers on WhatsApp</span>: <b class="num" id="orgNum"></b></p>
     <div class="err" id="fErr" hidden></div>
     <div class="ctas" style="margin:0">
-      <button class="btn pri" type="submit" data-i="fSubmit">Prepare WhatsApp message</button>
+      <button class="btn pri" type="submit" id="fSubmit" data-i="fSubmit">Submit registration</button>
     </div>
-    <div id="fOut" hidden>
-      <div class="out" id="fMsg"></div>
-      <div class="ctas">
-        <a class="btn pri" id="waLink" target="_blank" rel="noopener noreferrer" data-i="sendWa">Send on WhatsApp</a>
-        <button class="btn sec" type="button" id="copyBtn" data-i="copy">Copy message</button>
-      </div>
-    </div>
+    <p class="note" style="margin:0"><span data-i="contact">Organisers on WhatsApp</span>: <b class="num" id="orgNum"></b></p>
   </form>
+  <div id="regDone" class="regok" hidden>
+    <b data-i="regDoneH">Registration received</b>
+    <p style="margin:6px 0 0" id="regDoneText"></p>
+    <div class="ctas"><a class="btn sec" id="waLink" target="_blank" rel="noopener noreferrer" data-i="tellOrg">Tell the organisers on WhatsApp</a>
+      <button class="btn sec" type="button" id="regAgain" data-i="regAgain">Register another team</button></div>
+  </div>
+  <h3 class="sph3"><span data-i="regTeamsH">Registered teams</span> <span class="num" id="regCount"></span></h3>
+  <div class="tlist" id="teamList"></div>
 </div></section>
 
 <section id="sponsors"><div class="wrap">
   <h2 data-i="spH">Sponsors</h2>
   <p class="lead" data-i="spLead">Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.</p>
   <div id="spAdmin" class="admin" hidden>
-    <h3 data-i="spAdminH">Manage sponsors</h3>
+    <div class="adm-h"><h3 data-i="spAdminH">Manage sponsors</h3><a class="adm-link" href="#register" data-i="toTeams">Teams →</a></div>
     <div id="spLogin">
       <p class="note" data-i="spTokenHelp">Paste your GitHub access token for this site. It stays only in this browser.</p>
       <form id="spTokenForm" novalidate>
@@ -430,6 +455,7 @@ const CONFIG = {
   liveUrl: "https://cricheroes.com/search/3/jaakh-baba",   // replace with the Season 6 CricHeroes link once created
   organiserWhatsApp: "919736908731",                         // country code + number, no spaces
   organiserDisplay: "97369 08731",
+  api: "https://jaakh-baba-api.shimlacricket.workers.dev",   // Cloudflare Worker for team registrations (api/ folder)
   repo: "neerajyadav12523/jaakh-baba-cricket",   // sponsors are saved to sponsors.json + sponsors/ in this GitHub repo
   branch: "main"
 };
@@ -477,8 +503,18 @@ const T = {
   cPlayer:"Player",cTeam:"Team",cM:"M",cRuns:"Runs",cAvg:"Avg",cSR:"SR",cHS:"HS",c6:"6s",c4:"4s",cOv:"Overs",cW:"Wkts",cEco:"Econ",cBest:"Best",cAw:"Awards",cSeason:"Season",
   hofH:"Hall of Fame",hofLead:"Five finals at the Girls School Ground. Shimla Royals have played four of them and won two.",hofNote:"Scores and Player of the Match from the CricHeroes scorecard of each final.",
   rulesH:"Rules & awards",draft:"Draft",visitH:"Coming to watch?",mapBtn:"Open ground in Google Maps",mapShort:"Map",
-  regH:"Register your team",regLead:"Fill this in and send it to the organisers on WhatsApp. Your place is confirmed only when the committee replies and the entry fee is paid.",
-  fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
+  regH:"Register your team",regLead:"Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.",
+  fSubmit:"Submit registration",regDoneH:"Registration received",regDoneText:"{team} is waiting for approval. Once approved, the captain will get a 6-digit PIN on WhatsApp at {phone}.",
+  tellOrg:"Tell the organisers on WhatsApp",regAgain:"Register another team",regTeamsH:"Registered teams",regCountL:"{n} of {max}",regNone:"Approved teams will appear here.",
+  regFull:"All 32 places are filled. Registration is closed.",capL:"Captain",sending:"Sending…",
+  eName:"A team with this name is already registered. Choose a different name.",eFull:"All places are filled. Registration is closed.",
+  eMany:"Too many registrations from this connection. Try again in an hour.",eNet:"Couldn't reach the registration server. Check your internet and try again.",eLoad:"Couldn't load registered teams.",
+  tmAdminH:"Manage teams",toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Enter your admin key. It stays only in this browser.",tmKey:"Admin key",tmBadKey:"That admin key is wrong.",
+  tmPending:"Waiting for approval",tmApproved:"Approved",tmRejected:"Rejected",tmApprove:"Approve",tmReject:"Reject",tmToPending:"Move to waiting",tmRestore:"Restore",
+  tmNewPin:"New PIN",tmDelete:"Delete",tmConfirm:"Tap again to delete",tmPinL:"PIN",tmSendPin:"Send PIN on WhatsApp",tmPinNote:"Shown only now. Send it before leaving this page.",
+  tmEmpty:"None",tmLock:"Lock",tmFull:"All 32 places are already approved.",tmDone:"Done.",
+  pinMsg:"Jaakh Baba Cricket Pratiyogita – Season 6\n\nNamaste {captain} ji, your team {team} is approved.\n\nYour team PIN: {pin}\n\nYou will use this PIN on the website to add or remove your players. Keep it private.\n{site}\n\n— Organisers",
+  fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile (WhatsApp)",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
   fSubmit:"Prepare WhatsApp message",sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
   spH:"Sponsors",spBecome:"Become a sponsor",spTotalL:"raised from {n} sponsors",spNone:"Sponsors for Season 6 will appear here.",
@@ -526,7 +562,17 @@ const T = {
   cPlayer:"खिलाड़ी",cTeam:"टीम",cM:"मैच",cRuns:"रन",cAvg:"औसत",cSR:"स्ट्राइक रेट",cHS:"सर्वोच्च",c6:"छक्के",c4:"चौके",cOv:"ओवर",cW:"विकेट",cEco:"इकॉनमी",cBest:"बेस्ट",cAw:"पुरस्कार",cSeason:"सीज़न",
   hofH:"हॉल ऑफ फेम",hofLead:"गर्ल्स स्कूल ग्राउंड पर पाँच फाइनल। शिमला रॉयल्स चार फाइनल खेली और दो जीती।",hofNote:"हर फाइनल का स्कोर और मैन ऑफ द मैच CricHeroes स्कोरकार्ड से।",
   rulesH:"नियम और पुरस्कार",draft:"ड्राफ्ट",visitH:"मैच देखने आ रहे हैं?",mapBtn:"Google Maps में ग्राउंड खोलें",mapShort:"नक्शा",
-  regH:"अपनी टीम रजिस्टर करें",regLead:"यह फॉर्म भरें और WhatsApp पर आयोजकों को भेजें। कमेटी के जवाब और एंट्री फीस जमा होने के बाद ही जगह पक्की होगी।",
+  regH:"अपनी टीम रजिस्टर करें",regLead:"रजिस्टर करने के लिए यह फॉर्म भरें। आयोजक हर एंट्री जाँचते हैं। टीम मंज़ूर होने पर कप्तान को WhatsApp पर 6 अंकों का PIN मिलेगा, जिससे खिलाड़ी जोड़े जा सकेंगे।",
+  fSubmit:"रजिस्ट्रेशन भेजें",regDoneH:"रजिस्ट्रेशन मिल गया",regDoneText:"{team} मंज़ूरी का इंतज़ार कर रही है। मंज़ूर होने पर कप्तान को {phone} पर WhatsApp से 6 अंकों का PIN मिलेगा।",
+  tellOrg:"आयोजकों को WhatsApp पर बताएँ",regAgain:"दूसरी टीम रजिस्टर करें",regTeamsH:"रजिस्टर्ड टीमें",regCountL:"{max} में से {n}",regNone:"मंज़ूर टीमें यहाँ दिखेंगी।",
+  regFull:"सभी 32 जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",capL:"कप्तान",sending:"भेज रहे हैं…",
+  eName:"इस नाम की टीम पहले से रजिस्टर्ड है। कोई दूसरा नाम चुनें।",eFull:"सभी जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",
+  eMany:"इस कनेक्शन से बहुत ज़्यादा रजिस्ट्रेशन हुए। एक घंटे बाद कोशिश करें।",eNet:"रजिस्ट्रेशन सर्वर से जुड़ नहीं पाए। इंटरनेट जाँचकर फिर कोशिश करें।",eLoad:"रजिस्टर्ड टीमें लोड नहीं हुईं।",
+  tmAdminH:"टीमें मैनेज करें",toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHelp:"अपनी एडमिन की डालें। यह सिर्फ़ इसी ब्राउज़र में रहेगी।",tmKey:"एडमिन की",tmBadKey:"एडमिन की ग़लत है।",
+  tmPending:"मंज़ूरी बाकी",tmApproved:"मंज़ूर",tmRejected:"नामंज़ूर",tmApprove:"मंज़ूर करें",tmReject:"नामंज़ूर करें",tmToPending:"वापस बाकी में",tmRestore:"वापस लाएँ",
+  tmNewPin:"नया PIN",tmDelete:"मिटाएँ",tmConfirm:"मिटाने के लिए फिर दबाएँ",tmPinL:"PIN",tmSendPin:"WhatsApp पर PIN भेजें",tmPinNote:"यह सिर्फ़ अभी दिखेगा। पेज छोड़ने से पहले भेज दें।",
+  tmEmpty:"कोई नहीं",tmLock:"बंद करें",tmFull:"सभी 32 जगहें पहले से मंज़ूर हैं।",tmDone:"हो गया।",
+  pinMsg:"जाख बाबा क्रिकेट प्रतियोगिता – सीज़न 6\n\nनमस्ते {captain} जी, आपकी टीम {team} मंज़ूर हो गई है।\n\nआपकी टीम का PIN: {pin}\n\nइस PIN से आप वेबसाइट पर खिलाड़ी जोड़ या हटा सकेंगे। इसे किसी को न बताएँ।\n{site}\n\n— आयोजक",
   fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
   fSubmit:"WhatsApp संदेश तैयार करें",sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
@@ -720,7 +766,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderMatches();renderHof();renderSponsors();renderLists();tick();
+  renderMatches();renderHof();renderSponsors();renderTeams();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
 }
 function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
@@ -728,26 +774,99 @@ document.getElementById("langHi").onclick=()=>setLang("hi");
 document.getElementById("liveLink").href=CONFIG.liveUrl;
 document.getElementById("orgNum").textContent=CONFIG.organiserDisplay;
 
-/* Registration -> WhatsApp text */
-document.getElementById("regForm").addEventListener("submit",e=>{
+/* ===== Team registration (Cloudflare Worker API, see api/) ===== */
+const TM={teams:[],max:32,open:true,admin:[],key:"",pins:{},confirmDel:null};
+const api=(path,opt={})=>fetch(CONFIG.api+path,{...opt,headers:{"Content-Type":"application/json",...(TM.key?{"Authorization":"Bearer "+TM.key}:{}),...(opt.headers||{})}});
+function renderTeams(){
+  document.getElementById("regCount").textContent=t("regCountL").replace("{n}",TM.teams.length).replace("{max}",TM.max);
+  document.getElementById("teamList").innerHTML=TM.teams.length?TM.teams.map(x=>`<div class="tcard"><span class="badge" style="background:${teamColor(x.name)}">${esc(initials(x.name))}</span><div><b>${esc(x.name)}</b><small>${esc(x.village)} · ${t("capL")}: ${esc(x.captain)}</small></div></div>`).join(""):`<p class="note">${t("regNone")}</p>`;
+  const closed=!TM.open;
+  document.getElementById("regClosed").hidden=!closed;
+  document.getElementById("regForm").hidden=closed||!document.getElementById("regDone").hidden;
+}
+async function loadTeams(){
+  try{const r=await fetch(CONFIG.api+"/teams",{cache:"no-store"});const j=await r.json();TM.teams=j.teams||[];TM.max=j.max||32;TM.open=j.open!==false;}catch(e){}
+  renderTeams();
+}
+document.getElementById("regForm").addEventListener("submit",async e=>{
   e.preventDefault();
   const v=id=>document.getElementById(id).value.trim();
-  const err=document.getElementById("fErr");
-  const phone=v("fPhone").replace(/\D/g,"");
-  if(!v("fTeam")||!v("fVillage")||!v("fCaptain")||phone.length!==10){err.textContent=t("errFill");err.hidden=false;return;}
+  const err=document.getElementById("fErr");const showErr=m=>{err.textContent=m;err.hidden=false;};
+  const phone=v("fPhone").replace(/\D/g,"").slice(-10);
+  if(v("fTeam").length<2||v("fVillage").length<2||v("fCaptain").length<2||phone.length!==10){showErr(t("errFill"));return;}
   err.hidden=true;
-  const prevSel=document.getElementById("fPrev");
-  const msg=`${T[lang].title} – ${t("season")} 6\n${t("fTeam")}: ${v("fTeam")}\n${t("fVillage")}: ${v("fVillage")}\n${t("fCaptain")}: ${v("fCaptain")}\n${t("fPhone")}: ${phone}\n${t("fPlayers")}: ${v("fPlayers")}\n${t("fPrev")}: ${prevSel.options[prevSel.selectedIndex].text}`;
-  document.getElementById("fMsg").textContent=msg;
-  const wa=document.getElementById("waLink");
-  if(CONFIG.organiserWhatsApp){wa.href=`https://wa.me/${CONFIG.organiserWhatsApp}?text=${encodeURIComponent(msg)}`;wa.hidden=false;}
-  else{wa.hidden=true;document.getElementById("fMsg").textContent=msg+"\n\n— "+t("noWa");}
-  document.getElementById("fOut").hidden=false;
+  const btn=document.getElementById("fSubmit");btn.disabled=true;btn.textContent=t("sending");
+  try{
+    const r=await api("/register",{method:"POST",body:JSON.stringify({name:v("fTeam"),village:v("fVillage"),captain:v("fCaptain"),phone})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){showErr({name_taken:t("eName"),full:t("eFull"),too_many:t("eMany"),invalid:t("errFill")}[j.error]||t("eNet"));}
+    else{
+      const msg=`${T[lang].title} – ${t("season")} 6\n${t("fTeam")}: ${v("fTeam")}\n${t("fVillage")}: ${v("fVillage")}\n${t("fCaptain")}: ${v("fCaptain")}\n${t("fPhone")}: ${phone}`;
+      document.getElementById("waLink").href=`https://wa.me/${CONFIG.organiserWhatsApp}?text=${encodeURIComponent(msg)}`;
+      document.getElementById("regDoneText").textContent=t("regDoneText").replace("{team}",v("fTeam")).replace("{phone}",phone);
+      document.getElementById("regDone").hidden=false;document.getElementById("regForm").hidden=true;e.target.reset();
+    }
+  }catch(ex){showErr(t("eNet"));}
+  btn.disabled=false;btn.textContent=t("fSubmit");
 });
-document.getElementById("copyBtn").addEventListener("click",()=>{
-  const el=document.getElementById("fMsg");const btn=document.getElementById("copyBtn");
-  navigator.clipboard.writeText(el.textContent).then(()=>{btn.textContent=t("copied");setTimeout(()=>btn.textContent=t("copy"),1500);})
-   .catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);});
+document.getElementById("regAgain").addEventListener("click",()=>{document.getElementById("regDone").hidden=true;renderTeams();});
+
+/* --- Admin: approve / reject, and send the generated PIN on WhatsApp --- */
+function tmMsg(text,kind){const m=document.getElementById("tmMsg");m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
+function pinWaLink(x,pin){
+  const site=location.origin+location.pathname+"#register";
+  const text=t("pinMsg").replace("{captain}",x.captain).replace("{team}",x.name).replace("{pin}",pin).replace("{site}",site);
+  return `https://wa.me/91${x.phone}?text=${encodeURIComponent(text)}`;
+}
+function admRow(x){
+  const btn=(act,label,cls)=>`<button class="btn ${cls||"sec"}" data-act="${act}" data-id="${esc(x.id)}">${label}</button>`;
+  let acts="";
+  if(x.status==="pending")acts=btn("approved",t("tmApprove"),"pri")+btn("rejected",t("tmReject"));
+  else if(x.status==="approved")acts=btn("newpin",t("tmNewPin"))+btn("pending",t("tmToPending"));
+  else acts=btn("pending",t("tmRestore"))+btn("delete",TM.confirmDel===x.id?t("tmConfirm"):t("tmDelete"));
+  const pin=TM.pins[x.id];
+  const pinHtml=pin?`<div class="pinbox"><span>${t("tmPinL")}</span><b class="num">${pin}</b><a class="btn pri" href="${esc(pinWaLink(x,pin))}" target="_blank" rel="noopener noreferrer">${t("tmSendPin")}</a><small class="note" style="margin:0">${t("tmPinNote")}</small></div>`:"";
+  return `<div class="adm-row"><div class="who"><b>${esc(x.name)}</b><span>${esc(x.village)} · ${esc(x.captain)} · <span class="num">${esc(x.phone)}</span></span></div>${pinHtml}<div class="acts2">${acts}</div></div>`;
+}
+function renderAdminTeams(){
+  const by=st=>TM.admin.filter(x=>x.status===st);
+  const sec=(st,label)=>{const l=by(st);return `<div class="adm-h">${label} (${st==="approved"?l.length+"/"+TM.max:l.length})</div>${l.length?l.map(admRow).join(""):`<p class="note" style="margin:4px 0">${t("tmEmpty")}</p>`}`;};
+  document.getElementById("tmBoard").innerHTML=sec("pending",t("tmPending"))+sec("approved",t("tmApproved"))+sec("rejected",t("tmRejected"))+
+    `<div class="ctas"><button class="btn sec" type="button" id="tmLock">${t("tmLock")}</button></div>`;
+}
+async function loadAdminTeams(){
+  const r=await api("/admin/teams");
+  if(r.status===401){TM.key="";try{localStorage.removeItem("jb-admin-key");}catch(e){}document.getElementById("tmKeyForm").hidden=false;document.getElementById("tmBoard").hidden=true;tmMsg(t("tmBadKey"),"bad");return false;}
+  const j=await r.json();TM.admin=j.teams||[];TM.max=j.max||32;
+  document.getElementById("tmKeyForm").hidden=true;document.getElementById("tmBoard").hidden=false;renderAdminTeams();return true;
+}
+async function unlockTeams(key){
+  TM.key=key;
+  try{if(await loadAdminTeams()){try{localStorage.setItem("jb-admin-key",key);}catch(e){}tmMsg("");}}catch(e){tmMsg(t("eNet"),"bad");}
+}
+function initTeamsAdmin(){
+  document.getElementById("tmAdmin").hidden=false;
+  let saved="";try{saved=localStorage.getItem("jb-admin-key")||"";}catch(e){}
+  if(saved)unlockTeams(saved);
+}
+document.getElementById("tmKeyForm").addEventListener("submit",e=>{e.preventDefault();const k=document.getElementById("tmKey").value.trim();if(k)unlockTeams(k);});
+document.getElementById("tmBoard").addEventListener("click",async e=>{
+  if(e.target.id==="tmLock"){TM.key="";TM.pins={};try{localStorage.removeItem("jb-admin-key");}catch(x){}
+    document.getElementById("tmBoard").hidden=true;document.getElementById("tmKeyForm").hidden=false;document.getElementById("tmKey").value="";tmMsg("");return;}
+  const b=e.target.closest("button[data-act]");if(!b)return;
+  const {act,id}=b.dataset;
+  if(act==="delete"&&TM.confirmDel!==id){TM.confirmDel=id;renderAdminTeams();return;}
+  TM.confirmDel=null;b.disabled=true;tmMsg(t("sending"));
+  try{
+    let r;
+    if(act==="newpin")r=await api("/admin/newpin",{method:"POST",body:JSON.stringify({id})});
+    else if(act==="delete")r=await api("/admin/delete",{method:"POST",body:JSON.stringify({id})});
+    else r=await api("/admin/status",{method:"POST",body:JSON.stringify({id,status:act})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){tmMsg(j.error==="full"?t("tmFull"):j.error==="name_taken"?t("eName"):t("eNet"),"bad");b.disabled=false;return;}
+    if(j.pin)TM.pins[id]=j.pin;
+    await loadAdminTeams();loadTeams();tmMsg(t("tmDone"),"ok");
+  }catch(ex){tmMsg(t("eNet"),"bad");b.disabled=false;}
 });
 
 /* ===== Sponsors: public list from sponsors.json; owner adds/removes via #admin using a GitHub token ===== */
@@ -898,7 +1017,7 @@ const DEFAULT_TAB="history";
 const links=[...document.querySelectorAll("#navlinks a")];
 const sections=[...document.querySelectorAll("main section")];
 function showTab(id,scroll){
-  if(id==="admin"){if(!SP.admin)initAdmin();id="sponsors";}
+  if(id==="admin"){if(!SP.admin){initAdmin();initTeamsAdmin();}id="sponsors";}
   if(id==="bracket"||id==="schedule")id="matches";
   if(!sections.some(s=>s.id===id))id=DEFAULT_TAB;
   sections.forEach(s=>s.hidden=s.id!==id);
@@ -913,6 +1032,7 @@ document.addEventListener("click",e=>{
 /* Every visit opens on the Hall of Fame unless the link points to a tab, e.g. #schedule */
 showTab(location.hash.slice(1),false);
 loadSponsors();
+loadTeams();
 addEventListener("hashchange",()=>showTab(location.hash.slice(1),false));
 
 applyLang();
