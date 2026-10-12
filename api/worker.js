@@ -3,13 +3,13 @@
 // Public
 //   GET  /teams                  approved teams (no phone, no PIN) + places left
 //   POST /register               {name, village, captain, phone} -> pending team
-// Admin (header "Authorization: Bearer <ADMIN_KEY>")
+// Admin (header "Authorization: Bearer <GitHub token with write access to GITHUB_REPO>", or the optional ADMIN_KEY)
 //   GET  /admin/teams            every team incl. phone numbers
 //   POST /admin/status           {id, status: "approved" | "rejected" | "pending"}; first approval returns a new 6-digit PIN
 //   POST /admin/newpin           {id} -> replaces the captain PIN and returns it (to send again on WhatsApp)
 //   POST /admin/delete           {id}
 //
-// Bindings (wrangler.toml): DB (D1). Secrets: ADMIN_KEY, PIN_PEPPER. Vars: ALLOWED_ORIGINS, MAX_TEAMS.
+// Bindings (wrangler.toml): DB (D1). Secrets: PIN_PEPPER, optional ADMIN_KEY. Vars: ALLOWED_ORIGINS, MAX_TEAMS, GITHUB_REPO.
 
 const LIMITS = { text: 40, phoneDigits: 10, pinDigits: 6, regsPerIpPerHour: 5 };
 
@@ -163,14 +163,31 @@ async function readJson(request) {
   try { const b = await request.json(); return b && typeof b === 'object' ? b : null; } catch (e) { return null; }
 }
 
+// Admin = the same GitHub token the owner uses for sponsors: it must have write (push) access to
+// GITHUB_REPO. An optional ADMIN_KEY secret also works. Good answers are cached for 5 minutes.
+const adminCache = new Map();
 async function isAdmin(request, env) {
   const got = (request.headers.get('Authorization') || '').replace(/^Bearer\s+/i, '');
-  if (!got || !env.ADMIN_KEY) return false;
-  // compare digests so response time does not reveal how much of the key matched
-  const [a, b] = await Promise.all([sha256Hex(got), sha256Hex(env.ADMIN_KEY)]);
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
+  if (!got) return false;
+  const digest = await sha256Hex(got);
+  if (env.ADMIN_KEY) {
+    // compare digests so response time does not reveal how much of the key matched
+    const want = await sha256Hex(env.ADMIN_KEY);
+    let diff = 0;
+    for (let i = 0; i < want.length; i++) diff |= want.charCodeAt(i) ^ digest.charCodeAt(i);
+    if (diff === 0) return true;
+  }
+  const cached = adminCache.get(digest);
+  if (cached && cached > Date.now()) return true;
+  if (!env.GITHUB_REPO) return false;
+  const r = await fetch('https://api.github.com/repos/' + env.GITHUB_REPO, {
+    headers: { 'Authorization': 'Bearer ' + got, 'Accept': 'application/vnd.github+json', 'User-Agent': 'jaakh-baba-api' }
+  });
+  if (!r.ok) return false;
+  const repo = await r.json();
+  const ok = !!(repo.permissions && repo.permissions.push);
+  if (ok) adminCache.set(digest, Date.now() + 5 * 60e3);
+  return ok;
 }
 
 function corsHeaders(request, env) {

@@ -5,6 +5,7 @@ compatibility_date = "2025-06-01"
 [vars]
 ALLOWED_ORIGINS = "https://neerajyadav12523.github.io"
 MAX_TEAMS = "32"
+GITHUB_REPO = "neerajyadav12523/jaakh-baba-cricket"   # admin = a GitHub token with write access to this repo
 
 # created with: npx wrangler d1 create jaakh-baba
 [[d1_databases]]
@@ -13,6 +14,6 @@ database_name = "jaakh-baba"
 database_id = "eb335f4b-c359-4880-bb3f-a299a4db9a96"
 
 # Secrets (never in this file):
-#   npx wrangler secret put ADMIN_KEY    -> the owner types their admin key
+#   npx wrangler secret put ADMIN_KEY    -> optional extra admin password (the GitHub token already works)
 #   npx wrangler secret put PIN_PEPPER   -> a long random value used to hash captain PINs
 # Local testing reads them from .dev.vars (git-ignored).
