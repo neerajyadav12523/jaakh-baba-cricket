@@ -285,6 +285,9 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .gi .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .gi .play i{width:48px;height:48px;border-radius:50%;background:rgba(168,50,43,.92);display:flex;align-items:center;justify-content:center}
 .gi .play i::after{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.gi.vfile{background:var(--indigo)}
+.gi.vfile .play i{width:56px;height:56px}
+.lb video{width:100%;height:100%;border-radius:8px;background:#000}
 .gi.vlink{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;border:1px solid var(--line);padding:12px;text-align:center}
 .gi.vlink b{font-size:.9rem;overflow-wrap:anywhere}
 .gi.vlink span{font-size:.8rem;color:var(--label);font-weight:800}
@@ -693,7 +696,7 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
   navGallery:"Gallery",navExpenses:"Expenses",
-  galH:"Gallery",galLead:"Photos and videos from every season at the Girls School Ground.",galAll:"All seasons",galEmpty:"Photos and videos will appear here.",
+  galH:"Gallery",galLead:"Photos and videos from every season at the Girls School Ground.",galAll:"All seasons",galEarlier:"Earlier seasons",galEarlierShort:"Earlier",galEmpty:"Photos and videos will appear here.",
   galAdminH:"Add photos or a video",galType:"Type",galPhotos:"Photos",galVideo:"Video",galSeason:"Season",galCaption:"Caption (optional)",
   galFiles:"Photos (you can pick several)",galUrl:"YouTube, Instagram, Facebook or Drive link",galAdd:"Add to gallery",galWatch:"Watch",
   galNeedPhoto:"Choose at least one photo.",galNeedUrl:"Paste a full video link starting with https://",galUploading:"Uploading photo {i} of {n}…",
@@ -778,7 +781,7 @@ toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHel
   sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
   navGallery:"गैलरी",navExpenses:"खर्च",
-  galH:"गैलरी",galLead:"गर्ल्स स्कूल ग्राउंड पर हर सीज़न की फ़ोटो और वीडियो।",galAll:"सभी सीज़न",galEmpty:"फ़ोटो और वीडियो यहाँ दिखेंगे।",
+  galH:"गैलरी",galLead:"गर्ल्स स्कूल ग्राउंड पर हर सीज़न की फ़ोटो और वीडियो।",galAll:"सभी सीज़न",galEarlier:"पिछले सीज़न",galEarlierShort:"पिछले",galEmpty:"फ़ोटो और वीडियो यहाँ दिखेंगे।",
   galAdminH:"फ़ोटो या वीडियो जोड़ें",galType:"प्रकार",galPhotos:"फ़ोटो",galVideo:"वीडियो",galSeason:"सीज़न",galCaption:"कैप्शन (वैकल्पिक)",
   galFiles:"फ़ोटो (एक साथ कई चुन सकते हैं)",galUrl:"YouTube, Instagram, Facebook या Drive लिंक",galAdd:"गैलरी में जोड़ें",galWatch:"देखें",
   galNeedPhoto:"कम से कम एक फ़ोटो चुनें।",galNeedUrl:"https:// से शुरू होने वाला पूरा वीडियो लिंक डालें।",galUploading:"{n} में से फ़ोटो {i} अपलोड हो रही है…",
@@ -1354,7 +1357,7 @@ document.getElementById("spList").addEventListener("click",async e=>{
 });
 
 /* ===== Gallery and Expenses: public data in gallery.json / expenses.json; the owner edits them with the GitHub token (#admin) ===== */
-const GAL={items:[],season:0,confirm:null};
+const GAL={items:[],season:"all",confirm:null};
 const EXP={entries:[],confirm:null};
 const EX_CATS={expense:["ground","kit","trophies","officials","food","tent","print","stream","other"],income:["fees","donation","other"]};
 const isOwner=()=>SP.admin&&!!SP.token;
@@ -1392,27 +1395,30 @@ addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("lb
 /* --- Gallery --- */
 function renderGallery(){
   document.getElementById("galAdmin").hidden=!isOwner();
-  document.getElementById("galSeasonSel").innerHTML=[6,5,4,3,2,1].map(n=>`<option value="${n}">${t("season")} ${n} · ${2020+n}</option>`).join("");
-  document.getElementById("galChips").innerHTML=[0,6,5,4,3,2,1].map(n=>`<button data-s="${n}" aria-pressed="${GAL.season===n}">${n?t("season")+" "+n:t("galAll")}</button>`).join("");
-  const items=GAL.items.filter(x=>!GAL.season||x.season===GAL.season).sort((a,b)=>b.season-a.season||String(b.added).localeCompare(String(a.added)));
+  document.getElementById("galSeasonSel").innerHTML=[6,5,4,3,2,1].map(n=>`<option value="${n}">${t("season")} ${n} · ${2020+n}</option>`).join("")+`<option value="0">${t("galEarlier")}</option>`;
+  const have=new Set(GAL.items.map(x=>x.season));
+  document.getElementById("galChips").innerHTML=["all",6,5,4,3,2,1,0].filter(n=>n==="all"||have.has(n)).map(n=>`<button data-s="${n}" aria-pressed="${GAL.season===n}">${n==="all"?t("galAll"):n===0?t("galEarlier"):t("season")+" "+n}</button>`).join("");
+  const items=GAL.items.filter(x=>GAL.season==="all"||x.season===GAL.season).sort((a,b)=>b.season-a.season||String(b.added).localeCompare(String(a.added)));
   const box=document.getElementById("galGrid");
   if(!items.length){box.innerHTML=`<p class="note">${t("galEmpty")}</p>`;return;}
   box.innerHTML=items.map(x=>{
     const del=isOwner()?`<button class="del" data-gdel="${esc(x.id)}">${GAL.confirm===x.id?t("spConfirm"):t("spDel")}</button>`:"";
-    const sn=`<span class="sn">S${x.season}</span>`,cap=x.caption?`<span class="cap">${esc(x.caption)}</span>`:"";
+    const sn=`<span class="sn">${x.season?"S"+x.season:t("galEarlierShort")}</span>`,cap=x.caption?`<span class="cap">${esc(x.caption)}</span>`:"";
     let tile;
     if(x.type==="photo")tile=`<button class="gi" data-gopen="${esc(x.id)}"><img src="${esc(x.thumb||x.src)}" alt="${esc(x.caption||"")}" loading="lazy">${sn}${cap}</button>`;
+    else if(x.src)tile=`<button class="gi vfile" data-gopen="${esc(x.id)}"><span class="play"><i></i></span>${sn}<span class="cap">${esc(x.caption||t("galVideo"))}</span></button>`;
     else if(x.yt)tile=`<button class="gi" data-gopen="${esc(x.id)}"><img src="https://i.ytimg.com/vi/${esc(x.yt)}/hqdefault.jpg" alt="${esc(x.caption||"")}" loading="lazy"><span class="play"><i></i></span>${sn}${cap}</button>`;
     else tile=`<a class="gi vlink" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${sn}<b>${esc(x.caption||t("galVideo"))}</b><span>${t("galWatch")} ↗</span></a>`;
     return `<div class="gwrap">${del}${tile}</div>`;
   }).join("");
 }
 async function loadGallery(){const j=await loadJson("gallery.json");if(j)GAL.items=j.items||[];renderGallery();}
-document.getElementById("galChips").addEventListener("click",e=>{const b=e.target.closest("button[data-s]");if(!b)return;GAL.season=Number(b.dataset.s);renderGallery();});
+document.getElementById("galChips").addEventListener("click",e=>{const b=e.target.closest("button[data-s]");if(!b)return;GAL.season=b.dataset.s==="all"?"all":Number(b.dataset.s);renderGallery();});
 document.getElementById("galGrid").addEventListener("click",async e=>{
   const o=e.target.closest("[data-gopen]");
   if(o){const x=GAL.items.find(i=>i.id===o.dataset.gopen);if(!x)return;
     if(x.type==="photo")openLightbox(`<img src="${esc(x.src)}" alt="${esc(x.caption||"")}">`,x.caption);
+    else if(x.src)openLightbox(`<div class="vbox"><video src="${esc(x.src)}" controls autoplay playsinline preload="auto"></video></div>`,x.caption);
     else openLightbox(`<div class="vbox"><iframe src="https://www.youtube-nocookie.com/embed/${esc(x.yt)}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="${esc(x.caption||"Video")}"></iframe></div>`,x.caption);
     return;}
   const d=e.target.closest("[data-gdel]");if(!d||!isOwner())return;
@@ -1423,7 +1429,7 @@ document.getElementById("galGrid").addEventListener("click",async e=>{
     const cur=await ghGetData("gallery.json",{items:[]});const gone=(cur.data.items||[]).find(x=>x.id===id);
     const items=(cur.data.items||[]).filter(x=>x.id!==id);
     await ghPut("gallery.json",b64(JSON.stringify({items},null,1)),"Gallery: remove "+(gone&&gone.caption||id),cur.sha);
-    if(gone&&gone.src)await ghDelete(gone.src,"Gallery: remove photo");
+    if(gone&&gone.src)await ghDelete(gone.src,"Gallery: remove "+gone.type);
     if(gone&&gone.thumb)await ghDelete(gone.thumb,"Gallery: remove thumbnail");
     GAL.items=items;renderGallery();msgIn("galMsg",t("spRemoved"),"ok");
   }catch(err){msgIn("galMsg",t("spFail").replace("{e}",err.message),"bad");}
