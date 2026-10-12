@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, registration.">
+<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, sponsors, registration.">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -225,6 +225,26 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .tier b{display:block;font-family:var(--display);font-size:1.2rem}
 .tier span{font-size:.88rem;color:var(--muted)}
 
+/* Sponsor list (public) and the owner-only manager (#admin) */
+.sptotal{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:20px}
+.sptotal b{font-family:var(--display);font-size:1.8rem;color:var(--fresco)}
+.sptotal span{color:var(--muted)}
+.splist{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:14px}
+.spc{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 12px;text-align:center;min-width:0;position:relative}
+.spc img,.spc .ini{width:84px;height:84px;border-radius:50%;object-fit:cover;border:3px solid var(--marigold);margin:0 auto;display:flex}
+.spc .ini{align-items:center;justify-content:center;font-size:1.6rem}
+.spc b{display:block;margin-top:8px;font-size:1rem;overflow-wrap:anywhere}
+.spc .amt{display:block;font-family:var(--display);font-size:1.3rem;color:var(--fresco)}
+.spc small{display:block;color:var(--muted);font-size:.8rem;overflow-wrap:anywhere}
+.spc .del{position:absolute;top:6px;right:6px;font:inherit;font-size:.75rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
+.sph3{font-family:var(--display);font-size:1.4rem;margin-top:34px}
+.admin{margin-top:22px;background:var(--paper);border:2px solid var(--marigold);border-radius:14px;padding:16px}
+.admin h3{font-size:1.2rem}
+.admin form{margin:12px 0 0;padding:0;border:0;background:none;max-width:none}
+.admin .msg{font-weight:700;font-size:.9rem;margin-top:8px}
+.admin .msg.ok{color:#1f7a5a}.admin .msg.bad{color:var(--fresco)}
+.prev{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid var(--marigold)}
+
 footer{background:var(--indigo);color:var(--on-indigo);padding-block:28px;font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 </style>
@@ -356,6 +376,37 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <section id="sponsors"><div class="wrap">
   <h2 data-i="spH">Sponsors</h2>
   <p class="lead" data-i="spLead">Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.</p>
+  <div id="spAdmin" class="admin" hidden>
+    <h3 data-i="spAdminH">Manage sponsors</h3>
+    <div id="spLogin">
+      <p class="note" data-i="spTokenHelp">Paste your GitHub access token for this site. It stays only in this browser.</p>
+      <form id="spTokenForm" novalidate>
+        <label><span data-i="spToken">GitHub token</span><input id="spToken" type="password" autocomplete="off"></label>
+        <div class="ctas" style="margin:0"><button class="btn pri" type="submit" data-i="spUnlock">Unlock</button></div>
+      </form>
+    </div>
+    <div id="spEditor" hidden>
+      <form id="spForm" novalidate>
+        <div class="frow">
+          <label><span data-i="spName">Name</span><input id="spName" required></label>
+          <label><span data-i="spAmount">Amount (₹)</span><input id="spAmount" inputmode="numeric" required></label>
+        </div>
+        <div class="frow">
+          <label><span data-i="spNote">Village or business (optional)</span><input id="spNote"></label>
+          <label><span data-i="spPhoto">Photo (optional)</span><input id="spPhoto" type="file" accept="image/*"></label>
+        </div>
+        <img id="spPrev" class="prev" alt="" hidden>
+        <div class="ctas" style="margin:0">
+          <button class="btn pri" type="submit" id="spSave" data-i="spSave">Add sponsor</button>
+          <button class="btn sec" type="button" id="spLogout" data-i="spLogout">Lock</button>
+        </div>
+      </form>
+    </div>
+    <div class="msg" id="spMsg" aria-live="polite"></div>
+  </div>
+  <div class="sptotal" id="spTotal"></div>
+  <div class="splist" id="spList"></div>
+  <h3 class="sph3" data-i="spBecome">Become a sponsor</h3>
   <div class="tiers" id="tiers"></div>
 </div></section>
 </main>
@@ -372,7 +423,9 @@ const CONFIG = {
   days: 9,
   liveUrl: "https://cricheroes.com/search/3/jaakh-baba",   // replace with the Season 6 CricHeroes link once created
   organiserWhatsApp: "919736908731",                         // country code + number, no spaces
-  organiserDisplay: "97369 08731"
+  organiserDisplay: "97369 08731",
+  repo: "neerajyadav12523/jaakh-baba-cricket",   // sponsors are saved to sponsors.json + sponsors/ in this GitHub repo
+  branch: "main"
 };
 
 /* Season 6 matches, keyed by match number (1-31). Fill in teams after the draw, then results as matches finish.
@@ -422,7 +475,12 @@ const T = {
   fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
   fSubmit:"Prepare WhatsApp message",sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
-  spH:"Sponsors",spLead:"Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.",
+  spH:"Sponsors",spBecome:"Become a sponsor",spTotalL:"raised from {n} sponsors",spNone:"Sponsors for Season 6 will appear here.",
+  spAdminH:"Manage sponsors",spTokenHelp:"Paste your GitHub access token for this site. It stays only in this browser.",spToken:"GitHub token",spUnlock:"Unlock",
+  spName:"Name",spAmount:"Amount (₹)",spNote:"Village or business (optional)",spPhoto:"Photo (optional)",spSave:"Add sponsor",spLogout:"Lock",spDel:"Remove",
+  spBadToken:"That token can't change this site. Check it has Contents read and write access to the jaakh-baba-cricket repo.",
+  spNeed:"Enter a name and an amount in rupees.",spSaving:"Saving…",spSaved:"Saved. Everyone will see it within about a minute.",spRemoved:"Removed. The site updates within about a minute.",
+  spFail:"Couldn't save: {e}. Try again.",spConfirm:"Tap Remove again to confirm.",spLead:"Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.",
   footer:"Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan",pastOn:"Past seasons on CricHeroes",contact:"Organisers on WhatsApp",
   startsIn:"First ball in",d:"days",h:"hours",m:"min",s:"sec",liveNow:"Live now",dayOf:"Day {d} of {n}",todayMatches:"Today's matches are on the schedule below.",over:"Season 6 is complete. Thank you for watching.",
   rounds:["Round 1","Round 2","Quarter-finals","Semi-finals","Final"],ov:"overs",matches:"matches",match:"match",
@@ -466,7 +524,12 @@ const T = {
   fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
   fSubmit:"WhatsApp संदेश तैयार करें",sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
-  spH:"प्रायोजक",spLead:"पिछले सीज़न को लगभग 30,000 बार देखा गया। अपनी दुकान या व्यापार को पूरे इलाके तक पहुँचाएँ।",
+  spH:"प्रायोजक",spBecome:"प्रायोजक बनें",spTotalL:"{n} प्रायोजकों से सहयोग",spNone:"सीज़न 6 के प्रायोजक यहाँ दिखेंगे।",
+  spAdminH:"प्रायोजक जोड़ें",spTokenHelp:"इस साइट का GitHub टोकन डालें। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",spToken:"GitHub टोकन",spUnlock:"खोलें",
+  spName:"नाम",spAmount:"राशि (₹)",spNote:"गाँव या दुकान (वैकल्पिक)",spPhoto:"फ़ोटो (वैकल्पिक)",spSave:"प्रायोजक जोड़ें",spLogout:"बंद करें",spDel:"हटाएँ",
+  spBadToken:"यह टोकन साइट नहीं बदल सकता। जाँचें कि jaakh-baba-cricket repo पर Contents read and write अनुमति है।",
+  spNeed:"नाम और रुपये में राशि भरें।",spSaving:"सेव हो रहा है…",spSaved:"सेव हो गया। लगभग एक मिनट में सबको दिखेगा।",spRemoved:"हटा दिया। लगभग एक मिनट में साइट अपडेट होगी।",
+  spFail:"सेव नहीं हुआ: {e}। फिर से कोशिश करें।",spConfirm:"पक्का करने के लिए फिर से हटाएँ दबाएँ।",spLead:"पिछले सीज़न को लगभग 30,000 बार देखा गया। अपनी दुकान या व्यापार को पूरे इलाके तक पहुँचाएँ।",
   footer:"जाख बाबा क्रिकेट प्रतियोगिता · सीज़न 6 · शिमला, खेतड़ी, झुंझुनूं, राजस्थान",pastOn:"पिछले सीज़न CricHeroes पर",contact:"आयोजक WhatsApp पर",
   startsIn:"पहली गेंद में बाकी",d:"दिन",h:"घंटे",m:"मिनट",s:"सेकंड",liveNow:"अभी लाइव",dayOf:"दिन {d} / {n}",todayMatches:"आज के मैच नीचे कार्यक्रम में देखें।",over:"सीज़न 6 पूरा हुआ। देखने के लिए धन्यवाद।",
   rounds:["पहला राउंड","दूसरा राउंड","क्वार्टर फाइनल","सेमी फाइनल","फाइनल"],ov:"ओवर",matches:"मैच",match:"मैच",
@@ -651,7 +714,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderMatches();renderHof();renderLists();tick();
+  renderMatches();renderHof();renderSponsors();renderLists();tick();
 }
 function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
@@ -681,11 +744,114 @@ document.getElementById("copyBtn").addEventListener("click",()=>{
    .catch(()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);});
 });
 
+/* ===== Sponsors: public list from sponsors.json; owner adds/removes via #admin using a GitHub token ===== */
+const SP={list:[],admin:false,token:"",confirmId:null};
+const inr=n=>"₹"+Number(n).toLocaleString("en-IN");
+function renderSponsors(){
+  const list=[...SP.list].sort((a,b)=>b.amount-a.amount||String(a.added).localeCompare(String(b.added)));
+  const total=list.reduce((n,x)=>n+Number(x.amount||0),0);
+  document.getElementById("spTotal").innerHTML=list.length?`<b class="num">${inr(total)}</b><span>${t("spTotalL").replace("{n}",list.length)}</span>`:`<span>${t("spNone")}</span>`;
+  document.getElementById("spList").innerHTML=list.map(x=>{
+    const ini=String(x.name).split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join("");
+    const pic=x.photo?`<img src="${esc(x.photo)}" alt="" loading="lazy">`:`<span class="ini">${esc(ini)}</span>`;
+    const del=SP.admin&&SP.token?`<button class="del" data-id="${esc(x.id)}">${SP.confirmId===x.id?t("spConfirm"):t("spDel")}</button>`:"";
+    return `<div class="spc">${del}${pic}<b>${esc(x.name)}</b><span class="amt num">${inr(x.amount)}</span>${x.note?`<small>${esc(x.note)}</small>`:""}</div>`;
+  }).join("");
+}
+async function loadSponsors(){
+  try{const r=await fetch("sponsors.json?t="+Date.now(),{cache:"no-store"});if(r.ok){const j=await r.json();SP.list=j.sponsors||[];}}catch(e){}
+  renderSponsors();
+}
+/* GitHub contents API helpers (owner only) */
+const gh=(path,opt={})=>fetch("https://api.github.com/repos/"+CONFIG.repo+(path?"/"+path:""),{...opt,headers:{"Authorization":"Bearer "+SP.token,"Accept":"application/vnd.github+json",...(opt.headers||{})}});
+const b64=str=>btoa(String.fromCharCode(...new TextEncoder().encode(str)));
+const unb64=b=>new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g,"")),c=>c.charCodeAt(0)));
+async function ghGetJson(){
+  const r=await gh("contents/sponsors.json?ref="+CONFIG.branch);
+  if(r.status===404)return {sha:null,data:{sponsors:[]}};
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  const j=await r.json();return {sha:j.sha,data:JSON.parse(unb64(j.content))};
+}
+async function ghPut(path,contentB64,message,sha){
+  const body={message,content:contentB64,branch:CONFIG.branch};if(sha)body.sha=sha;
+  const r=await gh("contents/"+path,{method:"PUT",body:JSON.stringify(body)});
+  if(!r.ok)throw new Error((await r.json().catch(()=>({}))).message||("HTTP "+r.status));
+  return r.json();
+}
+async function ghDelete(path,message){
+  const g=await gh("contents/"+path+"?ref="+CONFIG.branch);if(!g.ok)return;
+  const {sha}=await g.json();
+  await gh("contents/"+path,{method:"DELETE",body:JSON.stringify({message,sha,branch:CONFIG.branch})});
+}
+function spMsg(text,kind){const m=document.getElementById("spMsg");m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
+/* Shrink a chosen photo to a 240px centre-cropped JPEG, returned as base64 (no data: prefix) */
+function shrinkPhoto(file){
+  return new Promise((ok,fail)=>{
+    const img=new Image();const url=URL.createObjectURL(file);
+    img.onload=()=>{const side=Math.min(img.width,img.height),c=document.createElement("canvas");c.width=c.height=240;
+      c.getContext("2d").drawImage(img,(img.width-side)/2,(img.height-side)/4,side,side,0,0,240,240);
+      URL.revokeObjectURL(url);ok(c.toDataURL("image/jpeg",0.82).split(",")[1]);};
+    img.onerror=()=>fail(new Error("photo could not be read"));img.src=url;
+  });
+}
+async function unlock(token){
+  SP.token=token;
+  let j=null;try{const r=await gh("");j=r.ok?await r.json():null;}catch(e){}
+  if(!j||!j.permissions||!j.permissions.push){SP.token="";spMsg(t("spBadToken"),"bad");return false;}
+  try{localStorage.setItem("jb-gh-token",token);}catch(e){}
+  document.getElementById("spLogin").hidden=true;document.getElementById("spEditor").hidden=false;spMsg("");
+  try{SP.list=(await ghGetJson()).data.sponsors||[];}catch(e){}
+  renderSponsors();return true;
+}
+function initAdmin(){
+  SP.admin=true;document.getElementById("spAdmin").hidden=false;
+  let saved="";try{saved=localStorage.getItem("jb-gh-token")||"";}catch(e){}
+  if(saved)unlock(saved);
+}
+document.getElementById("spTokenForm").addEventListener("submit",e=>{e.preventDefault();const v=document.getElementById("spToken").value.trim();if(v)unlock(v);});
+document.getElementById("spLogout").addEventListener("click",()=>{try{localStorage.removeItem("jb-gh-token");}catch(e){}SP.token="";
+  document.getElementById("spEditor").hidden=true;document.getElementById("spLogin").hidden=false;document.getElementById("spToken").value="";renderSponsors();});
+document.getElementById("spPhoto").addEventListener("change",e=>{const f=e.target.files[0],p=document.getElementById("spPrev");
+  if(f){p.src=URL.createObjectURL(f);p.hidden=false;}else p.hidden=true;});
+document.getElementById("spForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const name=document.getElementById("spName").value.trim(),note=document.getElementById("spNote").value.trim();
+  const amount=Number(document.getElementById("spAmount").value.replace(/[^0-9.]/g,""));
+  if(!name||!(amount>0)){spMsg(t("spNeed"),"bad");return;}
+  const btn=document.getElementById("spSave");btn.disabled=true;spMsg(t("spSaving"));
+  try{
+    const id="s"+Date.now().toString(36);let photo="";
+    const file=document.getElementById("spPhoto").files[0];
+    if(file){const data=await shrinkPhoto(file);await ghPut("sponsors/"+id+".jpg",data,"Sponsor photo: "+name);photo="sponsors/"+id+".jpg";}
+    const cur=await ghGetJson();
+    const list=cur.data.sponsors||[];
+    list.push({id,name,amount,note,photo,added:new Date().toISOString().slice(0,10)});
+    await ghPut("sponsors.json",b64(JSON.stringify({sponsors:list},null,1)),"Add sponsor: "+name,cur.sha);
+    SP.list=list;renderSponsors();
+    e.target.reset();document.getElementById("spPrev").hidden=true;spMsg(t("spSaved"),"ok");
+  }catch(err){spMsg(t("spFail").replace("{e}",err.message),"bad");}
+  btn.disabled=false;
+});
+document.getElementById("spList").addEventListener("click",async e=>{
+  const b=e.target.closest(".del");if(!b||!SP.token)return;
+  const id=b.dataset.id;
+  if(SP.confirmId!==id){SP.confirmId=id;renderSponsors();return;}
+  SP.confirmId=null;spMsg(t("spSaving"));
+  try{
+    const cur=await ghGetJson();const gone=(cur.data.sponsors||[]).find(x=>x.id===id);
+    const list=(cur.data.sponsors||[]).filter(x=>x.id!==id);
+    await ghPut("sponsors.json",b64(JSON.stringify({sponsors:list},null,1)),"Remove sponsor: "+(gone?gone.name:id),cur.sha);
+    if(gone&&gone.photo)await ghDelete(gone.photo,"Remove sponsor photo: "+gone.name);
+    SP.list=list;renderSponsors();spMsg(t("spRemoved"),"ok");
+  }catch(err){spMsg(t("spFail").replace("{e}",err.message),"bad");}
+});
+
 /* Tabs: only the clicked section is shown */
 const DEFAULT_TAB="history";
 const links=[...document.querySelectorAll("#navlinks a")];
 const sections=[...document.querySelectorAll("main section")];
 function showTab(id,scroll){
+  if(id==="admin"){if(!SP.admin)initAdmin();id="sponsors";}
   if(id==="bracket"||id==="schedule")id="matches";
   if(!sections.some(s=>s.id===id))id=DEFAULT_TAB;
   sections.forEach(s=>s.hidden=s.id!==id);
@@ -699,6 +865,8 @@ document.addEventListener("click",e=>{
 });
 /* Every visit opens on the Hall of Fame unless the link points to a tab, e.g. #schedule */
 showTab(location.hash.slice(1),false);
+loadSponsors();
+addEventListener("hashchange",()=>showTab(location.hash.slice(1),false));
 
 applyLang();
 setInterval(tick,1000);
