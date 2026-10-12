@@ -5,7 +5,7 @@
 //   POST /register               {name, village, captain, phone} -> pending team
 // Captain (approved team + PIN; 5 wrong PINs lock editing for 15 minutes)
 //   POST /captain/login          {id, pin} -> the team and its players
-//   POST /captain/players        {id, pin, players: [{name}]} -> saves the squad (max 15)
+//   POST /captain/players        {id, pin, players: [{name, phone}]} -> saves the squad (max 15; a mobile can be in only one team)
 // Admin (header "Authorization: Bearer <GitHub token with write access to GITHUB_REPO>", or the optional ADMIN_KEY)
 //   GET  /admin/teams            every team incl. phone numbers
 //   POST /admin/status           {id, status: "approved" | "rejected" | "pending"}; first approval returns a new 6-digit PIN
@@ -59,7 +59,7 @@ async function publicTeams(env) {
     "SELECT id, name, village, captain, players FROM teams WHERE status = 'approved' ORDER BY created_at"
   ).all();
   const max = maxTeams(env);
-  const teams = results.map(r => ({ id: r.id, name: r.name, village: r.village, captain: r.captain, players: parsePlayers(r.players) }));
+  const teams = results.map(r => ({ id: r.id, name: r.name, village: r.village, captain: r.captain, players: publicPlayers(r.players) }));
   return json({ teams, approved: teams.length, max, open: teams.length < max }, 200, { 'Cache-Control': 'public, max-age=30' });
 }
 
@@ -138,25 +138,45 @@ async function captainPlayers(request, env) {
   if (c.res) return c.res;
   const players = cleanPlayers(body.players);
   if (players.error) return json(players, 400);
+  const clash = await phoneClash(env, body.id, players);
+  if (clash) return json(clash, 409);
   await env.DB.prepare('UPDATE teams SET players = ?, updated_at = ? WHERE id = ?').bind(JSON.stringify(players), new Date().toISOString(), body.id).run();
   return json({ ok: true, team: captainView({ ...c.team, players: JSON.stringify(players) }) });
 }
 
-/* Player list rules: names 2-40 characters, no duplicates, at most 15. Each player is {name}; more fields can be added later. */
+/* Player list rules: each player is {name, phone}. Names 2-40 characters and unique in the team,
+   a 10-digit mobile for everyone, no mobile twice in the team, at most 15 players. */
 function cleanPlayers(list) {
   if (!Array.isArray(list)) return { error: 'bad_players' };
-  const out = [], seen = new Set();
+  const out = [], seenName = new Set(), seenPhone = new Set();
   for (const p of list) {
     const name = cleanText(p && typeof p === 'object' ? p.name : p);
     if (name.length < 2) return { error: 'bad_player_name', name };
-    const key = name.toLowerCase();
-    if (seen.has(key)) return { error: 'duplicate_player', name };
-    seen.add(key);
-    out.push({ name });
+    const phone = String((p && p.phone) || '').replace(/\D/g, '').slice(-LIMITS.phoneDigits);
+    if (phone.length !== LIMITS.phoneDigits) return { error: 'bad_player_phone', name };
+    if (seenName.has(name.toLowerCase())) return { error: 'duplicate_player', name };
+    if (seenPhone.has(phone)) return { error: 'duplicate_phone', name, phone };
+    seenName.add(name.toLowerCase());
+    seenPhone.add(phone);
+    out.push({ name, phone });
   }
   if (out.length > LIMITS.maxPlayers) return { error: 'too_many_players', max: LIMITS.maxPlayers };
   return out;
 }
+
+/* A player's mobile may belong to only one team. Returns an error body naming the other team, or null. */
+async function phoneClash(env, teamId, players) {
+  const { results } = await env.DB.prepare("SELECT name, players FROM teams WHERE id != ? AND status != 'rejected'").bind(teamId).all();
+  const owner = new Map();
+  for (const t of results) for (const p of parsePlayers(t.players)) if (p.phone) owner.set(p.phone, t.name);
+  for (const p of players) {
+    if (owner.has(p.phone)) return { error: 'phone_in_other_team', name: p.name, phone: p.phone, team: owner.get(p.phone) };
+  }
+  return null;
+}
+
+/* Public lists show player names only; mobiles stay with the captain and the admin */
+function publicPlayers(s) { return parsePlayers(s).map(p => ({ name: p.name })); }
 
 /* ---------- admin ---------- */
 
@@ -223,6 +243,8 @@ async function adminUpdate(request, env) {
   if (body.players !== undefined) {
     const players = cleanPlayers(body.players);
     if (players.error) return json(players, 400);
+    const clash = await phoneClash(env, team.id, players);
+    if (clash) return json(clash, 409);
     next.players = JSON.stringify(players);
   }
   if (next.name.toLowerCase() !== team.name.toLowerCase() && team.status !== 'rejected') {

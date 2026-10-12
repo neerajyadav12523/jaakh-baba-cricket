@@ -258,7 +258,11 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .plist li span{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:600}
 .plist li button{font:inherit;font-size:.78rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:2px 8px;cursor:pointer}
 .addrow{display:flex;gap:8px;margin-top:10px}
-.addrow input{flex:1;min-width:0}
+.addrow{flex-wrap:wrap}
+.addrow input{flex:1 1 140px;min-width:0}
+.addrow #capNewPhone{flex:1 1 120px}
+.plist li .ph{color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums;font-weight:500}
+.plist li .need{color:var(--fresco);font-size:.75rem;font-weight:800}
 .dirty{color:var(--fresco);font-weight:700;font-size:.85rem}
 .adm-edit{display:grid;gap:8px;background:var(--sand);border:1px solid var(--line);border-radius:8px;padding:10px}
 .adm-edit textarea{min-height:140px}
@@ -431,6 +435,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <ol class="plist" id="capList"></ol>
       <form class="addrow" id="capAdd" novalidate>
         <input id="capNew" maxlength="40" placeholder="Player name">
+        <input id="capNewPhone" inputmode="numeric" maxlength="14" placeholder="Mobile number">
         <button class="btn sec" type="submit" data-i="capAddBtn">Add</button>
       </form>
       <div class="ctas">
@@ -554,18 +559,18 @@ const T = {
   eName:"A team with this name is already registered. Choose a different name.",eFull:"All places are filled. Registration is closed.",
   eMany:"Too many registrations from this connection. Try again in an hour.",eNet:"Couldn't reach the registration server. Check your internet and try again.",eLoad:"Couldn't load registered teams.",
   capH:"Captains: add your players",capHelp:"Choose your team and enter the 6-digit PIN you got on WhatsApp.",capTeam:"Your team",capPin:"PIN",capOpen:"Open my team",
-  capPick:"Choose your team",capNone:"No approved teams yet",capAddBtn:"Add",capNewPh:"Player name",capSave:"Save players",capClose:"Close",capDirty:"Unsaved changes",capRemove:"Remove",
+  capPick:"Choose your team",capNone:"No approved teams yet",capAddBtn:"Add",capNewPh:"Player name",capPhonePh:"Mobile number",capNeedPhone:"Mobile needed",capBadPhone:"Enter a 10-digit mobile number for {name}.",capPhoneDup:"Mobile {phone} is already used by {name} in this team.",capPhoneOther:"Mobile {phone} is already registered with team {team}. A player can play for only one team.",tmPlayersHint:"One player per line: Name, mobile",capSave:"Save players",capClose:"Close",capDirty:"Unsaved changes",capRemove:"Remove",
   capCountL:"{n} of {max} players",capSaved:"Players saved. Everyone can see them now.",capWrong:"Wrong PIN. {n} tries left.",capWrong0:"Wrong PIN.",
   capLocked:"Too many wrong PINs. Try again after {t}, or ask the organisers for a new PIN.",capNotApproved:"This team is not approved yet.",
   capDup:"{name} is already in the list.",capShort:"Enter a name with at least 2 letters.",capFull:"A team can have at most {max} players.",capNeedPin:"Choose your team and enter the 6-digit PIN.",
-  playersL:"Players ({n})",tmEdit:"Edit",tmSave:"Save",tmCancel:"Cancel",tmPlayersL:"Players, one per line",
+  playersL:"Players ({n})",tmEdit:"Edit",tmSave:"Save",tmCancel:"Cancel",tmPlayersL:"Players (Name, mobile on each line)",
 toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub token you use for Sponsors. It stays only in this browser.",tmKey:"GitHub token",tmBadKey:"That token cannot manage this site. Use your GitHub token with write access to jaakh-baba-cricket.",
   tmPending:"Waiting for approval",tmApproved:"Approved",tmRejected:"Rejected",tmApprove:"Approve",tmReject:"Reject",tmToPending:"Move to waiting",tmRestore:"Restore",
   tmNewPin:"New PIN",tmDelete:"Delete",tmConfirm:"Tap again to delete",tmPinL:"PIN",tmSendPin:"Send PIN on WhatsApp",tmPinNote:"Shown only now. Send it before leaving this page.",
   tmEmpty:"None",tmLock:"Lock",tmFull:"All 32 places are already approved.",tmDone:"Done.",
   pinMsg:"Jaakh Baba Cricket Pratiyogita – Season 6\n\nNamaste {captain} ji, your team {team} is approved.\n\nYour team PIN: {pin}\n\nYou will use this PIN on the website to add or remove your players. Keep it private.\n{site}\n\n— Organisers",
   fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile (WhatsApp)",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
-  fSubmit:"Prepare WhatsApp message",sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
+  sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
   spH:"Sponsors",spBecome:"Become a sponsor",spTotalL:"raised from {n} sponsors",spNone:"Sponsors for Season 6 will appear here.",
   spAdminH:"Manage sponsors",spTokenHelp:"Paste your GitHub access token for this site. It stays only in this browser.",spToken:"GitHub token",spUnlock:"Unlock",
@@ -619,18 +624,18 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   eName:"इस नाम की टीम पहले से रजिस्टर्ड है। कोई दूसरा नाम चुनें।",eFull:"सभी जगहें भर गई हैं। रजिस्ट्रेशन बंद है।",
   eMany:"इस कनेक्शन से बहुत ज़्यादा रजिस्ट्रेशन हुए। एक घंटे बाद कोशिश करें।",eNet:"रजिस्ट्रेशन सर्वर से जुड़ नहीं पाए। इंटरनेट जाँचकर फिर कोशिश करें।",eLoad:"रजिस्टर्ड टीमें लोड नहीं हुईं।",
   capH:"कप्तान: अपने खिलाड़ी जोड़ें",capHelp:"अपनी टीम चुनें और WhatsApp पर मिला 6 अंकों का PIN डालें।",capTeam:"आपकी टीम",capPin:"PIN",capOpen:"मेरी टीम खोलें",
-  capPick:"अपनी टीम चुनें",capNone:"अभी कोई टीम मंज़ूर नहीं",capAddBtn:"जोड़ें",capNewPh:"खिलाड़ी का नाम",capSave:"खिलाड़ी सेव करें",capClose:"बंद करें",capDirty:"बदलाव सेव नहीं हुए",capRemove:"हटाएँ",
+  capPick:"अपनी टीम चुनें",capNone:"अभी कोई टीम मंज़ूर नहीं",capAddBtn:"जोड़ें",capNewPh:"खिलाड़ी का नाम",capPhonePh:"मोबाइल नंबर",capNeedPhone:"मोबाइल चाहिए",capBadPhone:"{name} का 10 अंकों का मोबाइल नंबर डालें।",capPhoneDup:"मोबाइल {phone} इस टीम में {name} के नाम से पहले से है।",capPhoneOther:"मोबाइल {phone} पहले से टीम {team} में रजिस्टर्ड है। एक खिलाड़ी सिर्फ़ एक टीम से खेल सकता है।",tmPlayersHint:"हर लाइन में एक खिलाड़ी: नाम, मोबाइल",capSave:"खिलाड़ी सेव करें",capClose:"बंद करें",capDirty:"बदलाव सेव नहीं हुए",capRemove:"हटाएँ",
   capCountL:"{max} में से {n} खिलाड़ी",capSaved:"खिलाड़ी सेव हो गए। अब सबको दिखेंगे।",capWrong:"ग़लत PIN। {n} कोशिश बाकी।",capWrong0:"ग़लत PIN।",
   capLocked:"बहुत बार ग़लत PIN। {t} के बाद कोशिश करें, या आयोजकों से नया PIN लें।",capNotApproved:"यह टीम अभी मंज़ूर नहीं है।",
   capDup:"{name} पहले से सूची में है।",capShort:"कम से कम 2 अक्षर का नाम डालें।",capFull:"एक टीम में ज़्यादा से ज़्यादा {max} खिलाड़ी हो सकते हैं।",capNeedPin:"अपनी टीम चुनें और 6 अंकों का PIN डालें।",
-  playersL:"खिलाड़ी ({n})",tmEdit:"बदलें",tmSave:"सेव करें",tmCancel:"रद्द करें",tmPlayersL:"खिलाड़ी, हर लाइन में एक",
+  playersL:"खिलाड़ी ({n})",tmEdit:"बदलें",tmSave:"सेव करें",tmCancel:"रद्द करें",tmPlayersL:"खिलाड़ी (हर लाइन में नाम, मोबाइल)",
 toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHelp:"वही GitHub टोकन डालें जो प्रायोजकों के लिए इस्तेमाल करते हैं। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",tmKey:"GitHub टोकन",tmBadKey:"यह टोकन साइट नहीं बदल सकता। jaakh-baba-cricket पर लिखने की अनुमति वाला GitHub टोकन डालें।",
   tmPending:"मंज़ूरी बाकी",tmApproved:"मंज़ूर",tmRejected:"नामंज़ूर",tmApprove:"मंज़ूर करें",tmReject:"नामंज़ूर करें",tmToPending:"वापस बाकी में",tmRestore:"वापस लाएँ",
   tmNewPin:"नया PIN",tmDelete:"मिटाएँ",tmConfirm:"मिटाने के लिए फिर दबाएँ",tmPinL:"PIN",tmSendPin:"WhatsApp पर PIN भेजें",tmPinNote:"यह सिर्फ़ अभी दिखेगा। पेज छोड़ने से पहले भेज दें।",
   tmEmpty:"कोई नहीं",tmLock:"बंद करें",tmFull:"सभी 32 जगहें पहले से मंज़ूर हैं।",tmDone:"हो गया।",
   pinMsg:"जाख बाबा क्रिकेट प्रतियोगिता – सीज़न 6\n\nनमस्ते {captain} जी, आपकी टीम {team} मंज़ूर हो गई है।\n\nआपकी टीम का PIN: {pin}\n\nइस PIN से आप वेबसाइट पर खिलाड़ी जोड़ या हटा सकेंगे। इसे किसी को न बताएँ।\n{site}\n\n— आयोजक",
   fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
-  fSubmit:"WhatsApp संदेश तैयार करें",sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
+  sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
   spH:"प्रायोजक",spBecome:"प्रायोजक बनें",spTotalL:"{n} प्रायोजकों से सहयोग",spNone:"सीज़न 6 के प्रायोजक यहाँ दिखेंगे।",
   spAdminH:"प्रायोजक जोड़ें",spTokenHelp:"इस साइट का GitHub टोकन डालें। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",spToken:"GitHub टोकन",spUnlock:"खोलें",
@@ -875,14 +880,14 @@ function renderCapPicker(){
   const sel=document.getElementById("capTeam");const cur=sel.value||CAP.id;
   sel.innerHTML=TM.teams.length?`<option value="">${t("capPick")}</option>`+TM.teams.map(x=>`<option value="${esc(x.id)}">${esc(x.name)} · ${esc(x.village)}</option>`).join(""):`<option value="">${t("capNone")}</option>`;
   sel.value=TM.teams.some(x=>x.id===cur)?cur:"";
-  document.getElementById("capNew").placeholder=t("capNewPh");
+  document.getElementById("capNew").placeholder=t("capNewPh");document.getElementById("capNewPhone").placeholder=t("capPhonePh");
 }
 function renderCap(){
   const box=document.getElementById("capEditor");box.hidden=!CAP.team;document.getElementById("capLogin").hidden=!!CAP.team;
   if(!CAP.team)return;
   document.getElementById("capTitle").textContent=CAP.team.name;
   document.getElementById("capCount").textContent=t("capCountL").replace("{n}",CAP.players.length).replace("{max}",CAP.max);
-  document.getElementById("capList").innerHTML=CAP.players.map((p,i)=>`<li><span>${esc(p.name)}</span><button type="button" data-i2="${i}">${t("capRemove")}</button></li>`).join("");
+  document.getElementById("capList").innerHTML=CAP.players.map((p,i)=>`<li><span>${esc(p.name)} ${p.phone?`<span class="ph">· ${esc(p.phone)}</span>`:`<span class="need">${t("capNeedPhone")}</span>`}</span><button type="button" data-i2="${i}">${t("capRemove")}</button></li>`).join("");
   document.getElementById("capDirty").hidden=!CAP.dirty;
 }
 function capError(j){
@@ -892,6 +897,9 @@ function capError(j){
   if(j.error==="duplicate_player")return t("capDup").replace("{name}",j.name);
   if(j.error==="too_many_players")return t("capFull").replace("{max}",j.max);
   if(j.error==="bad_player_name")return t("capShort");
+  if(j.error==="bad_player_phone")return t("capBadPhone").replace("{name}",j.name);
+  if(j.error==="duplicate_phone")return t("capPhoneDup").replace("{phone}",j.phone).replace("{name}",j.name);
+  if(j.error==="phone_in_other_team")return t("capPhoneOther").replace("{phone}",j.phone).replace("{team}",j.team);
   return t("eNet");
 }
 async function capOpen(id,pin){
@@ -913,10 +921,14 @@ document.getElementById("capLogin").addEventListener("submit",e=>{
 document.getElementById("capAdd").addEventListener("submit",e=>{
   e.preventDefault();
   const inp=document.getElementById("capNew");const name=inp.value.replace(/\s+/g," ").trim();
+  const ph=document.getElementById("capNewPhone");const phone=ph.value.replace(/\D/g,"").slice(-10);
   if(name.length<2){capMsg(t("capShort"),"bad");return;}
+  if(phone.length!==10){capMsg(t("capBadPhone").replace("{name}",name),"bad");ph.focus();return;}
+  const same=CAP.players.find(p=>p.phone===phone);
+  if(same){capMsg(t("capPhoneDup").replace("{phone}",phone).replace("{name}",same.name),"bad");return;}
   if(CAP.players.some(p=>p.name.toLowerCase()===name.toLowerCase())){capMsg(t("capDup").replace("{name}",name),"bad");return;}
   if(CAP.players.length>=CAP.max){capMsg(t("capFull").replace("{max}",CAP.max),"bad");return;}
-  CAP.players.push({name});CAP.dirty=true;inp.value="";capMsg("");renderCap();inp.focus();
+  CAP.players.push({name,phone});CAP.dirty=true;inp.value="";ph.value="";capMsg("");renderCap();inp.focus();
 });
 document.getElementById("capList").addEventListener("click",e=>{
   const b=e.target.closest("button[data-i2]");if(!b)return;
@@ -953,11 +965,11 @@ function admRow(x){
   else acts=btn("pending",t("tmRestore"))+btn("delete",TM.confirmDel===x.id?t("tmConfirm"):t("tmDelete"));
   const pin=TM.pins[x.id];
   const pinHtml=pin?`<div class="pinbox"><span>${t("tmPinL")}</span><b class="num">${pin}</b><a class="btn pri" href="${esc(pinWaLink(x,pin))}" target="_blank" rel="noopener noreferrer">${t("tmSendPin")}</a><small class="note" style="margin:0">${t("tmPinNote")}</small></div>`:"";
-  const players=(x.players||[]).map(p=>p.name);
+  const players=(x.players||[]).map(p=>p.phone?p.name+", "+p.phone:p.name);
   const edit=TM.editId===x.id?`<form class="adm-edit" data-edit="${esc(x.id)}" novalidate>
       <div class="frow"><label>${t("fTeam")}<input name="name" maxlength="40" value="${esc(x.name)}"></label><label>${t("fVillage")}<input name="village" maxlength="40" value="${esc(x.village)}"></label></div>
       <div class="frow"><label>${t("fCaptain")}<input name="captain" maxlength="40" value="${esc(x.captain)}"></label><label>${t("fPhone")}<input name="phone" inputmode="numeric" maxlength="14" value="${esc(x.phone)}"></label></div>
-      <label>${t("tmPlayersL")}<textarea name="players">${esc(players.join("\n"))}</textarea></label>
+      <label>${t("tmPlayersL")}<small class="note" style="margin:0">${t("tmPlayersHint")}</small><textarea name="players">${esc(players.join("\n"))}</textarea></label>
       <div class="acts2"><button class="btn pri" type="submit">${t("tmSave")}</button><button class="btn sec" type="button" data-act="editcancel" data-id="${esc(x.id)}">${t("tmCancel")}</button></div>
     </form>`:"";
   const plist=players.length&&TM.editId!==x.id?`<span class="note" style="margin:0">${t("playersL").replace("{n}",players.length)}: ${esc(players.join(", "))}</span>`:"";
@@ -988,7 +1000,7 @@ document.getElementById("tmBoard").addEventListener("submit",async e=>{
   const form=e.target.closest("form[data-edit]");if(!form)return;
   e.preventDefault();
   const fd=new FormData(form);const id=form.dataset.edit;
-  const players=String(fd.get("players")||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(name=>({name}));
+  const players=String(fd.get("players")||"").split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(line=>{const m=line.match(/^(.*?)[,\s]+(\+?[\d\s-]{10,})$/);return m?{name:m[1].trim(),phone:m[2].replace(/\D/g,"").slice(-10)}:{name:line,phone:""};});
   tmMsg(t("sending"));
   try{
     const r=await api("/admin/update",{method:"POST",body:JSON.stringify({id,name:fd.get("name"),village:fd.get("village"),captain:fd.get("captain"),phone:fd.get("phone"),players})});
