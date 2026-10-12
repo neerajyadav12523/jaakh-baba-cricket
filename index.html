@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, sponsors, team registration.">
+<meta name="description" content="Jaakh Baba Cricket Pratiyogita Season 6 - Shimla, Khetri, Jhunjhunu. 1-9 Nov 2026. Fixtures, results, records, gallery, sponsors, expenses, team registration.">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -276,6 +276,47 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .adm-edit{display:grid;gap:8px;background:var(--sand);border:1px solid var(--line);border-radius:8px;padding:10px}
 .adm-edit textarea{min-height:140px}
 
+/* Gallery: season chips, photo/video grid, lightbox */
+.galgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.gi{position:relative;display:block;width:100%;aspect-ratio:1/1;max-width:100%;border:0;padding:0;border-radius:10px;overflow:hidden;background:var(--paper);cursor:pointer;font:inherit;color:inherit;text-align:left}
+.gi img{width:100%;height:100%;object-fit:cover;display:block}
+.gi .cap{position:absolute;left:0;right:0;bottom:0;padding:16px 8px 6px;font-size:.78rem;font-weight:700;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.7));overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gi .sn{position:absolute;top:6px;left:6px;font-size:.68rem;font-weight:800;background:var(--marigold);color:#1f2340;border-radius:6px;padding:1px 6px}
+.gi .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.gi .play i{width:48px;height:48px;border-radius:50%;background:rgba(168,50,43,.92);display:flex;align-items:center;justify-content:center}
+.gi .play i::after{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px}
+.gi.vlink{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;border:1px solid var(--line);padding:12px;text-align:center}
+.gi.vlink b{font-size:.9rem;overflow-wrap:anywhere}
+.gi.vlink span{font-size:.8rem;color:var(--label);font-weight:800}
+.gwrap{position:relative}
+.gwrap .del{position:absolute;top:6px;right:6px;z-index:2;font:inherit;font-size:.72rem;font-weight:800;border:1px solid #fff;color:#fff;background:rgba(168,50,43,.9);border-radius:6px;padding:1px 7px;cursor:pointer}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,12,24,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 48px) 16px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.lb[hidden]{display:none!important}
+.lb #lbBody{width:100%;max-width:1000px;display:flex;justify-content:center}
+.lb img{max-width:100%;max-height:78vh;border-radius:8px;object-fit:contain}
+.lb .vbox{width:100%;aspect-ratio:16/9;max-width:100%}
+.lb iframe{width:100%;height:100%;border:0;border-radius:8px}
+.lb p{margin:0;color:#fbf4e4;text-align:center;max-width:65ch}
+.lb .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);right:12px;font:inherit;font-size:1.6rem;line-height:1;width:40px;height:40px;border-radius:50%;border:1px solid rgba(251,244,228,.4);background:transparent;color:#fbf4e4;cursor:pointer}
+
+/* Expenses: totals, category bars, entries table */
+.exsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-top:18px}
+.exsum div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.exsum small{display:block;text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:800;color:var(--muted)}
+.exsum b{display:block;font-family:var(--display);font-size:1.7rem;font-variant-numeric:tabular-nums}
+.exsum .in b{color:#1f7a5a}.exsum .out b{color:var(--fresco)}
+.exsum span{font-size:.8rem;color:var(--muted)}
+.bars{display:grid;gap:8px;margin-top:12px;max-width:720px}
+.exbar{display:grid;grid-template-columns:minmax(110px,1fr) 2fr auto;gap:10px;align-items:center;font-size:.9rem}
+.exbar .track{height:12px;border-radius:6px;background:var(--line);overflow:hidden}
+.exbar .fill{display:block;height:100%;background:var(--fresco);border-radius:6px}
+.exbar b{font-variant-numeric:tabular-nums;text-align:right}
+.lbt td.in{color:#1f7a5a;font-weight:800}.lbt td.out{color:var(--fresco);font-weight:800}
+.lbt td .bill{font-size:.78rem;font-weight:800;border:1px solid var(--line);background:transparent;color:var(--label);border-radius:6px;padding:1px 7px;cursor:pointer}
+.lbt td .del{font:inherit;font-size:.72rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
+.lbt td small{display:block;color:var(--muted);white-space:normal}
+#exTable td:nth-child(2){white-space:normal;min-width:140px}
+
 /* Sponsor list (public) and the owner-only manager (#admin) */
 .sptotal{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-top:20px}
 .sptotal b{font-family:var(--display);font-size:1.8rem;color:var(--fresco)}
@@ -335,10 +376,12 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <a href="#history" data-i="navHistory">Hall of Fame</a>
     <a href="#format" data-i="navFormat">Format</a>
     <a href="#matches" data-i="navMatches">Matches</a>
+    <a href="#gallery" data-i="navGallery">Gallery</a>
     <a href="#rules" data-i="navRules">Rules & Awards</a>
     <a href="#visit" data-i="navVisit">For Spectators</a>
     <a href="#register" data-i="navRegister">Register</a>
     <a href="#sponsors" data-i="navSponsors">Sponsors</a>
+    <a href="#expenses" data-i="navExpenses">Expenses</a>
   </div>
 </nav>
 
@@ -508,12 +551,65 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <h3 class="sph3" data-i="spBecome">Become a sponsor</h3>
   <div class="tiers" id="tiers"></div>
 </div></section>
+<section id="gallery"><div class="wrap">
+  <h2 data-i="galH">Gallery</h2>
+  <p class="lead" data-i="galLead">Photos and videos from every season at the Girls School Ground.</p>
+  <div id="galAdmin" class="admin" hidden>
+    <h3 data-i="galAdminH">Add photos or a video</h3>
+    <form id="galForm" novalidate>
+      <div class="frow">
+        <label><span data-i="galType">Type</span><select id="galType"><option value="photo" data-i="galPhotos">Photos</option><option value="video" data-i="galVideo">Video link</option></select></label>
+        <label><span data-i="galSeason">Season</span><select id="galSeasonSel"></select></label>
+      </div>
+      <label><span data-i="galCaption">Caption (optional)</span><input id="galCaption" maxlength="80"></label>
+      <label id="galFilesWrap"><span data-i="galFiles">Photos (you can pick several)</span><input id="galFiles" type="file" accept="image/*" multiple></label>
+      <label id="galUrlWrap" hidden><span data-i="galUrl">YouTube, Instagram, Facebook or Drive link</span><input id="galUrl" type="url" inputmode="url" placeholder="https://"></label>
+      <div class="ctas" style="margin:0"><button class="btn pri" type="submit" id="galSave" data-i="galAdd">Add to gallery</button></div>
+    </form>
+    <div class="msg" id="galMsg" aria-live="polite"></div>
+  </div>
+  <div class="chips" id="galChips"></div>
+  <div class="galgrid" id="galGrid"></div>
+</div></section>
+
+<section id="expenses"><div class="wrap">
+  <h2 data-i="exH">Income and expenses</h2>
+  <p class="lead" data-i="exLead">Every rupee collected and spent on the tournament, shared openly with the village.</p>
+  <div id="exAdmin" class="admin" hidden>
+    <h3 data-i="exAdminH">Add an entry</h3>
+    <form id="exForm" novalidate>
+      <div class="frow">
+        <label><span data-i="exKind">Type</span><select id="exKind"><option value="expense" data-i="exExpense">Expense (money spent)</option><option value="income" data-i="exIncome">Income (money received)</option></select></label>
+        <label><span data-i="exDate">Date</span><input id="exDate" type="date"></label>
+      </div>
+      <div class="frow">
+        <label><span data-i="exItem">What for</span><input id="exItem" maxlength="60"></label>
+        <label><span data-i="exCat">Category</span><select id="exCat"></select></label>
+      </div>
+      <div class="frow">
+        <label><span data-i="exAmount">Amount (₹)</span><input id="exAmount" inputmode="numeric"></label>
+        <label><span data-i="exBill">Bill photo (optional)</span><input id="exBillFile" type="file" accept="image/*"></label>
+      </div>
+      <label><span data-i="exNote">Note (optional)</span><input id="exNote" maxlength="100"></label>
+      <div class="ctas" style="margin:0"><button class="btn pri" type="submit" id="exSave" data-i="exAdd">Add entry</button></div>
+    </form>
+    <div class="msg" id="exMsg" aria-live="polite"></div>
+  </div>
+  <div class="exsum" id="exSum"></div>
+  <h3 class="sph3" data-i="exByCat">Where the money went</h3>
+  <div class="bars" id="exBars"></div>
+  <h3 class="sph3" data-i="exAll">All entries</h3>
+  <div class="tw" style="margin-top:12px"><table class="lbt" id="exTable"></table></div>
+  <p class="note" data-i="exFoot">Sponsor money is taken from the Sponsors tab. Entries are added by the organising committee.</p>
+</div></section>
 </main>
 
 <footer><div class="wrap">
   <span data-i="footer">Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan</span>
   <a href="https://cricheroes.com/search/3/jaakh-baba" target="_blank" rel="noopener noreferrer" data-i="pastOn">Past seasons on CricHeroes</a>
 </div></footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo or video"><button class="x" id="lbClose" aria-label="Close">×</button><div id="lbBody"></div><p id="lbCap"></p></div>
 
 <script>
 /* ===== Settings the organisers edit ===== */
@@ -598,6 +694,19 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   fTeam:"Team name",fVillage:"Village",fCaptain:"Captain's name",fPhone:"Captain's mobile (WhatsApp)",fPlayers:"Squad size",fPrev:"Played earlier seasons?",yes:"Yes",no:"No, first time",
   sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
+  navGallery:"Gallery",navExpenses:"Expenses",
+  galH:"Gallery",galLead:"Photos and videos from every season at the Girls School Ground.",galAll:"All seasons",galEmpty:"Photos and videos will appear here.",
+  galAdminH:"Add photos or a video",galType:"Type",galPhotos:"Photos",galVideo:"Video",galSeason:"Season",galCaption:"Caption (optional)",
+  galFiles:"Photos (you can pick several)",galUrl:"YouTube, Instagram, Facebook or Drive link",galAdd:"Add to gallery",galWatch:"Watch",
+  galNeedPhoto:"Choose at least one photo.",galNeedUrl:"Paste a full video link starting with https://",galUploading:"Uploading photo {i} of {n}…",
+  exH:"Income and expenses",exLead:"Every rupee collected and spent on the tournament, shared openly with the village.",
+  exAdminH:"Add an entry",exKind:"Type",exExpense:"Expense (money spent)",exIncome:"Income (money received)",exDate:"Date",exItem:"What for",exCat:"Category",
+  exAmount:"Amount (₹)",exAmountShort:"Amount",exBill:"Bill photo (optional)",exNote:"Note (optional)",exAdd:"Add entry",exNeed:"Enter the date, what it was for and an amount.",
+  exCollected:"Collected",exSpent:"Spent",exBalance:"Balance",exFromSp:"{n} from sponsors",exEntries:"{n} expenses",exLeft:"Money left",exShort:"Spent more than collected",
+  exByCat:"Where the money went",exAll:"All entries",exNone:"No expenses added yet.",exEmpty:"Entries will appear here.",exBillBtn:"Bill",
+  exSponsorsRow:"Sponsors ({n}), see the Sponsors tab",exFoot:"Sponsor money is taken from the Sponsors tab. Entries are added by the organising committee.",
+  cat_ground:"Ground and pitch",cat_kit:"Balls and kit",cat_trophies:"Trophies and prizes",cat_officials:"Umpires and scorers",cat_food:"Food and water",
+  cat_tent:"Tent, sound and lights",cat_print:"Banners and printing",cat_stream:"Live streaming",cat_other:"Other",cat_fees:"Entry fees",cat_donation:"Donation",cat_otherIn:"Other income",cat_sponsors:"Sponsors",
   spH:"Sponsors",spBecome:"Become a sponsor",spTotalL:"raised from {n} sponsors",spNone:"Sponsors for Season 6 will appear here.",
   spAdminH:"Manage sponsors",spTokenHelp:"Paste your GitHub access token for this site. It stays only in this browser.",spToken:"GitHub token",spUnlock:"Unlock",
   spName:"Name",spAmount:"Amount (₹)",spNote:"Village or business (optional)",spPhoto:"Photo (optional)",spSave:"Add sponsor",spLogout:"Lock",spDel:"Remove",spEdit:"Edit",spUpdate:"Save changes",spCancel:"Cancel",spEditingL:"Editing {n}",spDropPhoto:"Remove current photo",spUpdated:"Updated. Everyone will see it within about a minute.",spGoneErr:"This sponsor was removed in the meantime.",
@@ -670,6 +779,19 @@ toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHel
   fTeam:"टीम का नाम",fVillage:"गाँव",fCaptain:"कप्तान का नाम",fPhone:"कप्तान का मोबाइल",fPlayers:"खिलाड़ियों की संख्या",fPrev:"पिछले सीज़न खेले हैं?",yes:"हाँ",no:"नहीं, पहली बार",
   sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
+  navGallery:"गैलरी",navExpenses:"खर्च",
+  galH:"गैलरी",galLead:"गर्ल्स स्कूल ग्राउंड पर हर सीज़न की फ़ोटो और वीडियो।",galAll:"सभी सीज़न",galEmpty:"फ़ोटो और वीडियो यहाँ दिखेंगे।",
+  galAdminH:"फ़ोटो या वीडियो जोड़ें",galType:"प्रकार",galPhotos:"फ़ोटो",galVideo:"वीडियो",galSeason:"सीज़न",galCaption:"कैप्शन (वैकल्पिक)",
+  galFiles:"फ़ोटो (एक साथ कई चुन सकते हैं)",galUrl:"YouTube, Instagram, Facebook या Drive लिंक",galAdd:"गैलरी में जोड़ें",galWatch:"देखें",
+  galNeedPhoto:"कम से कम एक फ़ोटो चुनें।",galNeedUrl:"https:// से शुरू होने वाला पूरा वीडियो लिंक डालें।",galUploading:"{n} में से फ़ोटो {i} अपलोड हो रही है…",
+  exH:"आमदनी और खर्च",exLead:"टूर्नामेंट में आया और खर्च हुआ हर रुपया, पूरे गाँव के सामने।",
+  exAdminH:"एंट्री जोड़ें",exKind:"प्रकार",exExpense:"खर्च (पैसा दिया)",exIncome:"आमदनी (पैसा मिला)",exDate:"तारीख़",exItem:"किसके लिए",exCat:"श्रेणी",
+  exAmount:"राशि (₹)",exAmountShort:"राशि",exBill:"बिल की फ़ोटो (वैकल्पिक)",exNote:"टिप्पणी (वैकल्पिक)",exAdd:"एंट्री जोड़ें",exNeed:"तारीख़, किसके लिए और राशि भरें।",
+  exCollected:"कुल आमदनी",exSpent:"कुल खर्च",exBalance:"बचत",exFromSp:"{n} प्रायोजकों से",exEntries:"{n} खर्च",exLeft:"बचा हुआ पैसा",exShort:"आमदनी से ज़्यादा खर्च",
+  exByCat:"पैसा कहाँ खर्च हुआ",exAll:"सभी एंट्री",exNone:"अभी कोई खर्च नहीं जोड़ा गया।",exEmpty:"एंट्री यहाँ दिखेंगी।",exBillBtn:"बिल",
+  exSponsorsRow:"प्रायोजक ({n}), प्रायोजक टैब देखें",exFoot:"प्रायोजकों की राशि प्रायोजक टैब से ली गई है। एंट्री आयोजन समिति जोड़ती है।",
+  cat_ground:"ग्राउंड और पिच",cat_kit:"गेंद और सामान",cat_trophies:"ट्रॉफी और इनाम",cat_officials:"अंपायर और स्कोरर",cat_food:"खाना और पानी",
+  cat_tent:"टेंट, साउंड और लाइट",cat_print:"बैनर और छपाई",cat_stream:"लाइव स्ट्रीमिंग",cat_other:"अन्य",cat_fees:"एंट्री फीस",cat_donation:"दान",cat_otherIn:"अन्य आमदनी",cat_sponsors:"प्रायोजक",
   spH:"प्रायोजक",spBecome:"प्रायोजक बनें",spTotalL:"{n} प्रायोजकों से सहयोग",spNone:"सीज़न 6 के प्रायोजक यहाँ दिखेंगे।",
   spAdminH:"प्रायोजक जोड़ें",spTokenHelp:"इस साइट का GitHub टोकन डालें। यह सिर्फ़ इसी ब्राउज़र में रहेगा।",spToken:"GitHub टोकन",spUnlock:"खोलें",
   spName:"नाम",spAmount:"राशि (₹)",spNote:"गाँव या दुकान (वैकल्पिक)",spPhoto:"फ़ोटो (वैकल्पिक)",spSave:"प्रायोजक जोड़ें",spLogout:"बंद करें",spDel:"हटाएँ",spEdit:"बदलें",spUpdate:"बदलाव सेव करें",spCancel:"रद्द करें",spEditingL:"{n} बदल रहे हैं",spDropPhoto:"मौजूदा फ़ोटो हटाएँ",spUpdated:"बदल गया। लगभग एक मिनट में सबको दिखेगा।",spGoneErr:"यह प्रायोजक इस बीच हटा दिया गया।",
@@ -860,7 +982,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
+  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();renderGallery();renderExpenses();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
 }
 function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
@@ -1105,7 +1227,7 @@ function renderSponsors(){
 }
 async function loadSponsors(){
   try{const r=await fetch("sponsors.json?t="+Date.now(),{cache:"no-store"});if(r.ok){const j=await r.json();SP.list=j.sponsors||[];}}catch(e){}
-  renderSponsors();
+  renderSponsors();renderExpenses();
 }
 /* GitHub contents API helpers (owner only) */
 const gh=(path,opt={})=>fetch("https://api.github.com/repos/"+CONFIG.repo+(path?"/"+path:""),{...opt,headers:{"Authorization":"Bearer "+SP.token,"Accept":"application/vnd.github+json",...(opt.headers||{})}});
@@ -1147,7 +1269,7 @@ async function unlock(token){
   if(!TM.key&&!document.getElementById("tmAdmin").hidden)unlockTeams(token);
   document.getElementById("spLogin").hidden=true;document.getElementById("spEditor").hidden=false;spMsg("");
   try{SP.list=(await ghGetJson()).data.sponsors||[];}catch(e){}
-  renderSponsors();return true;
+  renderSponsors();renderGallery();renderExpenses();return true;
 }
 function initAdmin(){
   SP.admin=true;document.getElementById("spAdmin").hidden=false;
@@ -1156,7 +1278,7 @@ function initAdmin(){
 }
 document.getElementById("spTokenForm").addEventListener("submit",e=>{e.preventDefault();const v=document.getElementById("spToken").value.trim();if(v)unlock(v);});
 document.getElementById("spLogout").addEventListener("click",()=>{SP.editId=null;document.getElementById("spCancel").hidden=true;document.getElementById("spEditing").hidden=true;document.getElementById("spDropWrap").hidden=true;document.getElementById("spSave").textContent=t("spSave");try{localStorage.removeItem("jb-gh-token");}catch(e){}SP.token="";
-  document.getElementById("spEditor").hidden=true;document.getElementById("spLogin").hidden=false;document.getElementById("spToken").value="";renderSponsors();});
+  document.getElementById("spEditor").hidden=true;document.getElementById("spLogin").hidden=false;document.getElementById("spToken").value="";renderSponsors();renderGallery();renderExpenses();});
 document.getElementById("spPhoto").addEventListener("change",e=>{const f=e.target.files[0],p=document.getElementById("spPrev");
   if(f){p.src=URL.createObjectURL(f);p.hidden=false;}else p.hidden=true;});
 document.getElementById("spForm").addEventListener("submit",async e=>{
@@ -1233,6 +1355,172 @@ document.getElementById("spList").addEventListener("click",async e=>{
   }catch(err){spMsg(t("spFail").replace("{e}",err.message),"bad");}
 });
 
+/* ===== Gallery and Expenses: public data in gallery.json / expenses.json; the owner edits them with the GitHub token (#admin) ===== */
+const GAL={items:[],season:0,confirm:null};
+const EXP={entries:[],confirm:null};
+const EX_CATS={expense:["ground","kit","trophies","officials","food","tent","print","stream","other"],income:["fees","donation","other"]};
+const isOwner=()=>SP.admin&&!!SP.token;
+function msgIn(id,text,kind){const m=document.getElementById(id);m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
+async function loadJson(path){try{const r=await fetch(path+"?t="+Date.now(),{cache:"no-store"});if(r.ok)return await r.json();}catch(e){}return null;}
+async function ghGetData(path,empty){
+  const r=await gh("contents/"+path+"?ref="+CONFIG.branch);
+  if(r.status===404)return {sha:null,data:empty};
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  const j=await r.json();return {sha:j.sha,data:JSON.parse(unb64(j.content))};
+}
+/* Shrinks a photo so its longest side is at most `max` px; returns base64 JPEG without the data: prefix */
+function resizePhoto(file,max,quality){
+  return new Promise((ok,fail)=>{
+    const img=new Image();const url=URL.createObjectURL(file);
+    img.onload=()=>{const k=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement("canvas");
+      c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url);ok(c.toDataURL("image/jpeg",quality).split(",")[1]);};
+    img.onerror=()=>fail(new Error("photo could not be read"));img.src=url;
+  });
+}
+function ytId(u){const m=String(u||"").match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/))([\w-]{11})/);return m?m[1]:"";}
+const newId=p=>p+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+
+/* --- Lightbox (photos, YouTube videos, bills) --- */
+function openLightbox(html,caption){
+  document.getElementById("lbBody").innerHTML=html;document.getElementById("lbCap").textContent=caption||"";
+  document.getElementById("lb").hidden=false;document.getElementById("lbClose").focus();
+}
+function closeLightbox(){document.getElementById("lb").hidden=true;document.getElementById("lbBody").innerHTML="";}
+document.getElementById("lbClose").addEventListener("click",closeLightbox);
+document.getElementById("lb").addEventListener("click",e=>{if(e.target.id==="lb")closeLightbox();});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("lb").hidden)closeLightbox();});
+
+/* --- Gallery --- */
+function renderGallery(){
+  document.getElementById("galAdmin").hidden=!isOwner();
+  document.getElementById("galSeasonSel").innerHTML=[6,5,4,3,2,1].map(n=>`<option value="${n}">${t("season")} ${n} · ${2020+n}</option>`).join("");
+  document.getElementById("galChips").innerHTML=[0,6,5,4,3,2,1].map(n=>`<button data-s="${n}" aria-pressed="${GAL.season===n}">${n?t("season")+" "+n:t("galAll")}</button>`).join("");
+  const items=GAL.items.filter(x=>!GAL.season||x.season===GAL.season).sort((a,b)=>b.season-a.season||String(b.added).localeCompare(String(a.added)));
+  const box=document.getElementById("galGrid");
+  if(!items.length){box.innerHTML=`<p class="note">${t("galEmpty")}</p>`;return;}
+  box.innerHTML=items.map(x=>{
+    const del=isOwner()?`<button class="del" data-gdel="${esc(x.id)}">${GAL.confirm===x.id?t("spConfirm"):t("spDel")}</button>`:"";
+    const sn=`<span class="sn">S${x.season}</span>`,cap=x.caption?`<span class="cap">${esc(x.caption)}</span>`:"";
+    let tile;
+    if(x.type==="photo")tile=`<button class="gi" data-gopen="${esc(x.id)}"><img src="${esc(x.thumb||x.src)}" alt="${esc(x.caption||"")}" loading="lazy">${sn}${cap}</button>`;
+    else if(x.yt)tile=`<button class="gi" data-gopen="${esc(x.id)}"><img src="https://i.ytimg.com/vi/${esc(x.yt)}/hqdefault.jpg" alt="${esc(x.caption||"")}" loading="lazy"><span class="play"><i></i></span>${sn}${cap}</button>`;
+    else tile=`<a class="gi vlink" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${sn}<b>${esc(x.caption||t("galVideo"))}</b><span>${t("galWatch")} ↗</span></a>`;
+    return `<div class="gwrap">${del}${tile}</div>`;
+  }).join("");
+}
+async function loadGallery(){const j=await loadJson("gallery.json");if(j)GAL.items=j.items||[];renderGallery();}
+document.getElementById("galChips").addEventListener("click",e=>{const b=e.target.closest("button[data-s]");if(!b)return;GAL.season=Number(b.dataset.s);renderGallery();});
+document.getElementById("galGrid").addEventListener("click",async e=>{
+  const o=e.target.closest("[data-gopen]");
+  if(o){const x=GAL.items.find(i=>i.id===o.dataset.gopen);if(!x)return;
+    if(x.type==="photo")openLightbox(`<img src="${esc(x.src)}" alt="${esc(x.caption||"")}">`,x.caption);
+    else openLightbox(`<div class="vbox"><iframe src="https://www.youtube-nocookie.com/embed/${esc(x.yt)}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="${esc(x.caption||"Video")}"></iframe></div>`,x.caption);
+    return;}
+  const d=e.target.closest("[data-gdel]");if(!d||!isOwner())return;
+  const id=d.dataset.gdel;
+  if(GAL.confirm!==id){GAL.confirm=id;renderGallery();return;}
+  GAL.confirm=null;msgIn("galMsg",t("spSaving"));
+  try{
+    const cur=await ghGetData("gallery.json",{items:[]});const gone=(cur.data.items||[]).find(x=>x.id===id);
+    const items=(cur.data.items||[]).filter(x=>x.id!==id);
+    await ghPut("gallery.json",b64(JSON.stringify({items},null,1)),"Gallery: remove "+(gone&&gone.caption||id),cur.sha);
+    if(gone&&gone.src)await ghDelete(gone.src,"Gallery: remove photo");
+    if(gone&&gone.thumb)await ghDelete(gone.thumb,"Gallery: remove thumbnail");
+    GAL.items=items;renderGallery();msgIn("galMsg",t("spRemoved"),"ok");
+  }catch(err){msgIn("galMsg",t("spFail").replace("{e}",err.message),"bad");}
+});
+document.getElementById("galType").addEventListener("change",e=>{const v=e.target.value==="video";document.getElementById("galFilesWrap").hidden=v;document.getElementById("galUrlWrap").hidden=!v;});
+document.getElementById("galForm").addEventListener("submit",async e=>{
+  e.preventDefault();if(!isOwner())return;
+  const type=document.getElementById("galType").value,season=Number(document.getElementById("galSeasonSel").value);
+  const caption=document.getElementById("galCaption").value.trim().slice(0,80);
+  const files=[...document.getElementById("galFiles").files],url=document.getElementById("galUrl").value.trim();
+  if(type==="photo"&&!files.length){msgIn("galMsg",t("galNeedPhoto"),"bad");return;}
+  if(type==="video"&&!/^https?:\/\/\S+$/i.test(url)){msgIn("galMsg",t("galNeedUrl"),"bad");return;}
+  const btn=document.getElementById("galSave");btn.disabled=true;
+  try{
+    const added=new Date().toISOString(),add=[];
+    if(type==="photo"){
+      for(let i=0;i<files.length;i++){
+        msgIn("galMsg",t("galUploading").replace("{i}",i+1).replace("{n}",files.length));
+        const id=newId("g"),full=await resizePhoto(files[i],1600,0.82),thumb=await resizePhoto(files[i],480,0.75);
+        await ghPut("gallery/"+id+".jpg",full,"Gallery photo, season "+season);
+        await ghPut("gallery/"+id+"-t.jpg",thumb,"Gallery thumbnail");
+        add.push({id,type:"photo",season,caption,src:"gallery/"+id+".jpg",thumb:"gallery/"+id+"-t.jpg",added});
+      }
+    } else add.push({id:newId("v"),type:"video",season,caption,url,yt:ytId(url),added});
+    msgIn("galMsg",t("spSaving"));
+    const cur=await ghGetData("gallery.json",{items:[]});const items=(cur.data.items||[]).concat(add);
+    await ghPut("gallery.json",b64(JSON.stringify({items},null,1)),"Gallery: add "+add.length+" item(s), season "+season,cur.sha);
+    GAL.items=items;GAL.season=season;renderGallery();e.target.reset();document.getElementById("galType").dispatchEvent(new Event("change"));
+    msgIn("galMsg",t("spSaved"),"ok");
+  }catch(err){msgIn("galMsg",t("spFail").replace("{e}",err.message),"bad");}
+  btn.disabled=false;
+});
+
+/* --- Income and expenses --- */
+function exCatName(kind,c){return t("cat_"+(kind==="income"&&c==="other"?"otherIn":c))||c;}
+function fillExCats(){const k=document.getElementById("exKind").value,sel=document.getElementById("exCat"),cur=sel.value;
+  sel.innerHTML=EX_CATS[k].map(c=>`<option value="${c}">${exCatName(k,c)}</option>`).join("");if(EX_CATS[k].includes(cur))sel.value=cur;}
+function shortDate(iso){if(!iso)return "";const d=new Date(iso+"T00:00:00");return `${d.getDate()} ${t("months")[d.getMonth()]} ${d.getFullYear()}`;}
+function renderExpenses(){
+  document.getElementById("exAdmin").hidden=!isOwner();fillExCats();
+  const sponsors=SP.list.reduce((n,x)=>n+Number(x.amount||0),0);
+  const inc=EXP.entries.filter(x=>x.kind==="income"),out=EXP.entries.filter(x=>x.kind==="expense");
+  const collected=sponsors+inc.reduce((n,x)=>n+x.amount,0),spent=out.reduce((n,x)=>n+x.amount,0),bal=collected-spent;
+  document.getElementById("exSum").innerHTML=
+    `<div class="in"><small>${t("exCollected")}</small><b>${inr(collected)}</b><span>${t("exFromSp").replace("{n}",inr(sponsors))}</span></div>`+
+    `<div class="out"><small>${t("exSpent")}</small><b>${inr(spent)}</b><span>${t("exEntries").replace("{n}",out.length)}</span></div>`+
+    `<div><small>${t("exBalance")}</small><b>${bal<0?"−":""}${inr(Math.abs(bal))}</b><span>${bal<0?t("exShort"):t("exLeft")}</span></div>`;
+  const byCat={};for(const x of out)byCat[x.category]=(byCat[x.category]||0)+x.amount;
+  const cats=Object.entries(byCat).sort((a,b)=>b[1]-a[1]),max=cats.length?cats[0][1]:1;
+  document.getElementById("exBars").innerHTML=cats.length?cats.map(([c,v])=>`<div class="exbar"><span>${exCatName("expense",c)}</span><span class="track"><span class="fill" style="width:${Math.max(2,Math.round(v*100/max))}%"></span></span><b>${inr(v)}</b></div>`).join(""):`<p class="note">${t("exNone")}</p>`;
+  const rows=[...EXP.entries].sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.added).localeCompare(String(a.added)));
+  const head=`<thead><tr><th>${t("exDate")}</th><th>${t("exItem")}</th><th>${t("exCat")}</th><th>${t("exAmountShort")}</th><th></th></tr></thead>`;
+  const spRow=sponsors?`<tr><td>–</td><td>${t("exSponsorsRow").replace("{n}",SP.list.length)}</td><td>${t("cat_sponsors")}</td><td class="in">+${inr(sponsors)}</td><td></td></tr>`:"";
+  document.getElementById("exTable").innerHTML=head+"<tbody>"+spRow+rows.map(x=>`<tr><td class="num">${esc(shortDate(x.date))}</td><td>${esc(x.item)}${x.note?`<small>${esc(x.note)}</small>`:""}</td><td>${exCatName(x.kind,x.category)}</td><td class="${x.kind==="income"?"in":"out"}">${x.kind==="income"?"+":"−"}${inr(x.amount)}</td><td>${x.bill?`<button class="bill" data-bill="${esc(x.id)}">${t("exBillBtn")}</button> `:""}${isOwner()?`<button class="del" data-exdel="${esc(x.id)}">${EXP.confirm===x.id?t("spConfirm"):t("spDel")}</button>`:""}</td></tr>`).join("")+"</tbody>";
+  if(!rows.length&&!sponsors)document.getElementById("exTable").innerHTML=`<tbody><tr><td>${t("exEmpty")}</td></tr></tbody>`;
+}
+async function loadExpenses(){const j=await loadJson("expenses.json");if(j)EXP.entries=j.entries||[];renderExpenses();}
+document.getElementById("exKind").addEventListener("change",fillExCats);
+document.getElementById("exTable").addEventListener("click",async e=>{
+  const b=e.target.closest("[data-bill]");
+  if(b){const x=EXP.entries.find(i=>i.id===b.dataset.bill);if(x)openLightbox(`<img src="${esc(x.bill)}" alt="">`,x.item+" · "+inr(x.amount));return;}
+  const d=e.target.closest("[data-exdel]");if(!d||!isOwner())return;
+  const id=d.dataset.exdel;
+  if(EXP.confirm!==id){EXP.confirm=id;renderExpenses();return;}
+  EXP.confirm=null;msgIn("exMsg",t("spSaving"));
+  try{
+    const cur=await ghGetData("expenses.json",{entries:[]});const gone=(cur.data.entries||[]).find(x=>x.id===id);
+    const entries=(cur.data.entries||[]).filter(x=>x.id!==id);
+    await ghPut("expenses.json",b64(JSON.stringify({entries},null,1)),"Expenses: remove "+(gone?gone.item:id),cur.sha);
+    if(gone&&gone.bill)await ghDelete(gone.bill,"Expenses: remove bill photo");
+    EXP.entries=entries;renderExpenses();msgIn("exMsg",t("spRemoved"),"ok");
+  }catch(err){msgIn("exMsg",t("spFail").replace("{e}",err.message),"bad");}
+});
+document.getElementById("exForm").addEventListener("submit",async e=>{
+  e.preventDefault();if(!isOwner())return;
+  const kind=document.getElementById("exKind").value,date=document.getElementById("exDate").value,item=document.getElementById("exItem").value.trim().slice(0,60);
+  const category=document.getElementById("exCat").value,note=document.getElementById("exNote").value.trim().slice(0,100);
+  const amount=Number(document.getElementById("exAmount").value.replace(/[^0-9.]/g,""));
+  if(!date||item.length<2||!(amount>0)){msgIn("exMsg",t("exNeed"),"bad");return;}
+  const btn=document.getElementById("exSave");btn.disabled=true;msgIn("exMsg",t("spSaving"));
+  try{
+    const id=newId("e");let bill="";
+    const file=document.getElementById("exBillFile").files[0];
+    if(file){const data=await resizePhoto(file,1600,0.8);await ghPut("expenses/"+id+".jpg",data,"Bill photo: "+item);bill="expenses/"+id+".jpg";}
+    const cur=await ghGetData("expenses.json",{entries:[]});
+    const entries=(cur.data.entries||[]).concat([{id,kind,date,item,category,amount,note,bill,added:new Date().toISOString()}]);
+    await ghPut("expenses.json",b64(JSON.stringify({entries},null,1)),(kind==="income"?"Income: ":"Expense: ")+item+" "+amount,cur.sha);
+    EXP.entries=entries;renderExpenses();
+    document.getElementById("exItem").value="";document.getElementById("exAmount").value="";document.getElementById("exNote").value="";document.getElementById("exBillFile").value="";
+    msgIn("exMsg",t("spSaved"),"ok");
+  }catch(err){msgIn("exMsg",t("spFail").replace("{e}",err.message),"bad");}
+  btn.disabled=false;
+});
+try{document.getElementById("exDate").value=new Date(Date.now()+5.5*3600e3).toISOString().slice(0,10);}catch(e){}
+
 /* Tabs: only the clicked section is shown */
 const DEFAULT_TAB="history";
 const links=[...document.querySelectorAll("#navlinks a")];
@@ -1254,6 +1542,8 @@ document.addEventListener("click",e=>{
 showTab(location.hash.slice(1),false);
 loadSponsors();
 loadTeams();
+loadGallery();
+loadExpenses();
 addEventListener("hashchange",()=>showTab(location.hash.slice(1),false));
 
 applyLang();
