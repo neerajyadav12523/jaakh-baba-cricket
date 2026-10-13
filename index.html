@@ -297,7 +297,9 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .lb[hidden]{display:none!important}
 .lb #lbBody{width:100%;max-width:1000px;display:flex;justify-content:center}
 .lb img{max-width:100%;max-height:78vh;border-radius:8px;object-fit:contain}
-.lb .vbox{width:100%;aspect-ratio:16/9;max-width:100%}
+.lb .vbox{width:100%;aspect-ratio:16/9;max-width:100%;max-height:80vh}
+.lb .vbox:has(video){aspect-ratio:auto;display:flex;justify-content:center}
+.lb .vbox video{width:auto;max-width:100%;max-height:80vh;height:auto}
 .lb iframe{width:100%;height:100%;border:0;border-radius:8px}
 .lb p{margin:0;color:#fbf4e4;text-align:center;max-width:65ch}
 .lb .x{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);right:12px;font:inherit;font-size:1.6rem;line-height:1;width:40px;height:40px;border-radius:50%;border:1px solid rgba(251,244,228,.4);background:transparent;color:#fbf4e4;cursor:pointer}
@@ -1406,7 +1408,7 @@ function renderGallery(){
     const sn=`<span class="sn">${x.season?"S"+x.season:t("galEarlierShort")}</span>`,cap=x.caption?`<span class="cap">${esc(x.caption)}</span>`:"";
     let tile;
     if(x.type==="photo")tile=`<button class="gi" data-gopen="${esc(x.id)}"><img src="${esc(x.thumb||x.src)}" alt="${esc(x.caption||"")}" loading="lazy">${sn}${cap}</button>`;
-    else if(x.src)tile=`<button class="gi vfile" data-gopen="${esc(x.id)}"><span class="play"><i></i></span>${sn}<span class="cap">${esc(x.caption||t("galVideo"))}</span></button>`;
+    else if(x.src)tile=`<button class="gi vfile" data-gopen="${esc(x.id)}">${x.thumb?`<img src="${esc(x.thumb)}" alt="${esc(x.caption||"")}" loading="lazy">`:""}<span class="play"><i></i></span>${sn}<span class="cap">${esc(x.caption||t("galVideo"))}</span></button>`;
     else if(x.yt)tile=`<button class="gi" data-gopen="${esc(x.id)}"><img src="https://i.ytimg.com/vi/${esc(x.yt)}/hqdefault.jpg" alt="${esc(x.caption||"")}" loading="lazy"><span class="play"><i></i></span>${sn}${cap}</button>`;
     else tile=`<a class="gi vlink" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${sn}<b>${esc(x.caption||t("galVideo"))}</b><span>${t("galWatch")} ↗</span></a>`;
     return `<div class="gwrap">${del}${tile}</div>`;
@@ -1418,7 +1420,7 @@ document.getElementById("galGrid").addEventListener("click",async e=>{
   const o=e.target.closest("[data-gopen]");
   if(o){const x=GAL.items.find(i=>i.id===o.dataset.gopen);if(!x)return;
     if(x.type==="photo")openLightbox(`<img src="${esc(x.src)}" alt="${esc(x.caption||"")}">`,x.caption);
-    else if(x.src)openLightbox(`<div class="vbox"><video src="${esc(x.src)}" controls autoplay playsinline preload="auto"></video></div>`,x.caption);
+    else if(x.src)openLightbox(`<div class="vbox"><video src="${esc(x.src)}"${x.thumb?` poster="${esc(x.thumb)}"`:""} controls autoplay playsinline preload="auto"></video></div>`,x.caption);
     else openLightbox(`<div class="vbox"><iframe src="https://www.youtube-nocookie.com/embed/${esc(x.yt)}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="${esc(x.caption||"Video")}"></iframe></div>`,x.caption);
     return;}
   const d=e.target.closest("[data-gdel]");if(!d||!isOwner())return;

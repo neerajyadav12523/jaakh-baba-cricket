@@ -296,7 +296,8 @@
    "src": "gallery/e033.mp4",
    "url": "",
    "yt": "",
-   "added": "2026-10-12T09:16:51Z"
+   "added": "2026-10-12T09:16:51Z",
+   "thumb": "gallery/e033-t.jpg"
   },
   {
    "id": "e034",
@@ -306,7 +307,8 @@
    "src": "gallery/e034.mp4",
    "url": "",
    "yt": "",
-   "added": "2026-10-12T09:16:51Z"
+   "added": "2026-10-12T09:16:51Z",
+   "thumb": "gallery/e034-t.jpg"
   },
   {
    "id": "e035",
@@ -316,7 +318,8 @@
    "src": "gallery/e035.mp4",
    "url": "",
    "yt": "",
-   "added": "2026-10-12T09:16:51Z"
+   "added": "2026-10-12T09:16:51Z",
+   "thumb": "gallery/e035-t.jpg"
   },
   {
    "id": "e036",
@@ -326,7 +329,19 @@
    "src": "gallery/e036.mp4",
    "url": "",
    "yt": "",
-   "added": "2026-10-12T09:16:51Z"
+   "added": "2026-10-12T09:16:51Z",
+   "thumb": "gallery/e036-t.jpg"
+  },
+  {
+   "id": "e037",
+   "type": "video",
+   "season": 6,
+   "caption": "सीज़न 6 प्रोमो · 1 नवंबर से",
+   "src": "gallery/e037.mp4",
+   "thumb": "gallery/e037-t.jpg",
+   "url": "",
+   "yt": "",
+   "added": "2026-10-13T10:49:17.367Z"
   }
  ]
 }
