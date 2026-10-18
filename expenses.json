@@ -32,6 +32,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-18T07:22:29.565Z"
+  },
+  {
+   "id": "emvdi3a9b7k2",
+   "kind": "expense",
+   "date": "2026-10-14",
+   "item": "Pitch Mat",
+   "category": "ground",
+   "amount": 7700,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-18T07:25:10.038Z"
   }
  ]
 }
