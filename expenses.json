@@ -21,6 +21,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-18T07:21:10.581Z"
+  },
+  {
+   "id": "emvdhzujnswt",
+   "kind": "expense",
+   "date": "2026-10-17",
+   "item": "Kali ka katta - 5",
+   "category": "ground",
+   "amount": 500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-18T07:22:29.565Z"
   }
  ]
 }
