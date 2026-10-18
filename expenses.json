@@ -1,3 +1,15 @@
 {
- "entries": []
+ "entries": [
+  {
+   "id": "emvdhwq3xobm",
+   "kind": "expense",
+   "date": "2026-10-14",
+   "item": "Rotavator in ground",
+   "category": "ground",
+   "amount": 4000,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-18T07:20:04.159Z"
+  }
+ ]
 }
