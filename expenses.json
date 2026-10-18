@@ -10,6 +10,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-18T07:20:04.159Z"
+  },
+  {
+   "id": "emvdhy5tcevp",
+   "kind": "expense",
+   "date": "2026-10-18",
+   "item": "Roller in ground",
+   "category": "ground",
+   "amount": 7000,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-18T07:21:10.581Z"
   }
  ]
 }
