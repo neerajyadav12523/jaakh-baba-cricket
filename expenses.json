@@ -14,13 +14,14 @@
   {
    "id": "emvdhy5tcevp",
    "kind": "expense",
-   "date": "2026-10-18",
+   "date": "2026-10-16",
    "item": "Roller in ground",
    "category": "ground",
    "amount": 7000,
    "note": "",
    "bill": "",
-   "added": "2026-10-18T07:21:10.581Z"
+   "added": "2026-10-18T07:21:10.581Z",
+   "updated": "2026-10-19T04:35:46.448Z"
   },
   {
    "id": "emvdhzujnswt",
