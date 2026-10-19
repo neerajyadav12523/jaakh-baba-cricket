@@ -318,6 +318,8 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .exbar b{font-variant-numeric:tabular-nums;text-align:right}
 .lbt td.in{color:#1f7a5a;font-weight:800}.lbt td.out{color:var(--fresco);font-weight:800}
 .lbt td .bill{font-size:.78rem;font-weight:800;border:1px solid var(--line);background:transparent;color:var(--label);border-radius:6px;padding:1px 7px;cursor:pointer}
+.lbt td .ed{font:inherit;font-size:.72rem;font-weight:800;border:1px solid var(--line);color:var(--label);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
+.lbt tr.editing td{background:var(--sand)}
 .lbt td .del{font:inherit;font-size:.72rem;font-weight:800;border:1px solid var(--fresco);color:var(--fresco);background:transparent;border-radius:6px;padding:1px 7px;cursor:pointer}
 .lbt td small{display:block;color:var(--muted);white-space:normal}
 #exTable td:nth-child(2){white-space:normal;min-width:140px}
@@ -579,7 +581,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <h2 data-i="exH">Income and expenses</h2>
   <p class="lead" data-i="exLead">Every rupee collected and spent on the tournament, shared openly with the village.</p>
   <div id="exAdmin" class="admin" hidden>
-    <h3 data-i="exAdminH">Add an entry</h3>
+    <h3 id="exFormH" data-i="exAdminH">Add an entry</h3>
     <form id="exForm" novalidate>
       <div class="frow">
         <label><span data-i="exKind">Type</span><select id="exKind"><option value="expense" data-i="exExpense">Expense (money spent)</option><option value="income" data-i="exIncome">Income (money received)</option></select></label>
@@ -594,7 +596,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <label><span data-i="exBill">Bill photo (optional)</span><input id="exBillFile" type="file" accept="image/*"></label>
       </div>
       <label><span data-i="exNote">Note (optional)</span><input id="exNote" maxlength="100"></label>
-      <div class="ctas" style="margin:0"><button class="btn pri" type="submit" id="exSave" data-i="exAdd">Add entry</button></div>
+      <label id="exDropWrap" hidden style="display:flex;align-items:center;gap:8px;font-weight:500"><input id="exDropBill" type="checkbox" style="width:auto"><span data-i="exDropBill">Remove current bill photo</span></label>
+      <div class="ctas" style="margin:0"><button class="btn pri" type="submit" id="exSave" data-i="exAdd">Add entry</button><button class="btn sec" type="button" id="exCancel" data-i="exCancel" hidden>Cancel</button></div>
     </form>
     <div class="msg" id="exMsg" aria-live="polite"></div>
   </div>
@@ -704,7 +707,7 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   galNeedPhoto:"Choose at least one photo.",galNeedUrl:"Paste a full video link starting with https://",galUploading:"Uploading photo {i} of {n}…",
   exH:"Income and expenses",exLead:"Every rupee collected and spent on the tournament, shared openly with the village.",
   exAdminH:"Add an entry",exKind:"Type",exExpense:"Expense (money spent)",exIncome:"Income (money received)",exDate:"Date",exItem:"What for",exCat:"Category",
-  exAmount:"Amount (₹)",exAmountShort:"Amount",exBill:"Bill photo (optional)",exNote:"Note (optional)",exAdd:"Add entry",exNeed:"Enter the date, what it was for and an amount.",
+  exAmount:"Amount (₹)",exAmountShort:"Amount",exBill:"Bill photo (optional)",exNote:"Note (optional)",exAdd:"Add entry",exEdit:"Edit",exEditH:"Edit entry: {item}",exUpdate:"Save changes",exCancel:"Cancel",exDropBill:"Remove current bill photo",exUpdated:"Updated. Everyone will see it within about a minute.",exGone:"This entry was removed in the meantime.",exNeed:"Enter the date, what it was for and an amount.",
   exCollected:"Collected",exSpent:"Spent",exBalance:"Balance",exFromSp:"{n} from sponsors",exEntries:"{n} expenses",exLeft:"Money left",exShort:"Spent more than collected",
   exByCat:"Where the money went",exAll:"All entries",exNone:"No expenses added yet.",exEmpty:"Entries will appear here.",exBillBtn:"Bill",
   exSponsorsRow:"Sponsors ({n}), see the Sponsors tab",exFoot:"Sponsor money is taken from the Sponsors tab. Entries are added by the organising committee.",
@@ -789,7 +792,7 @@ toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHel
   galNeedPhoto:"कम से कम एक फ़ोटो चुनें।",galNeedUrl:"https:// से शुरू होने वाला पूरा वीडियो लिंक डालें।",galUploading:"{n} में से फ़ोटो {i} अपलोड हो रही है…",
   exH:"आमदनी और खर्च",exLead:"टूर्नामेंट में आया और खर्च हुआ हर रुपया, पूरे गाँव के सामने।",
   exAdminH:"एंट्री जोड़ें",exKind:"प्रकार",exExpense:"खर्च (पैसा दिया)",exIncome:"आमदनी (पैसा मिला)",exDate:"तारीख़",exItem:"किसके लिए",exCat:"श्रेणी",
-  exAmount:"राशि (₹)",exAmountShort:"राशि",exBill:"बिल की फ़ोटो (वैकल्पिक)",exNote:"टिप्पणी (वैकल्पिक)",exAdd:"एंट्री जोड़ें",exNeed:"तारीख़, किसके लिए और राशि भरें।",
+  exAmount:"राशि (₹)",exAmountShort:"राशि",exBill:"बिल की फ़ोटो (वैकल्पिक)",exNote:"टिप्पणी (वैकल्पिक)",exAdd:"एंट्री जोड़ें",exEdit:"बदलें",exEditH:"एंट्री बदलें: {item}",exUpdate:"बदलाव सेव करें",exCancel:"रद्द करें",exDropBill:"मौजूदा बिल फ़ोटो हटाएँ",exUpdated:"बदल गया। लगभग एक मिनट में सबको दिखेगा।",exGone:"यह एंट्री इस बीच हटा दी गई।",exNeed:"तारीख़, किसके लिए और राशि भरें।",
   exCollected:"कुल आमदनी",exSpent:"कुल खर्च",exBalance:"बचत",exFromSp:"{n} प्रायोजकों से",exEntries:"{n} खर्च",exLeft:"बचा हुआ पैसा",exShort:"आमदनी से ज़्यादा खर्च",
   exByCat:"पैसा कहाँ खर्च हुआ",exAll:"सभी एंट्री",exNone:"अभी कोई खर्च नहीं जोड़ा गया।",exEmpty:"एंट्री यहाँ दिखेंगी।",exBillBtn:"बिल",
   exSponsorsRow:"प्रायोजक ({n}), प्रायोजक टैब देखें",exFoot:"प्रायोजकों की राशि प्रायोजक टैब से ली गई है। एंट्री आयोजन समिति जोड़ती है।",
@@ -1360,7 +1363,7 @@ document.getElementById("spList").addEventListener("click",async e=>{
 
 /* ===== Gallery and Expenses: public data in gallery.json / expenses.json; the owner edits them with the GitHub token (#admin) ===== */
 const GAL={items:[],season:"all",confirm:null};
-const EXP={entries:[],confirm:null};
+const EXP={entries:[],confirm:null,editId:null};
 const EX_CATS={expense:["ground","kit","trophies","officials","food","tent","print","stream","other"],income:["fees","donation","other"]};
 const isOwner=()=>SP.admin&&!!SP.token;
 function msgIn(id,text,kind){const m=document.getElementById(id);m.textContent=text;m.className="msg"+(kind?" "+kind:"");}
@@ -1471,7 +1474,9 @@ function fillExCats(){const k=document.getElementById("exKind").value,sel=docume
   sel.innerHTML=EX_CATS[k].map(c=>`<option value="${c}">${exCatName(k,c)}</option>`).join("");if(EX_CATS[k].includes(cur))sel.value=cur;}
 function shortDate(iso){if(!iso)return "";const d=new Date(iso+"T00:00:00");return `${d.getDate()} ${t("months")[d.getMonth()]} ${d.getFullYear()}`;}
 function renderExpenses(){
-  document.getElementById("exAdmin").hidden=!isOwner();fillExCats();
+  document.getElementById("exAdmin").hidden=!isOwner();
+  {const cur=EXP.entries.find(i=>i.id===EXP.editId);document.getElementById("exFormH").textContent=cur?t("exEditH").replace("{item}",cur.item):t("exAdminH");document.getElementById("exSave").textContent=cur?t("exUpdate"):t("exAdd");}
+  if(!EXP.editId)fillExCats();
   const sponsors=SP.list.reduce((n,x)=>n+Number(x.amount||0),0);
   const inc=EXP.entries.filter(x=>x.kind==="income"),out=EXP.entries.filter(x=>x.kind==="expense");
   const collected=sponsors+inc.reduce((n,x)=>n+x.amount,0),spent=out.reduce((n,x)=>n+x.amount,0),bal=collected-spent;
@@ -1485,12 +1490,33 @@ function renderExpenses(){
   const rows=[...EXP.entries].sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.added).localeCompare(String(a.added)));
   const head=`<thead><tr><th>${t("exDate")}</th><th>${t("exItem")}</th><th>${t("exCat")}</th><th>${t("exAmountShort")}</th><th></th></tr></thead>`;
   const spRow=sponsors?`<tr><td>–</td><td>${t("exSponsorsRow").replace("{n}",SP.list.length)}</td><td>${t("cat_sponsors")}</td><td class="in">+${inr(sponsors)}</td><td></td></tr>`:"";
-  document.getElementById("exTable").innerHTML=head+"<tbody>"+spRow+rows.map(x=>`<tr><td class="num">${esc(shortDate(x.date))}</td><td>${esc(x.item)}${x.note?`<small>${esc(x.note)}</small>`:""}</td><td>${exCatName(x.kind,x.category)}</td><td class="${x.kind==="income"?"in":"out"}">${x.kind==="income"?"+":"−"}${inr(x.amount)}</td><td>${x.bill?`<button class="bill" data-bill="${esc(x.id)}">${t("exBillBtn")}</button> `:""}${isOwner()?`<button class="del" data-exdel="${esc(x.id)}">${EXP.confirm===x.id?t("spConfirm"):t("spDel")}</button>`:""}</td></tr>`).join("")+"</tbody>";
+  document.getElementById("exTable").innerHTML=head+"<tbody>"+spRow+rows.map(x=>`<tr${EXP.editId===x.id?' class="editing"':""}><td class="num">${esc(shortDate(x.date))}</td><td>${esc(x.item)}${x.note?`<small>${esc(x.note)}</small>`:""}</td><td>${exCatName(x.kind,x.category)}</td><td class="${x.kind==="income"?"in":"out"}">${x.kind==="income"?"+":"−"}${inr(x.amount)}</td><td>${x.bill?`<button class="bill" data-bill="${esc(x.id)}">${t("exBillBtn")}</button> `:""}${isOwner()?`<button class="ed" data-exed="${esc(x.id)}">${t("exEdit")}</button> <button class="del" data-exdel="${esc(x.id)}">${EXP.confirm===x.id?t("spConfirm"):t("spDel")}</button>`:""}</td></tr>`).join("")+"</tbody>";
   if(!rows.length&&!sponsors)document.getElementById("exTable").innerHTML=`<tbody><tr><td>${t("exEmpty")}</td></tr></tbody>`;
 }
 async function loadExpenses(){const j=await loadJson("expenses.json");if(j)EXP.entries=j.entries||[];renderExpenses();}
 document.getElementById("exKind").addEventListener("change",fillExCats);
+/* Edit an entry: load it into the form; submitting then saves the changes in place */
+function setExEdit(x){
+  EXP.editId=x?x.id:null;
+  document.getElementById("exFormH").textContent=x?t("exEditH").replace("{item}",x.item):t("exAdminH");
+  document.getElementById("exSave").textContent=x?t("exUpdate"):t("exAdd");
+  document.getElementById("exCancel").hidden=!x;
+  document.getElementById("exDropWrap").hidden=!(x&&x.bill);document.getElementById("exDropBill").checked=false;
+  document.getElementById("exBillFile").value="";
+  if(x){
+    document.getElementById("exKind").value=x.kind;fillExCats();document.getElementById("exCat").value=x.category;
+    document.getElementById("exDate").value=x.date;document.getElementById("exItem").value=x.item;
+    document.getElementById("exAmount").value=x.amount;document.getElementById("exNote").value=x.note||"";
+    document.getElementById("exAdmin").scrollIntoView({behavior:"smooth",block:"start"});
+  } else {
+    document.getElementById("exItem").value="";document.getElementById("exAmount").value="";document.getElementById("exNote").value="";
+  }
+  renderExpenses();
+}
+document.getElementById("exCancel").addEventListener("click",()=>{setExEdit(null);msgIn("exMsg","");});
 document.getElementById("exTable").addEventListener("click",async e=>{
+  const ed=e.target.closest("[data-exed]");
+  if(ed&&isOwner()){const x=EXP.entries.find(i=>i.id===ed.dataset.exed);if(x){EXP.confirm=null;msgIn("exMsg","");setExEdit(x);}return;}
   const b=e.target.closest("[data-bill]");
   if(b){const x=EXP.entries.find(i=>i.id===b.dataset.bill);if(x)openLightbox(`<img src="${esc(x.bill)}" alt="">`,x.item+" · "+inr(x.amount));return;}
   const d=e.target.closest("[data-exdel]");if(!d||!isOwner())return;
@@ -1502,7 +1528,7 @@ document.getElementById("exTable").addEventListener("click",async e=>{
     const entries=(cur.data.entries||[]).filter(x=>x.id!==id);
     await ghPut("expenses.json",b64(JSON.stringify({entries},null,1)),"Expenses: remove "+(gone?gone.item:id),cur.sha);
     if(gone&&gone.bill)await ghDelete(gone.bill,"Expenses: remove bill photo");
-    EXP.entries=entries;renderExpenses();msgIn("exMsg",t("spRemoved"),"ok");
+    EXP.entries=entries;if(EXP.editId===id)setExEdit(null);else renderExpenses();msgIn("exMsg",t("spRemoved"),"ok");
   }catch(err){msgIn("exMsg",t("spFail").replace("{e}",err.message),"bad");}
 });
 document.getElementById("exForm").addEventListener("submit",async e=>{
@@ -1512,6 +1538,22 @@ document.getElementById("exForm").addEventListener("submit",async e=>{
   const amount=Number(document.getElementById("exAmount").value.replace(/[^0-9.]/g,""));
   if(!date||item.length<2||!(amount>0)){msgIn("exMsg",t("exNeed"),"bad");return;}
   const btn=document.getElementById("exSave");btn.disabled=true;msgIn("exMsg",t("spSaving"));
+  if(EXP.editId){
+    try{
+      const id=EXP.editId;const cur=await ghGetData("expenses.json",{entries:[]});const entries=cur.data.entries||[];
+      const x=entries.find(i=>i.id===id);
+      if(!x){msgIn("exMsg",t("exGone"),"bad");setExEdit(null);btn.disabled=false;return;}
+      const old=x.bill||"";let bill=old;
+      const file=document.getElementById("exBillFile").files[0];
+      if(file){const data=await resizePhoto(file,1600,0.8);bill="expenses/"+id+"-"+Date.now().toString(36)+".jpg";await ghPut(bill,data,"Bill photo: "+item);}
+      else if(document.getElementById("exDropBill").checked)bill="";
+      Object.assign(x,{kind,date,item,category,amount,note,bill,updated:new Date().toISOString()});
+      await ghPut("expenses.json",b64(JSON.stringify({entries},null,1)),"Edit "+(kind==="income"?"income: ":"expense: ")+item+" "+amount,cur.sha);
+      if(old&&old!==bill)await ghDelete(old,"Expenses: remove old bill photo");
+      EXP.entries=entries;setExEdit(null);msgIn("exMsg",t("exUpdated"),"ok");
+    }catch(err){msgIn("exMsg",t("spFail").replace("{e}",err.message),"bad");}
+    btn.disabled=false;return;
+  }
   try{
     const id=newId("e");let bill="";
     const file=document.getElementById("exBillFile").files[0];
