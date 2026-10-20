@@ -66,6 +66,12 @@ h2{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--indigo)}
 .facts>span{white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 @media(min-width:600px){.facts>span+span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--marigold);margin-right:8px}}
 /* Phones: season badge and venue share one row under the title; wider screens keep them in the title/facts lines */
+.prizes{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.prz{display:inline-flex;align-items:baseline;gap:6px;border-radius:8px;padding:3px 9px;background:rgba(251,244,228,.12);font-size:.78rem;font-weight:700}
+.prz b{font-size:.98rem;color:var(--marigold);font-variant-numeric:tabular-nums}
+.prz.top{background:var(--marigold);color:#1f2340}.prz.top b{color:#1f2340}
+.regkey{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 0;font-weight:700}
+.regkey b{color:var(--fresco)}
 .srow{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:6px}
 .srow .venue{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;font-weight:500}
 @media(max-width:599px){.mast .wide{display:none!important}}
@@ -378,6 +384,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <span class="num" id="dateRange">4 – 12 Nov 2026</span>
         <span class="wide"><span data-i="venue">Girls School Ground, Shimla</span><a class="maplink" href="https://maps.app.goo.gl/VVUHpmnWVNwEBa8aA" target="_blank" rel="noopener noreferrer"><svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg><span data-i="mapShort">Map</span></a></span>
       </div>
+      <div class="prizes" id="prizeStrip"></div>
     </div>
     <div class="mside">
       <div class="clock" id="clockBody" aria-live="polite"></div>
@@ -462,8 +469,10 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
       <li data-i="step2">WhatsApp opens with your team details. Pay the entry fee, attach the payment screenshot and send the message to the organisers.</li>
       <li data-i="step3">When the payment is confirmed, your team is approved and the captain gets a 6-digit PIN on WhatsApp to add players.</li>
     </ol>
+    <p class="regkey"><span><span data-i="stepFeeL">Entry fee</span>: <b class="num">₹1500</b></span><span><span data-i="stepLastL">Last date</span>: <b data-i="stepLastV">31 October 2026</b></span></p>
     <p class="warn" data-i="stepWarn">Teams are approved only after the entry fee is paid and the payment screenshot is sent on WhatsApp.</p>
     <p class="note" style="margin:6px 0 0"><span data-i="contact">Organisers on WhatsApp</span>: <b class="num orgNum2"></b></p>
+    <p class="note" style="margin:2px 0 0"><span data-i="moreInfo">More information</span>: <b class="num">97369 08731</b>, <b class="num">95188 33805</b> (<span data-i="ankit">Ankit</span>)</p>
   </div>
   <p class="lead" data-i="regLead">Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.</p>
   <div id="tmAdmin" class="admin" hidden>
@@ -639,6 +648,9 @@ const CONFIG = {
   organiserWhatsApp: "919736908731",                         // country code + number, no spaces
   organiserDisplay: "97369 08731",
   pay: { phone: "97369 08731", upi: "neeyad@upi", name: "NEERAJ", qr: "pay-qr.jpg" },   // entry fees and sponsorship
+  entryFee: 1500,
+  regCloses: "2026-10-31T23:59:59+05:30",   // registration form closes after this (the API checks it too)
+  prizes: { winner: 51000, runner: 31000, series: 2100, finalMom: 1100 },
   api: "https://jaakh-baba-api.shimlacricket.workers.dev",   // Cloudflare Worker for team registrations (api/ folder)
   repo: "neerajyadav12523/jaakh-baba-cricket",   // sponsors are saved to sponsors.json + sponsors/ in this GitHub repo
   branch: "main"
@@ -691,11 +703,14 @@ const T = {
   fSubmit:"Submit registration",regDoneH:"Registration received",regDoneText:"{team} is saved and waiting for approval. Send the WhatsApp message with the entry fee payment screenshot. After the payment is confirmed, the captain gets a 6-digit PIN on WhatsApp at {phone}.",
   tellOrg:"Send details and payment screenshot on WhatsApp",
   stepsH:"How registration works",step1:"Fill in the form below and tap Submit registration.",
-  step2:"WhatsApp opens with your team details. Pay the entry fee, attach the payment screenshot and send the message to the organisers.",
+  step2:"WhatsApp opens with your team details. Pay the entry fee of ₹1500, attach the payment screenshot and send the message to the organisers.",
+  stepFeeL:"Entry fee",stepLastL:"Last date",stepLastV:"31 October 2026",moreInfo:"More information",ankit:"Ankit",
+  regLate:"Registration closed on 31 October 2026.",
+  prizeWin:"Winner",prizeRun:"Runner-up",prizeSer:"Man of the Series",prizeFin:"Man of the Match (Final)",
   step3:"When the payment is confirmed, your team is approved and the captain gets a 6-digit PIN on WhatsApp to add players.",
   stepWarn:"Teams are approved only after the entry fee is paid and the payment screenshot is sent on WhatsApp.",
   payH:"Payment details",payPhone:"PhonePe / GPay",payUpi:"UPI ID",payName:"Name",payCopy:"Copy",payCopied:"Copied",payApp:"Pay with UPI app",payQr:"Tap to enlarge",
-  payNoteReg:"Pay the entry fee, then send the payment screenshot on WhatsApp to {n} with your team name.",
+  payNoteReg:"Pay the entry fee of ₹1500, then send the payment screenshot on WhatsApp to {n} with your team name.",
   payNoteSp:"To sponsor, pay any amount the same way, then send the screenshot, your name and a photo on WhatsApp to {n}.",
   regWaNote:"If WhatsApp did not open, tap the button below. Attach the entry fee payment screenshot before sending.",
   regWaMsg:"New team registration – Jaakh Baba Cricket Pratiyogita, Season 6\n\nTeam: {team}\nVillage: {village}\nCaptain: {captain}\nCaptain mobile: {phone}\nRegistration ID: {id}\n\nEntry fee payment screenshot attached.",
@@ -744,20 +759,23 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],months:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   rules:[
    "32 teams play a straight knockout. A team that loses is out.",
-   "Rounds 1, 2 and quarter-finals are 10 overs a side. Semi-finals and the final are 12 overs a side.",
-   "A bowler may bowl at most one-fifth of the overs: 2 in a 10-over game, 3 in a 12-over game.",
+   "Each team must be from one village only. A town team must be from a single ward.",
+   "Entry fee is ₹1500 per team. The last date for registration is 31 October 2026.",
+   "All matches are 10 overs a side. Semi-finals and the final are 12 or 15 overs a side (the committee will decide).",
+   "All matches are played with a Woods ball.",
+   "A bowler may bowl at most one-fifth of the overs: 2 in a 10-over game, 3 in a 12- or 15-over game.",
    "Every no-ball is followed by a free hit.",
    "A tie is decided by a Super Over. If the Super Over is tied, another Super Over is played.",
    "Overs can be reduced only by the umpires, and only for bad light or weather.",
    "Teams report 30 minutes before start. A team more than 15 minutes late forfeits the match.",
    "A player can play for one team only. The committee may ask for ID.",
-   "Umpires' decisions on the field are final. Complaints go to the tournament committee in writing.",
+   "The decision of the committee and the umpires is final. Complaints go to the committee in writing.",
    "Betting, abuse or fighting leads to disqualification of the player or the team."
   ],
-  awards:[["Champions","Trophy and prize money"],["Runners-up","Trophy and prize money"],["Player of the Match","Every match"],["Player of the Series","Across all 31 matches"],["Best Batter","Most runs"],["Best Bowler","Most wickets"],["Best Fielder","Catches and run-outs"],["Fair Play Team","Best conduct on and off the field"]],
-  info:[["Venue","Girls School Ground, Shimla, Khetri, Jhunjhunu."],["Match times","First match 8:30 AM. Last match around 3 PM. The final is on 12 November at noon."],["Watch from home","Every match is scored live on CricHeroes, ball by ball."],["Water & first aid","Drinking water and a first-aid desk at the pavilion. Ambulance number on the notice board."],["Food stalls","Local stalls near the entrance from 10 AM."],["Parking","Two-wheelers and tractors on the school side. Keep the boundary rope clear."]],
+  awards:[["Champions","₹51,000 and trophy"],["Runners-up","₹31,000 and trophy"],["Man of the Series","₹2,100"],["Man of the Match (Final)","₹1,100"],["Player of the Match","Every match"],["Best Batter","Most runs"],["Best Bowler","Most wickets"],["Best Fielder","Catches and run-outs"],["Fair Play Team","Best conduct on and off the field"]],
+  info:[["Venue","Girls School Ground, Shimla, Khetri, Jhunjhunu."],["Contact","97369 08731 (WhatsApp, registration and payments) · 95188 33805 (Ankit)"],["Match times","First match 8:30 AM. Last match around 3 PM. The final is on 12 November at noon."],["Watch from home","Every match is scored live on CricHeroes, ball by ball."],["Water & first aid","Drinking water and a first-aid desk at the pavilion. Ambulance number on the notice board."],["Food stalls","Local stalls near the entrance from 10 AM."],["Parking","Two-wheelers and tractors on the school side. Keep the boundary rope clear."]],
   tiers:[["Title sponsor","Name on the trophy, banners and every live stream"],["Powered by","Logo on jerseys and the scoreboard"],["Player of the Match","Your name with every award, 31 times"],["Six & wicket sponsor","Announced with every six or wicket"],["Boundary banner","Banner on the boundary for all 9 days"]],
-  formatCards:[["32","teams"],["31","matches"],["5","rounds"],["10 / 12","overs (league / semis & final)"],["9","days"]]
+  formatCards:[["32","teams"],["31","matches"],["5","rounds"],["10 / 12–15","overs (league / semis & final)"],["9","days"]]
  },
  hi:{
   eyebrow:"शिमला · खेतड़ी · झुंझुनूं",title:"जाख बाबा क्रिकेट प्रतियोगिता",season:"सीज़न",venue:"गर्ल्स स्कूल ग्राउंड, शिमला",teamsShort:"32 टीमें · 31 मैच",
@@ -779,11 +797,14 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   fSubmit:"रजिस्ट्रेशन भेजें",regDoneH:"रजिस्ट्रेशन मिल गया",regDoneText:"{team} सेव हो गई है और मंज़ूरी का इंतज़ार कर रही है। एंट्री फीस के भुगतान के स्क्रीनशॉट के साथ WhatsApp संदेश भेजें। भुगतान की पुष्टि के बाद कप्तान को {phone} पर WhatsApp से 6 अंकों का PIN मिलेगा।",
   tellOrg:"विवरण और भुगतान का स्क्रीनशॉट WhatsApp पर भेजें",
   stepsH:"रजिस्ट्रेशन कैसे होगा",step1:"नीचे फॉर्म भरें और रजिस्ट्रेशन भेजें दबाएँ।",
-  step2:"आपकी टीम के विवरण के साथ WhatsApp खुलेगा। एंट्री फीस भरें, भुगतान का स्क्रीनशॉट जोड़ें और संदेश आयोजकों को भेजें।",
+  step2:"आपकी टीम के विवरण के साथ WhatsApp खुलेगा। ₹1500 एंट्री फीस भरें, भुगतान का स्क्रीनशॉट जोड़ें और संदेश आयोजकों को भेजें।",
   step3:"भुगतान की पुष्टि होने पर आपकी टीम मंज़ूर होगी और कप्तान को खिलाड़ी जोड़ने के लिए WhatsApp पर 6 अंकों का PIN मिलेगा।",
   payH:"भुगतान की जानकारी",payPhone:"PhonePe / GPay",payUpi:"UPI ID",payName:"नाम",payCopy:"कॉपी",payCopied:"कॉपी हो गया",payApp:"UPI ऐप से भुगतान करें",payQr:"बड़ा देखने के लिए दबाएँ",
-  payNoteReg:"एंट्री फीस भरें, फिर भुगतान का स्क्रीनशॉट टीम के नाम के साथ WhatsApp पर {n} पर भेजें।",
+  payNoteReg:"₹1500 एंट्री फीस भरें, फिर भुगतान का स्क्रीनशॉट टीम के नाम के साथ WhatsApp पर {n} पर भेजें।",
   payNoteSp:"प्रायोजक बनने के लिए इसी तरह कोई भी राशि भरें, फिर स्क्रीनशॉट, अपना नाम और फ़ोटो WhatsApp पर {n} पर भेजें।",
+  stepFeeL:"प्रवेश शुल्क",stepLastL:"अंतिम तिथि",stepLastV:"31 अक्टूबर 2026",moreInfo:"अधिक जानकारी",ankit:"अंकित",
+  regLate:"रजिस्ट्रेशन 31 अक्टूबर 2026 को बंद हो गया।",
+  prizeWin:"विजेता",prizeRun:"उपविजेता",prizeSer:"मैन ऑफ द सीरीज़",prizeFin:"मैन ऑफ द मैच (फाइनल)",
   stepWarn:"एंट्री फीस भरने और भुगतान का स्क्रीनशॉट WhatsApp पर भेजने के बाद ही टीम मंज़ूर होगी।",
   regWaNote:"अगर WhatsApp नहीं खुला, तो नीचे का बटन दबाएँ। भेजने से पहले एंट्री फीस के भुगतान का स्क्रीनशॉट जोड़ें।",
   regWaMsg:"नई टीम रजिस्ट्रेशन – जाख बाबा क्रिकेट प्रतियोगिता, सीज़न 6\n\nटीम: {team}\nगाँव: {village}\nकप्तान: {captain}\nकप्तान का मोबाइल: {phone}\nरजिस्ट्रेशन ID: {id}\n\nएंट्री फीस के भुगतान का स्क्रीनशॉट साथ में है।",
@@ -832,25 +853,28 @@ toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHel
   days:["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"],months:["जन","फ़र","मार्च","अप्रै","मई","जून","जुला","अग","सित","अक्टू","नव","दिस"],
   rules:[
    "32 टीमें सीधा नॉकआउट खेलेंगी। हारने वाली टीम बाहर।",
-   "पहला, दूसरा राउंड और क्वार्टर फाइनल 10-10 ओवर के। सेमी फाइनल और फाइनल 12-12 ओवर के।",
-   "एक गेंदबाज़ अधिकतम पाँचवाँ हिस्सा ओवर डालेगा: 10 ओवर में 2, 12 ओवर में 3।",
+   "केवल एक गाँव की टीम होनी चाहिए। शहरी टीम केवल एक वार्ड की होनी चाहिए।",
+   "प्रवेश शुल्क ₹1500 प्रति टीम। रजिस्ट्रेशन की अंतिम तिथि 31 अक्टूबर 2026।",
+   "सभी मैच 10 ओवर के होंगे। सेमीफाइनल व फाइनल 12 या 15 ओवर के होंगे (कमेटी तय करेगी)।",
+   "सभी मैच वुड्स बॉल से होंगे।",
+   "एक गेंदबाज़ अधिकतम पाँचवाँ हिस्सा ओवर डालेगा: 10 ओवर में 2, 12 या 15 ओवर में 3।",
    "हर नो-बॉल के बाद फ्री हिट।",
    "मैच टाई होने पर सुपर ओवर। सुपर ओवर भी टाई हो तो एक और सुपर ओवर।",
    "ओवर सिर्फ़ अंपायर कम कर सकते हैं, और सिर्फ़ रोशनी या मौसम की वजह से।",
    "टीमें 30 मिनट पहले पहुँचें। 15 मिनट से ज़्यादा देरी पर मैच हार माना जाएगा।",
    "एक खिलाड़ी सिर्फ़ एक टीम से खेलेगा। कमेटी पहचान पत्र माँग सकती है।",
-   "मैदान पर अंपायर का फ़ैसला अंतिम। शिकायत लिखित में टूर्नामेंट कमेटी को दें।",
+   "कमेटी व अंपायर का निर्णय सर्वमान्य होगा। शिकायत लिखित में कमेटी को दें।",
    "सट्टा, गाली-गलौज या झगड़ा करने पर खिलाड़ी या टीम बाहर।"
   ],
-  awards:[["चैंपियन","ट्रॉफी और इनाम राशि"],["उपविजेता","ट्रॉफी और इनाम राशि"],["मैन ऑफ द मैच","हर मैच में"],["मैन ऑफ द सीरीज़","सभी 31 मैचों में"],["सर्वश्रेष्ठ बल्लेबाज़","सबसे ज़्यादा रन"],["सर्वश्रेष्ठ गेंदबाज़","सबसे ज़्यादा विकेट"],["सर्वश्रेष्ठ फील्डर","कैच और रन-आउट"],["फेयर प्ले टीम","मैदान के अंदर और बाहर सबसे अच्छा व्यवहार"]],
-  info:[["स्थान","गर्ल्स स्कूल ग्राउंड, शिमला, खेतड़ी, झुंझुनूं।"],["मैच का समय","पहला मैच सुबह 8:30 बजे। आख़िरी मैच लगभग 3 बजे। फाइनल 12 नवंबर को दोपहर 12 बजे।"],["घर से देखें","हर मैच CricHeroes पर गेंद-दर-गेंद लाइव।"],["पानी और प्राथमिक उपचार","पवेलियन पर पीने का पानी और फर्स्ट-एड। एंबुलेंस नंबर नोटिस बोर्ड पर।"],["खाने के स्टॉल","सुबह 10 बजे से गेट के पास स्टॉल।"],["पार्किंग","दोपहिया और ट्रैक्टर स्कूल की तरफ़। बाउंड्री रस्सी के पास जगह खाली रखें।"]],
+  awards:[["चैंपियन","₹51,000 और ट्रॉफी"],["उपविजेता","₹31,000 और ट्रॉफी"],["मैन ऑफ द सीरीज़","₹2,100"],["मैन ऑफ द मैच (फाइनल)","₹1,100"],["मैन ऑफ द मैच","हर मैच में"],["सर्वश्रेष्ठ बल्लेबाज़","सबसे ज़्यादा रन"],["सर्वश्रेष्ठ गेंदबाज़","सबसे ज़्यादा विकेट"],["सर्वश्रेष्ठ फील्डर","कैच और रन-आउट"],["फेयर प्ले टीम","मैदान के अंदर और बाहर सबसे अच्छा व्यवहार"]],
+  info:[["स्थान","गर्ल्स स्कूल ग्राउंड, शिमला, खेतड़ी, झुंझुनूं।"],["संपर्क","97369 08731 (WhatsApp, रजिस्ट्रेशन व भुगतान) · 95188 33805 (अंकित)"],["मैच का समय","पहला मैच सुबह 8:30 बजे। आख़िरी मैच लगभग 3 बजे। फाइनल 12 नवंबर को दोपहर 12 बजे।"],["घर से देखें","हर मैच CricHeroes पर गेंद-दर-गेंद लाइव।"],["पानी और प्राथमिक उपचार","पवेलियन पर पीने का पानी और फर्स्ट-एड। एंबुलेंस नंबर नोटिस बोर्ड पर।"],["खाने के स्टॉल","सुबह 10 बजे से गेट के पास स्टॉल।"],["पार्किंग","दोपहिया और ट्रैक्टर स्कूल की तरफ़। बाउंड्री रस्सी के पास जगह खाली रखें।"]],
   tiers:[["टाइटल प्रायोजक","ट्रॉफी, बैनर और हर लाइव स्ट्रीम पर नाम"],["पावर्ड बाय","जर्सी और स्कोरबोर्ड पर लोगो"],["मैन ऑफ द मैच","हर पुरस्कार के साथ आपका नाम, 31 बार"],["छक्का और विकेट प्रायोजक","हर छक्के और विकेट पर घोषणा"],["बाउंड्री बैनर","नौ दिन बाउंड्री पर बैनर"]],
-  formatCards:[["32","टीमें"],["31","मैच"],["5","राउंड"],["10 / 12","ओवर (लीग / सेमी व फाइनल)"],["9","दिन"]]
+  formatCards:[["32","टीमें"],["31","मैच"],["5","राउंड"],["10 / 12–15","ओवर (लीग / सेमी व फाइनल)"],["9","दिन"]]
  }
 };
 
 /* ===== Fixtures: match number, round, day index, time ===== */
-const ROUND_OVERS=[10,10,10,12,12];
+const ROUND_OVERS=[10,10,10,"12–15","12–15"];   // semi-final/final overs not fixed yet
 function buildFixtures(){
   const fx=[];let no=1;
   // Round 1: 16 matches, 4 per day on days 0-3
@@ -1008,7 +1032,7 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();renderPay();renderGallery();renderExpenses();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
+  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();renderPay();renderPrizes();renderGallery();renderExpenses();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
 }
 function setLang(l){lang=l;try{localStorage.setItem("jb-lang2",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
@@ -1017,15 +1041,19 @@ document.getElementById("liveLink").href=CONFIG.liveUrl;
 document.getElementById("orgNum").textContent=CONFIG.organiserDisplay;
 document.querySelectorAll(".orgNum2").forEach(el=>el.textContent=CONFIG.organiserDisplay);
 /* Payment details for entry fees (Register) and sponsorship (Sponsors) */
+function renderPrizes(){
+  const p=CONFIG.prizes,chip=(k,v,top)=>`<span class="prz${top?" top":""}">${t(k)} <b>${inr(v)}</b></span>`;
+  document.getElementById("prizeStrip").innerHTML=chip("prizeWin",p.winner,1)+chip("prizeRun",p.runner,1)+chip("prizeSer",p.series)+chip("prizeFin",p.finalMom);
+}
 function renderPay(){
-  const p=CONFIG.pay;const link=`upi://pay?pa=${encodeURIComponent(p.upi)}&pn=${encodeURIComponent(p.name)}&cu=INR`;
+  const p=CONFIG.pay;const base=`upi://pay?pa=${encodeURIComponent(p.upi)}&pn=${encodeURIComponent(p.name)}&cu=INR`;
   document.querySelectorAll(".paybox").forEach(box=>{
     const note=t(box.dataset.for==="sp"?"payNoteSp":"payNoteReg").replace("{n}",CONFIG.organiserDisplay);
     box.innerHTML=`<div><h3>${t("payH")}</h3>
       <div class="pr"><small>${t("payPhone")}</small><b>${esc(p.phone)}</b><button type="button" class="cp" data-copy="${esc(p.phone.replace(/\s/g,""))}">${t("payCopy")}</button></div>
       <div class="pr"><small>${t("payUpi")}</small><b>${esc(p.upi)}</b><button type="button" class="cp" data-copy="${esc(p.upi)}">${t("payCopy")}</button></div>
       <div class="pr"><small>${t("payName")}</small><b>${esc(p.name)}</b></div>
-      <div class="ctas" style="margin-top:10px"><a class="btn pri" href="${esc(link)}">${t("payApp")}</a></div>
+      <div class="ctas" style="margin-top:10px"><a class="btn pri" href="${esc(box.dataset.for==="reg"?base+"&am="+CONFIG.entryFee+"&tn="+encodeURIComponent("Jaakh Baba S6 entry fee"):base)}">${t("payApp")}</a></div>
       <p class="note">${esc(note)}</p></div>
       <button type="button" class="qr" data-qr="1"><img src="${esc(p.qr)}" alt="UPI QR code" loading="lazy"><span>${t("payQr")}</span></button>`;
   });
@@ -1045,7 +1073,9 @@ function renderTeams(){
   document.getElementById("regCount").textContent=t("regCountL").replace("{n}",TM.teams.length).replace("{max}",TM.max);
   document.getElementById("teamList").innerHTML=TM.teams.length?TM.teams.map(x=>`<div class="tcard"><span class="badge" style="background:${teamColor(x.name)}">${esc(initials(x.name))}</span><div><b>${esc(x.name)}</b><small>${esc(x.village)} · ${t("capL")}: ${esc(x.captain)}</small></div>${(x.players||[]).length?`<details><summary>${t("playersL").replace("{n}",x.players.length)}</summary><ol>${x.players.map(p=>`<li>${esc(p.name)}</li>`).join("")}</ol></details>`:""}</div>`).join(""):`<p class="note">${t("regNone")}</p>`;
   renderCapPicker();
-  const closed=!TM.open;
+  const late=Date.now()>Date.parse(CONFIG.regCloses);
+  const closed=!TM.open||late;
+  document.getElementById("regClosed").textContent=late?t("regLate"):t("regFull");
   document.getElementById("regClosed").hidden=!closed;
   document.getElementById("regForm").hidden=closed||!document.getElementById("regDone").hidden;
 }
@@ -1066,7 +1096,7 @@ document.getElementById("regForm").addEventListener("submit",async e=>{
   try{
     const r=await api("/register",{method:"POST",body:JSON.stringify({name:v("fTeam"),village:v("fVillage"),captain:v("fCaptain"),phone})});
     const j=await r.json().catch(()=>({}));
-    if(!r.ok){if(wa)wa.close();showErr({name_taken:t("eName"),full:t("eFull"),too_many:t("eMany"),invalid:t("errFill")}[j.error]||t("eNet"));}
+    if(!r.ok){if(wa)wa.close();showErr({name_taken:t("eName"),full:t("eFull"),too_many:t("eMany"),invalid:t("errFill"),closed:t("regLate")}[j.error]||t("eNet"));}
     else{
       const msg=t("regWaMsg").replace("{team}",v("fTeam")).replace("{village}",v("fVillage")).replace("{captain}",v("fCaptain")).replace("{phone}",phone).replace("{id}",j.id||"");
       const link=`https://wa.me/${CONFIG.organiserWhatsApp}?text=${encodeURIComponent(msg)}`;

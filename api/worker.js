@@ -13,7 +13,7 @@
 //   POST /admin/delete           {id}
 //   POST /admin/update           {id, name?, village?, captain?, phone?, players?} -> edit any team
 //
-// Bindings (wrangler.toml): DB (D1). Secrets: PIN_PEPPER, optional ADMIN_KEY. Vars: ALLOWED_ORIGINS, MAX_TEAMS, GITHUB_REPO.
+// Bindings (wrangler.toml): DB (D1). Secrets: PIN_PEPPER, optional ADMIN_KEY. Vars: ALLOWED_ORIGINS, MAX_TEAMS, GITHUB_REPO, REG_CLOSES.
 
 const LIMITS = { text: 40, phoneDigits: 10, pinDigits: 6, regsPerIpPerHour: 5, maxPlayers: 15, pinTries: 5, lockMinutes: 15 };
 
@@ -76,6 +76,7 @@ async function register(request, env) {
   if (phone.length !== LIMITS.phoneDigits) missing.push('phone');
   if (missing.length) return json({ error: 'invalid', fields: missing }, 400);
 
+  if (env.REG_CLOSES && Date.now() > Date.parse(env.REG_CLOSES)) return json({ error: 'closed' }, 409);
   if ((await countStatus(env, 'approved')) >= maxTeams(env)) return json({ error: 'full' }, 409);
 
   const ipHash = await sha256Hex((request.headers.get('CF-Connecting-IP') || 'unknown') + '|' + env.PIN_PEPPER);

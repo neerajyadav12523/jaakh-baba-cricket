@@ -5,6 +5,7 @@ compatibility_date = "2025-06-01"
 [vars]
 ALLOWED_ORIGINS = "https://neerajyadav12523.github.io"
 MAX_TEAMS = "32"
+REG_CLOSES = "2026-10-31T23:59:59+05:30"   # no new registrations after this
 GITHUB_REPO = "neerajyadav12523/jaakh-baba-cricket"   # admin = a GitHub token with write access to this repo
 
 # created with: npx wrangler d1 create jaakh-baba
