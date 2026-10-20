@@ -270,6 +270,17 @@ input,select,textarea{font:inherit;font-weight:400;padding:9px 11px;border-radiu
 .regsteps{margin-top:18px;background:var(--paper);border:2px solid var(--marigold);border-radius:14px;padding:14px 16px;max-width:720px}
 .regsteps b{display:block;font-size:1.02rem}
 .regsteps ol{margin:8px 0 0;padding-left:1.3em;display:grid;gap:6px}
+.paybox{margin-top:14px;background:var(--paper);border:2px solid var(--marigold);border-radius:14px;padding:14px 16px;max-width:720px;display:grid;gap:14px;align-items:start}
+@media(min-width:620px){.paybox{grid-template-columns:1fr 200px}}
+.paybox h3{font-size:1.15rem}
+.paybox .pr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:8px}
+.paybox .pr small{min-width:110px;color:var(--muted);font-weight:700}
+.paybox .pr b{font-size:1.1rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.paybox .cp{font:inherit;font-size:.75rem;font-weight:800;border:1px solid var(--line);background:transparent;color:var(--label);border-radius:6px;padding:1px 8px;cursor:pointer}
+.paybox .qr{display:block;width:100%;max-width:200px;border:0;padding:0;background:none;cursor:zoom-in;justify-self:center}
+.paybox .qr img{width:100%;border-radius:10px;display:block}
+.paybox .qr span{display:block;text-align:center;font-size:.75rem;color:var(--muted);margin-top:4px}
+.paybox .note{margin:8px 0 0}
 .regsteps .warn{margin-top:10px;color:var(--fresco);font-weight:800}
 .plist li .need{color:var(--fresco);font-size:.75rem;font-weight:800}
 .dirty{color:var(--fresco);font-weight:700;font-size:.85rem}
@@ -454,6 +465,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <p class="warn" data-i="stepWarn">Teams are approved only after the entry fee is paid and the payment screenshot is sent on WhatsApp.</p>
     <p class="note" style="margin:6px 0 0"><span data-i="contact">Organisers on WhatsApp</span>: <b class="num orgNum2"></b></p>
   </div>
+  <div class="paybox" id="payReg" data-for="reg"></div>
   <p class="lead" data-i="regLead">Fill this in to register. The organisers check every entry. Once your team is approved, the captain gets a 6-digit PIN on WhatsApp to add the players.</p>
   <div id="tmAdmin" class="admin" hidden>
     <div class="adm-h"><h3 data-i="tmAdminH">Manage teams</h3><a class="adm-link" href="#sponsors" data-i="toSponsors">Sponsors →</a></div>
@@ -520,6 +532,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <section id="sponsors"><div class="wrap">
   <h2 data-i="spH">Sponsors</h2>
   <p class="lead" data-i="spLead">Last season's pages were viewed nearly 30,000 times. Put your shop or business in front of the whole area.</p>
+  <div class="paybox" id="paySp" data-for="sp"></div>
   <div id="spAdmin" class="admin" hidden>
     <div class="adm-h"><h3 data-i="spAdminH">Manage sponsors</h3><a class="adm-link" href="#register" data-i="toTeams">Teams →</a></div>
     <div id="spLogin">
@@ -625,6 +638,7 @@ const CONFIG = {
   liveUrl: "https://cricheroes.com/search/3/jaakh-baba",   // replace with the Season 6 CricHeroes link once created
   organiserWhatsApp: "919736908731",                         // country code + number, no spaces
   organiserDisplay: "97369 08731",
+  pay: { phone: "97369 08731", upi: "neeyad@upi", name: "NEERAJ", qr: "pay-qr.jpg" },   // entry fees and sponsorship
   api: "https://jaakh-baba-api.shimlacricket.workers.dev",   // Cloudflare Worker for team registrations (api/ folder)
   repo: "neerajyadav12523/jaakh-baba-cricket",   // sponsors are saved to sponsors.json + sponsors/ in this GitHub repo
   branch: "main"
@@ -680,6 +694,9 @@ const T = {
   step2:"WhatsApp opens with your team details. Pay the entry fee, attach the payment screenshot and send the message to the organisers.",
   step3:"When the payment is confirmed, your team is approved and the captain gets a 6-digit PIN on WhatsApp to add players.",
   stepWarn:"Teams are approved only after the entry fee is paid and the payment screenshot is sent on WhatsApp.",
+  payH:"Payment details",payPhone:"PhonePe / GPay",payUpi:"UPI ID",payName:"Name",payCopy:"Copy",payCopied:"Copied",payApp:"Pay with UPI app",payQr:"Tap to enlarge",
+  payNoteReg:"Pay the entry fee, then send the payment screenshot on WhatsApp to {n} with your team name.",
+  payNoteSp:"To sponsor, pay any amount the same way, then send the screenshot, your name and a photo on WhatsApp to {n}.",
   regWaNote:"If WhatsApp did not open, tap the button below. Attach the entry fee payment screenshot before sending.",
   regWaMsg:"New team registration – Jaakh Baba Cricket Pratiyogita, Season 6\n\nTeam: {team}\nVillage: {village}\nCaptain: {captain}\nCaptain mobile: {phone}\nRegistration ID: {id}\n\nEntry fee payment screenshot attached.",
   capEdit:"Edit",capOk:"Done",capCancelEd:"Cancel",regAgain:"Register another team",regTeamsH:"Registered teams",regCountL:"{n} of {max}",regNone:"Approved teams will appear here.",
@@ -764,6 +781,9 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   stepsH:"रजिस्ट्रेशन कैसे होगा",step1:"नीचे फॉर्म भरें और रजिस्ट्रेशन भेजें दबाएँ।",
   step2:"आपकी टीम के विवरण के साथ WhatsApp खुलेगा। एंट्री फीस भरें, भुगतान का स्क्रीनशॉट जोड़ें और संदेश आयोजकों को भेजें।",
   step3:"भुगतान की पुष्टि होने पर आपकी टीम मंज़ूर होगी और कप्तान को खिलाड़ी जोड़ने के लिए WhatsApp पर 6 अंकों का PIN मिलेगा।",
+  payH:"भुगतान की जानकारी",payPhone:"PhonePe / GPay",payUpi:"UPI ID",payName:"नाम",payCopy:"कॉपी",payCopied:"कॉपी हो गया",payApp:"UPI ऐप से भुगतान करें",payQr:"बड़ा देखने के लिए दबाएँ",
+  payNoteReg:"एंट्री फीस भरें, फिर भुगतान का स्क्रीनशॉट टीम के नाम के साथ WhatsApp पर {n} पर भेजें।",
+  payNoteSp:"प्रायोजक बनने के लिए इसी तरह कोई भी राशि भरें, फिर स्क्रीनशॉट, अपना नाम और फ़ोटो WhatsApp पर {n} पर भेजें।",
   stepWarn:"एंट्री फीस भरने और भुगतान का स्क्रीनशॉट WhatsApp पर भेजने के बाद ही टीम मंज़ूर होगी।",
   regWaNote:"अगर WhatsApp नहीं खुला, तो नीचे का बटन दबाएँ। भेजने से पहले एंट्री फीस के भुगतान का स्क्रीनशॉट जोड़ें।",
   regWaMsg:"नई टीम रजिस्ट्रेशन – जाख बाबा क्रिकेट प्रतियोगिता, सीज़न 6\n\nटीम: {team}\nगाँव: {village}\nकप्तान: {captain}\nकप्तान का मोबाइल: {phone}\nरजिस्ट्रेशन ID: {id}\n\nएंट्री फीस के भुगतान का स्क्रीनशॉट साथ में है।",
@@ -846,7 +866,7 @@ function buildFixtures(){
 const FIX=buildFixtures();
 
 let lang="hi";   // Hindi by default; a visitor's own choice is remembered below
-try{const s=localStorage.getItem("jb-lang");if(s==="hi"||s==="en")lang=s;}catch(e){}
+try{const s=localStorage.getItem("jb-lang2");if(s==="hi"||s==="en")lang=s;}catch(e){}
 const t=k=>T[lang][k];
 const start=new Date(CONFIG.startISO);
 const dayDate=i=>new Date(start.getTime()+i*86400000);
@@ -988,14 +1008,35 @@ function applyLang(){
   document.querySelectorAll("[data-i]").forEach(el=>{const v=t(el.dataset.i);if(typeof v==="string")el.textContent=v;});
   document.getElementById("langEn").setAttribute("aria-pressed",lang==="en");
   document.getElementById("langHi").setAttribute("aria-pressed",lang==="hi");
-  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();renderGallery();renderExpenses();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
+  renderMatches();renderHof();renderSponsors();renderTeams();renderCap();renderPay();renderGallery();renderExpenses();if(TM.admin.length&&TM.key)renderAdminTeams();renderLists();tick();
 }
-function setLang(l){lang=l;try{localStorage.setItem("jb-lang",l);}catch(e){}applyLang();}
+function setLang(l){lang=l;try{localStorage.setItem("jb-lang2",l);}catch(e){}applyLang();}
 document.getElementById("langEn").onclick=()=>setLang("en");
 document.getElementById("langHi").onclick=()=>setLang("hi");
 document.getElementById("liveLink").href=CONFIG.liveUrl;
 document.getElementById("orgNum").textContent=CONFIG.organiserDisplay;
 document.querySelectorAll(".orgNum2").forEach(el=>el.textContent=CONFIG.organiserDisplay);
+/* Payment details for entry fees (Register) and sponsorship (Sponsors) */
+function renderPay(){
+  const p=CONFIG.pay;const link=`upi://pay?pa=${encodeURIComponent(p.upi)}&pn=${encodeURIComponent(p.name)}&cu=INR`;
+  document.querySelectorAll(".paybox").forEach(box=>{
+    const note=t(box.dataset.for==="sp"?"payNoteSp":"payNoteReg").replace("{n}",CONFIG.organiserDisplay);
+    box.innerHTML=`<div><h3>${t("payH")}</h3>
+      <div class="pr"><small>${t("payPhone")}</small><b>${esc(p.phone)}</b><button type="button" class="cp" data-copy="${esc(p.phone.replace(/\s/g,""))}">${t("payCopy")}</button></div>
+      <div class="pr"><small>${t("payUpi")}</small><b>${esc(p.upi)}</b><button type="button" class="cp" data-copy="${esc(p.upi)}">${t("payCopy")}</button></div>
+      <div class="pr"><small>${t("payName")}</small><b>${esc(p.name)}</b></div>
+      <div class="ctas" style="margin-top:10px"><a class="btn pri" href="${esc(link)}">${t("payApp")}</a></div>
+      <p class="note">${esc(note)}</p></div>
+      <button type="button" class="qr" data-qr="1"><img src="${esc(p.qr)}" alt="UPI QR code" loading="lazy"><span>${t("payQr")}</span></button>`;
+  });
+}
+document.addEventListener("click",e=>{
+  const c=e.target.closest(".paybox .cp");
+  if(c){const v=c.dataset.copy;const done=()=>{c.textContent=t("payCopied");setTimeout(()=>c.textContent=t("payCopy"),1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(done).catch(()=>{});else{const i=document.createElement("input");i.value=v;document.body.appendChild(i);i.select();try{document.execCommand("copy");done();}catch(x){}i.remove();}
+    return;}
+  if(e.target.closest(".paybox .qr"))openLightbox(`<img src="${esc(CONFIG.pay.qr)}" alt="UPI QR code" style="background:#000;padding:8px">`,CONFIG.pay.upi+" · "+CONFIG.pay.phone);
+});
 
 /* ===== Team registration (Cloudflare Worker API, see api/) ===== */
 const TM={teams:[],max:32,open:true,admin:[],key:"",pins:{},confirmDel:null,editId:null};
