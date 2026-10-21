@@ -55,6 +55,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-20T16:04:25.468Z"
+  },
+  {
+   "id": "emvi4rutkvqz",
+   "kind": "income",
+   "date": "2026-10-21",
+   "item": "Jailaf Team Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-21T13:11:12.867Z"
   }
  ]
 }
