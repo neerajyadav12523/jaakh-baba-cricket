@@ -55,6 +55,11 @@ h2{font-size:clamp(1.7rem,4vw,2.3rem);color:var(--indigo)}
 .mtop{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-block:8px 0}
 .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:700;color:var(--marigold)}
 .toggles{display:flex;gap:4px}
+.iglink{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;border:1px solid rgba(251,244,228,.4);color:var(--on-indigo);text-decoration:none;margin-right:2px}
+.iglink:hover{background:var(--marigold);color:#1f2340;border-color:var(--marigold)}
+.igrow{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-weight:800;text-decoration:none;color:var(--label);border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:var(--paper)}
+.igrow:hover{border-color:var(--marigold)}
+footer .ig{display:inline-flex;align-items:center;gap:6px}
 .chipbtn{font:inherit;font-size:.75rem;font-weight:700;border:1px solid rgba(251,244,228,.4);background:transparent;color:var(--on-indigo);border-radius:999px;padding:2px 10px;cursor:pointer}
 .chipbtn[aria-pressed="true"]{background:var(--marigold);border-color:var(--marigold);color:#1f2340}
 .mmain{display:grid;gap:10px 24px;padding-block:6px 14px;align-items:center}
@@ -372,6 +377,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   <div class="wrap mtop">
     <span class="eyebrow" data-i="eyebrow">Shimla · Khetri · Jhunjhunu</span>
     <div class="toggles">
+      <a class="iglink" href="https://www.instagram.com/cricket_club_shimla/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @cricket_club_shimla" title="@cricket_club_shimla"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.2.8-.4.4-.6.7-.8 1.2-.2.4-.3 1-.4 2.1C2.7 8.5 2.7 8.9 2.7 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.2.4.4.7.6 1.2.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.2-.8.4-.4.6-.7.8-1.2.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.2-1-.3-2.1-.4C15.5 4 15.1 4 12 4zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg></a>
       <button class="chipbtn" id="langEn" aria-pressed="true">English</button>
       <button class="chipbtn" id="langHi" aria-pressed="false">हिन्दी</button>
     </div>
@@ -581,6 +587,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <section id="gallery"><div class="wrap">
   <h2 data-i="galH">Gallery</h2>
   <p class="lead" data-i="galLead">Photos and videos from every season at the Girls School Ground.</p>
+  <a class="igrow" href="https://www.instagram.com/cricket_club_shimla/" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.2.8-.4.4-.6.7-.8 1.2-.2.4-.3 1-.4 2.1C2.7 8.5 2.7 8.9 2.7 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.2.4.4.7.6 1.2.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.2-.8.4-.4.6-.7.8-1.2.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.2-1-.3-2.1-.4C15.5 4 15.1 4 12 4zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg><span data-i="igMore">More photos and videos on Instagram</span> <span>@cricket_club_shimla</span></a>
   <div id="galAdmin" class="admin" hidden>
     <h3 data-i="galAdminH">Add photos or a video</h3>
     <form id="galForm" novalidate>
@@ -635,6 +642,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 <footer><div class="wrap">
   <span data-i="footer">Jaakh Baba Cricket Pratiyogita · Season 6 · Shimla, Khetri, Jhunjhunu, Rajasthan</span>
   <a href="https://cricheroes.com/search/3/jaakh-baba" target="_blank" rel="noopener noreferrer" data-i="pastOn">Past seasons on CricHeroes</a>
+  <a class="ig" href="https://www.instagram.com/cricket_club_shimla/" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.2.8-.4.4-.6.7-.8 1.2-.2.4-.3 1-.4 2.1C2.7 8.5 2.7 8.9 2.7 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.2.4.4.7.6 1.2.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.2-.8.4-.4.6-.7.8-1.2.2-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.2-1-.3-2.1-.4C15.5 4 15.1 4 12 4zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg><span>Instagram @cricket_club_shimla</span></a>
 </div></footer>
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo or video"><button class="x" id="lbClose" aria-label="Close">×</button><div id="lbBody"></div><p id="lbCap"></p></div>
@@ -733,7 +741,7 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   sendWa:"Send on WhatsApp",copy:"Copy message",copied:"Copied",
   errFill:"Fill in team name, village, captain and a 10-digit mobile number.",noWa:"The organisers' WhatsApp number is not added yet. Copy this message and send it to them directly.",
   navGallery:"Gallery",navExpenses:"Expenses",
-  galH:"Gallery",galLead:"Photos and videos from every season at the Girls School Ground.",galAll:"All seasons",galEarlier:"Earlier seasons",galEarlierShort:"Earlier",galEmpty:"Photos and videos will appear here.",
+  galH:"Gallery",igMore:"More photos and videos on Instagram",galLead:"Photos and videos from every season at the Girls School Ground.",galAll:"All seasons",galEarlier:"Earlier seasons",galEarlierShort:"Earlier",galEmpty:"Photos and videos will appear here.",
   galAdminH:"Add photos or a video",galType:"Type",galPhotos:"Photos",galVideo:"Video",galSeason:"Season",galCaption:"Caption (optional)",
   galFiles:"Photos (you can pick several)",galUrl:"YouTube, Instagram, Facebook or Drive link",galAdd:"Add to gallery",galWatch:"Watch",
   galNeedPhoto:"Choose at least one photo.",galNeedUrl:"Paste a full video link starting with https://",galUploading:"Uploading photo {i} of {n}…",
@@ -827,7 +835,7 @@ toSponsors:"प्रायोजक →",toTeams:"टीमें →",tmKeyHel
   sendWa:"WhatsApp पर भेजें",copy:"संदेश कॉपी करें",copied:"कॉपी हो गया",
   errFill:"टीम का नाम, गाँव, कप्तान और 10 अंकों का मोबाइल नंबर भरें।",noWa:"आयोजकों का WhatsApp नंबर अभी जोड़ा नहीं गया है। यह संदेश कॉपी करके सीधे उन्हें भेजें।",
   navGallery:"गैलरी",navExpenses:"खर्च",
-  galH:"गैलरी",galLead:"गर्ल्स स्कूल ग्राउंड पर हर सीज़न की फ़ोटो और वीडियो।",galAll:"सभी सीज़न",galEarlier:"पिछले सीज़न",galEarlierShort:"पिछले",galEmpty:"फ़ोटो और वीडियो यहाँ दिखेंगे।",
+  galH:"गैलरी",igMore:"और फ़ोटो व वीडियो Instagram पर",galLead:"गर्ल्स स्कूल ग्राउंड पर हर सीज़न की फ़ोटो और वीडियो।",galAll:"सभी सीज़न",galEarlier:"पिछले सीज़न",galEarlierShort:"पिछले",galEmpty:"फ़ोटो और वीडियो यहाँ दिखेंगे।",
   galAdminH:"फ़ोटो या वीडियो जोड़ें",galType:"प्रकार",galPhotos:"फ़ोटो",galVideo:"वीडियो",galSeason:"सीज़न",galCaption:"कैप्शन (वैकल्पिक)",
   galFiles:"फ़ोटो (एक साथ कई चुन सकते हैं)",galUrl:"YouTube, Instagram, Facebook या Drive लिंक",galAdd:"गैलरी में जोड़ें",galWatch:"देखें",
   galNeedPhoto:"कम से कम एक फ़ोटो चुनें।",galNeedUrl:"https:// से शुरू होने वाला पूरा वीडियो लिंक डालें।",galUploading:"{n} में से फ़ोटो {i} अपलोड हो रही है…",
