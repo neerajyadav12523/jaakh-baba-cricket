@@ -133,6 +133,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-23T13:38:57.880Z"
+  },
+  {
+   "id": "emvl0pdj2qm3",
+   "kind": "income",
+   "date": "2026-10-23",
+   "item": "Bhankhari Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-23T13:40:37.501Z"
   }
  ]
 }
