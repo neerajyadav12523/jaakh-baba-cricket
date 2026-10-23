@@ -155,6 +155,17 @@
    "note": "700 pending",
    "bill": "",
    "added": "2026-10-23T15:27:50.612Z"
+  },
+  {
+   "id": "emvl6eha2p48",
+   "kind": "income",
+   "date": "2026-10-23",
+   "item": "Khatipura Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-23T16:20:06.355Z"
   }
  ]
 }
