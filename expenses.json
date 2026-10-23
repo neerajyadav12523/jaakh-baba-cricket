@@ -111,6 +111,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-23T12:25:33.519Z"
+  },
+  {
+   "id": "emvky9we2fo4",
+   "kind": "income",
+   "date": "2026-10-23",
+   "item": "Maroli Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-23T12:32:35.720Z"
   }
  ]
 }
