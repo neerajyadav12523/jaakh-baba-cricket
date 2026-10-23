@@ -144,6 +144,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-23T13:40:37.501Z"
+  },
+  {
+   "id": "emvl4j9dn613",
+   "kind": "income",
+   "date": "2026-10-23",
+   "item": "Khatoti Entry",
+   "category": "fees",
+   "amount": 800,
+   "note": "700 pending",
+   "bill": "",
+   "added": "2026-10-23T15:27:50.612Z"
   }
  ]
 }
