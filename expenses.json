@@ -100,6 +100,17 @@
    "bill": "",
    "added": "2026-10-22T13:43:46.112Z",
    "updated": "2026-10-22T14:00:02.869Z"
+  },
+  {
+   "id": "emvky0ubsbvv",
+   "kind": "income",
+   "date": "2026-10-23",
+   "item": "Gehli B Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-23T12:25:33.519Z"
   }
  ]
 }
