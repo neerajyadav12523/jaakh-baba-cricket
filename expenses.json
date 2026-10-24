@@ -166,6 +166,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-23T16:20:06.355Z"
+  },
+  {
+   "id": "emvludqhsdfn",
+   "kind": "income",
+   "date": "2026-10-24",
+   "item": "Meghpur Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-24T03:31:22.822Z"
   }
  ]
 }
