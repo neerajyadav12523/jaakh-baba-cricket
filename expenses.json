@@ -188,6 +188,17 @@
    "note": "400 pending",
    "bill": "",
    "added": "2026-10-24T08:28:59.664Z"
+  },
+  {
+   "id": "emvml0ra8b5c",
+   "kind": "income",
+   "date": "2026-10-24",
+   "item": "Badbar Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-24T15:57:06.782Z"
   }
  ]
 }
