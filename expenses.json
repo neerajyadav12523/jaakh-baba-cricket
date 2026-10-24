@@ -177,6 +177,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-24T03:31:22.822Z"
+  },
+  {
+   "id": "emvm50gtgtd8",
+   "kind": "income",
+   "date": "2026-10-24",
+   "item": "Dabla Entry",
+   "category": "fees",
+   "amount": 1100,
+   "note": "400 pending",
+   "bill": "",
+   "added": "2026-10-24T08:28:59.664Z"
   }
  ]
 }
