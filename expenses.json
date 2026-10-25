@@ -238,11 +238,12 @@
    "kind": "expense",
    "date": "2026-10-24",
    "item": "Stumps, 5 box balls, gloves, umpire hat, bat, winner & runne",
-   "category": "ground",
+   "category": "kit",
    "amount": 10175,
    "note": "",
    "bill": "",
-   "added": "2026-10-25T10:58:41.380Z"
+   "added": "2026-10-25T10:58:41.380Z",
+   "updated": "2026-10-25T13:09:25.430Z"
   },
   {
    "id": "emvnpzl882st",
