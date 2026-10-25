@@ -221,6 +221,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-25T06:00:25.460Z"
+  },
+  {
+   "id": "emvnoup2636e",
+   "kind": "expense",
+   "date": "2026-10-25",
+   "item": "2 Dustins(70ltr) for ground",
+   "category": "ground",
+   "amount": 2848,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-25T10:32:08.605Z"
   }
  ]
 }
