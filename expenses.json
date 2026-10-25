@@ -250,11 +250,12 @@
    "kind": "expense",
    "date": "2026-10-24",
    "item": "Medals, momento, best batsman, bowler, man of the series tro",
-   "category": "ground",
+   "category": "trophies",
    "amount": 2000,
    "note": "1500 pending",
    "bill": "",
-   "added": "2026-10-25T11:03:56.241Z"
+   "added": "2026-10-25T11:03:56.241Z",
+   "updated": "2026-10-25T13:12:30.121Z"
   },
   {
    "id": "emvntwtm5yww",
