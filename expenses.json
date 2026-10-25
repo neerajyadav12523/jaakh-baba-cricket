@@ -254,6 +254,17 @@
    "note": "1500 pending",
    "bill": "",
    "added": "2026-10-25T11:03:56.241Z"
+  },
+  {
+   "id": "emvntwtm5yww",
+   "kind": "income",
+   "date": "2026-10-25",
+   "item": "Thatwari Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-25T12:53:45.741Z"
   }
  ]
 }
