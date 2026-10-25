@@ -232,6 +232,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-25T10:32:08.605Z"
+  },
+  {
+   "id": "emvnpsu6tpes",
+   "kind": "expense",
+   "date": "2026-10-24",
+   "item": "Stumps, 5 box balls, gloves, umpire hat, bat, winner & runne",
+   "category": "ground",
+   "amount": 10175,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-25T10:58:41.380Z"
   }
  ]
 }
