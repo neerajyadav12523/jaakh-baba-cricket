@@ -210,6 +210,17 @@
    "note": "1000 pending",
    "bill": "",
    "added": "2026-10-25T05:35:09.941Z"
+  },
+  {
+   "id": "emvnf59e1u8z",
+   "kind": "income",
+   "date": "2026-10-25",
+   "item": "Sihoriya ki Dhani",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-25T06:00:25.460Z"
   }
  ]
 }
