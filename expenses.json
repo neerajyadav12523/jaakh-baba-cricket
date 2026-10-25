@@ -243,6 +243,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-25T10:58:41.380Z"
+  },
+  {
+   "id": "emvnpzl882st",
+   "kind": "expense",
+   "date": "2026-10-24",
+   "item": "Medals, momento, best batsman, bowler, man of the series tro",
+   "category": "ground",
+   "amount": 2000,
+   "note": "1500 pending",
+   "bill": "",
+   "added": "2026-10-25T11:03:56.241Z"
   }
  ]
 }
