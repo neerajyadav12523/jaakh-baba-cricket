@@ -279,6 +279,17 @@
    "note": "1000 pending",
    "bill": "",
    "added": "2026-10-26T13:57:01.955Z"
+  },
+  {
+   "id": "emvpbo3igjvw",
+   "kind": "income",
+   "date": "2026-10-26",
+   "item": "Khorma Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-26T13:58:37.758Z"
   }
  ]
 }
