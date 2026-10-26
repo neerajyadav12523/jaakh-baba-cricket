@@ -290,6 +290,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-26T13:58:37.758Z"
+  },
+  {
+   "id": "emvpct435hxh",
+   "kind": "income",
+   "date": "2026-10-26",
+   "item": "Dudhwa Entry",
+   "category": "fees",
+   "amount": 500,
+   "note": "1000 pending",
+   "bill": "",
+   "added": "2026-10-26T14:30:31.453Z"
   }
  ]
 }
