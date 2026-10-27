@@ -301,6 +301,17 @@
    "note": "1000 pending",
    "bill": "",
    "added": "2026-10-26T14:30:31.453Z"
+  },
+  {
+   "id": "emvq4ty4fexh",
+   "kind": "income",
+   "date": "2026-10-27",
+   "item": "Dhani (Shimla) Entry",
+   "category": "fees",
+   "amount": 500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-27T03:34:59.657Z"
   }
  ]
 }
