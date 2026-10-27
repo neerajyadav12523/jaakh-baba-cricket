@@ -312,6 +312,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-27T03:34:59.657Z"
+  },
+  {
+   "id": "emvqot8weqec",
+   "kind": "income",
+   "date": "2026-10-27",
+   "item": "Maandri Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-27T12:54:20.004Z"
   }
  ]
 }
