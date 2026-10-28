@@ -334,6 +334,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-28T11:12:56.998Z"
+  },
+  {
+   "id": "emvs0o4470y1",
+   "kind": "income",
+   "date": "2026-10-28",
+   "item": "Rambas Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-28T11:14:00.972Z"
   }
  ]
 }
