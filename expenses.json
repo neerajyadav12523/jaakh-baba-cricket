@@ -346,6 +346,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-28T11:14:00.972Z"
+  },
+  {
+   "id": "emvs0xg3cj6g",
+   "kind": "income",
+   "date": "2026-10-28",
+   "item": "Bapdoli Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-28T11:21:16.439Z"
   }
  ]
 }
