@@ -323,6 +323,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-27T12:54:20.004Z"
+  },
+  {
+   "id": "emvs0mq5rmf7",
+   "kind": "expense",
+   "date": "2026-10-28",
+   "item": "Rambas Entry",
+   "category": "ground",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-28T11:12:56.998Z"
   }
  ]
 }
