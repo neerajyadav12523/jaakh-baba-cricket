@@ -357,6 +357,17 @@
    "note": "",
    "bill": "",
    "added": "2026-10-28T11:21:16.439Z"
+  },
+  {
+   "id": "emvs6liywqt8",
+   "kind": "income",
+   "date": "2026-10-28",
+   "item": "Dochana Entry",
+   "category": "fees",
+   "amount": 500,
+   "note": "1000 pending",
+   "bill": "",
+   "added": "2026-10-28T13:59:58.531Z"
   }
  ]
 }
