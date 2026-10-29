@@ -368,6 +368,17 @@
    "note": "1000 pending",
    "bill": "",
    "added": "2026-10-28T13:59:58.531Z"
+  },
+  {
+   "id": "emvt5gltscbo",
+   "kind": "income",
+   "date": "2026-10-29",
+   "item": "Copper Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-10-29T06:15:55.455Z"
   }
  ]
 }
