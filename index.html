@@ -97,6 +97,7 @@ footer .ig{display:inline-flex;align-items:center;gap:6px}
 .cd small{font-size:.62rem;opacity:.8;text-transform:uppercase;letter-spacing:.04em}
 .clock .day{font-weight:700;font-size:.9rem}
 .ctas{display:flex;flex-wrap:wrap;gap:8px}
+.chnote{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .livepill{display:inline-flex;align-items:center;gap:8px;background:var(--fresco);color:#fff;font-weight:800;border-radius:999px;padding:4px 14px}
 .livepill i{width:9px;height:9px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite}
 @keyframes pulse{50%{opacity:.25}}
@@ -433,6 +434,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
   </div>
   <div class="chips" id="roundChips"></div>
   <div id="mlist"></div>
+  <p class="note chnote" id="chNote" hidden><span id="chWhen"></span> <button class="btn sec sm" id="chSync" type="button" hidden></button> <span class="msg" id="chMsg" aria-live="polite"></span></p>
   <p class="note" id="mNote"><span class="tag alt" data-i="tentative">Tentative</span> <span data-i="datesNote">Dates and times will be confirmed by the committee.</span></p>
 </div></section>
 
@@ -657,7 +659,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 const CONFIG = {
   startISO: "2026-11-04T10:30:00+05:30",
   days: 9,
-  liveUrl: "https://cricheroes.com/tournament/2261877/jaakh-baba-cricket-tournament-season-6/matches",   // Season 6 on CricHeroes
+  liveUrl: "https://cricheroes.com/tournament/2261877/jaakh-baba-cricket-tournament-season-6/matches",
+  teamAlias: { "Balaha": "Balawa Cricket Club" },   // CricHeroes name -> name shown on the site   // Season 6 on CricHeroes
   organiserWhatsApp: "919736908731",                         // country code + number, no spaces
   organiserDisplay: "97369 08731",
   pay: { phone: "97369 08731", upi: "neeyad@upi", name: "NEERAJ", qr: "pay-qr.jpg" },   // entry fees and sponsorship
@@ -705,7 +708,7 @@ const T = {
   navFormat:"Format",navMatches:"Matches",navHistory:"Hall of Fame",navRules:"Rules & Awards",navVisit:"For Spectators",navRegister:"Register",navSponsors:"Sponsors",
   formatH:"Same format, sixth year",formatLead:"Thirty-two teams, straight knockout. Lose once and you are out. Five rounds over nine days decide the champion.",
   matchesH:"Matches",matchesLead:"Fixtures and results for Season 6. Pick an earlier season to see every result from Seasons 1 to 5.",
-  fixtures:"Fixtures",results:"Results",allRounds:"All rounds",matchLbl:"Match",ovShort:"ov",venueShort:"Girls School Ground, Shimla",liveBtn:"Live on CricHeroes",
+  fixtures:"Fixtures",results:"Results",allRounds:"All rounds",matchLbl:"Match",ovShort:"ov",venueShort:"Girls School Ground, Shimla",liveBtn:"Live on CricHeroes",live:"LIVE",chWhen:"Fixtures and scores from CricHeroes, updated {t}.",chSync:"Sync from CricHeroes now",chSyncing:"Syncing…",chSynced:"Done: {n} matches.",chSyncFail:"Could not sync: {e}",chMore:"The next matches will appear here as soon as they are scheduled on CricHeroes.",
   noResults6:"No results yet. Season 6 starts on {d}. Results appear here after each match.",seasonDone:"Season {n} is complete. Open Results to see all 31 matches.",
   allPlayed:"All Season 6 matches have been played. Open Results.",noneInRound:"No matches in this round.",
   tbd:"To be decided",tentative:"Tentative",datesNote:"Dates and times will be confirmed by the committee.",
@@ -799,7 +802,7 @@ toSponsors:"Sponsors →",toTeams:"Teams →",tmKeyHelp:"Paste the same GitHub t
   navFormat:"फॉर्मेट",navMatches:"मैच",navHistory:"हॉल ऑफ फेम",navRules:"नियम व पुरस्कार",navVisit:"दर्शकों के लिए",navRegister:"रजिस्ट्रेशन",navSponsors:"प्रायोजक",
   formatH:"वही फॉर्मेट, छठा साल",formatLead:"32 टीमें, सीधा नॉकआउट। एक हार और टीम बाहर। नौ दिन में पाँच राउंड के बाद विजेता तय होगा।",
   matchesH:"मैच",matchesLead:"सीज़न 6 के आगामी मैच और नतीजे। सीज़न 1 से 5 के सारे नतीजे देखने के लिए पुराना सीज़न चुनें।",
-  fixtures:"आगामी मैच",results:"नतीजे",allRounds:"सभी राउंड",matchLbl:"मैच",ovShort:"ओवर",venueShort:"गर्ल्स स्कूल ग्राउंड, शिमला",liveBtn:"CricHeroes पर लाइव",
+  fixtures:"आगामी मैच",results:"नतीजे",allRounds:"सभी राउंड",matchLbl:"मैच",ovShort:"ओवर",venueShort:"गर्ल्स स्कूल ग्राउंड, शिमला",liveBtn:"CricHeroes पर लाइव",live:"लाइव",chWhen:"फ़िक्स्चर और स्कोर CricHeroes से, {t} पर अपडेट।",chSync:"CricHeroes से अभी अपडेट करें",chSyncing:"अपडेट हो रहा है…",chSynced:"हो गया: {n} मैच।",chSyncFail:"अपडेट नहीं हो सका: {e}",chMore:"अगले मैच CricHeroes पर तय होते ही यहाँ दिखेंगे।",
   noResults6:"अभी कोई नतीजा नहीं। सीज़न 6 {d} से शुरू होगा। हर मैच के बाद नतीजा यहाँ दिखेगा।",seasonDone:"सीज़न {n} पूरा हो चुका है। सभी 31 मैच देखने के लिए नतीजे खोलें।",
   allPlayed:"सीज़न 6 के सभी मैच हो चुके हैं। नतीजे खोलें।",noneInRound:"इस राउंड में कोई मैच नहीं।",
   tbd:"तय होना बाकी",tentative:"संभावित",datesNote:"तारीख़ और समय कमेटी तय करेगी।",
@@ -933,7 +936,31 @@ function teamHtml(side,name,score,state){
   return `<div class="tm ${side} ${state}"><span class="badge" style="background:${teamColor(name)}">${esc(initials(name))}</span><span class="tn">${esc(name)}</span>${score?scoreHtml(score):""}</div>`;
 }
 /* Normalised match list for the chosen season: {no, r, date, a, b, sa, sb, win, text, url, today} */
+const CH={list:null,synced:null};
+const chName=n=>(CONFIG.teamAlias||{})[n]||n;
+function chRound(name){const n=String(name).toLowerCase();
+  return /semi/.test(n)?3:/quarter/.test(n)?2:/final/.test(n)?4:/two|2|second/.test(n)?1:/one|1|first/.test(n)?0:-1;}
+function istDay(d){return istParts(d).toDateString();}
+function chMatches(){
+  const today=istDay(Date.now());
+  return CH.list.slice().sort((x,y)=>Date.parse(x.start)-Date.parse(y.start)||x.id-y.id).map((x,i)=>{
+    // show the team that batted first on the left, as in the past-season results
+    const sw=x.bFirst,a=chName(sw?x.b:x.a),b=chName(sw?x.a:x.b),sa=sw?x.sb:x.sa,sb=sw?x.sa:x.sb;
+    const w=x.winner?((x.winner==="a")!==sw?0:1):null;
+    let text=x.result||"";for(const [k,v] of Object.entries(CONFIG.teamAlias||{}))text=text.split(k).join(v);
+    const done=x.status==="past",live=x.status==="live",date=new Date(x.start);
+    return {no:i+1,r:chRound(x.round),rname:x.round,date,a,b,sa:sa&&[a].concat(sa),sb:sb&&[b].concat(sb),win:done?w:null,
+      text,url:done?x.url:"",chUrl:x.url,overs:x.overs,live,done,today:istDay(date)===today};
+  });
+}
+async function loadCH(){
+  try{const r=await fetch(CONFIG.api+"/matches",{cache:"no-store"});if(!r.ok)return;const j=await r.json();
+    CH.list=j.matches||[];CH.synced=j.synced;renderMatches();}catch(e){}
+}
+/* refresh every minute while a Season 6 match is live or still to be played today */
+setInterval(()=>{if(document.visibilityState==="visible"&&CH.list&&CH.list.length&&chMatches().some(m=>m.live||(m.today&&!m.done)))loadCH();},60000);
 function seasonMatches(season){
+  if(season===6&&CH.list&&CH.list.length)return chMatches();
   if(season===6){
     const today=nowDayIndex();
     return FIX.map(m=>{
@@ -948,13 +975,14 @@ function seasonMatches(season){
 }
 function cardHtml(m){
   const st=i=>m.win==null||m.win<0?"":(m.win===i?"win":"lose");
-  const live=m.today&&!m.done?`<span class="livepill" style="font-size:.75rem;padding:2px 10px"><i></i>${t("today")}</span>`:"";
+  const live=m.live||(m.today&&!m.done)?`<span class="livepill" style="font-size:.75rem;padding:2px 10px"><i></i>${m.live?t("live"):t("today")}</span>`:"";
+  const showSc=m.done||m.live;
   return `<article class="mc${m.today&&!m.done?" today":""}">
-    <div class="mc-top"><span class="lbl">${t("rounds")[m.r]} · ${t("matchLbl")} ${m.no}</span><span class="num">${live} ${clock(m.date)}</span></div>
-    ${m.done&&m.text?`<div class="mc-res">${esc(m.text)}</div>`:""}
-    <div class="mc-teams">${teamHtml("a",m.a,m.done?m.sa:null,st(0))}<span class="vs">VS</span>${teamHtml("b",m.b,m.done?m.sb:null,st(1))}</div>
-    <div class="mc-foot"><span>${t("venueShort")}${mState.season===6?" · "+ROUND_OVERS[m.r]+" "+t("ov"):""}</span>
-      ${m.url?`<a class="btn sec sm" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${t("scorecard")}</a>`:(m.today?`<a class="btn pri sm" href="${esc(CONFIG.liveUrl)}" target="_blank" rel="noopener noreferrer">${t("liveBtn")}</a>`:"")}</div>
+    <div class="mc-top"><span class="lbl">${m.r>=0?t("rounds")[m.r]:esc(m.rname||"")} · ${t("matchLbl")} ${m.no}</span><span class="num">${live} ${clock(m.date)}</span></div>
+    ${showSc&&m.text?`<div class="mc-res">${esc(m.text)}</div>`:""}
+    <div class="mc-teams">${teamHtml("a",m.a,showSc?m.sa:null,st(0))}<span class="vs">VS</span>${teamHtml("b",m.b,showSc?m.sb:null,st(1))}</div>
+    <div class="mc-foot"><span>${t("venueShort")}${mState.season===6?" · "+(m.overs||ROUND_OVERS[m.r])+" "+t("ov"):""}</span>
+      ${m.url?`<a class="btn sec sm" href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${t("scorecard")}</a>`:(m.live||m.today?`<a class="btn pri sm" href="${esc(m.chUrl||CONFIG.liveUrl)}" target="_blank" rel="noopener noreferrer">${t("liveBtn")}</a>`:"")}</div>
   </article>`;
 }
 function renderMatches(){
@@ -963,7 +991,11 @@ function renderMatches(){
   document.getElementById("vFix").setAttribute("aria-selected",mState.view==="fixtures");
   document.getElementById("vRes").setAttribute("aria-selected",mState.view==="results");
   document.getElementById("roundChips").innerHTML=[-1,0,1,2,3,4].map(r=>`<button data-r="${r}" aria-pressed="${mState.round===r}">${r<0?t("allRounds"):t("rounds")[r]}</button>`).join("");
-  document.getElementById("mNote").hidden=!(mState.season===6&&mState.view==="fixtures");
+  const fromCH=mState.season===6&&!!(CH.list&&CH.list.length);
+  document.getElementById("mNote").hidden=!(mState.season===6&&mState.view==="fixtures")||fromCH;
+  document.getElementById("chNote").hidden=!(mState.season===6&&(fromCH||isOwner()));
+  document.getElementById("chWhen").textContent=fromCH&&CH.synced?t("chWhen").replace("{t}",clock(CH.synced)):"";
+  {const b=document.getElementById("chSync");b.hidden=!isOwner();if(!b.disabled)b.textContent=t("chSync");}
   let ms=seasonMatches(mState.season).filter(m=>mState.view==="results"?m.done:!m.done);
   if(mState.round>=0)ms=ms.filter(m=>m.r===mState.round);
   ms.sort((a,b)=>mState.view==="results"?b.date-a.date||b.no-a.no:a.date-b.date||a.no-b.no);
@@ -973,7 +1005,7 @@ function renderMatches(){
     if(mState.round<0){
       if(mState.season===6&&mState.view==="results")msg=t("noResults6").replace("{d}",longDay(start));
       else if(mState.season!==6&&mState.view==="fixtures")msg=t("seasonDone").replace("{n}",mState.season);
-      else if(mState.season===6)msg=t("allPlayed");
+      else if(mState.season===6)msg=fromCH&&Date.now()<start.getTime()+CONFIG.days*86400000?t("chMore"):t("allPlayed");
     }
     box.innerHTML=`<div class="mempty">${msg}</div>`;return;
   }
@@ -983,6 +1015,14 @@ function renderMatches(){
     h+=cardHtml(m);}
   box.innerHTML=h+"</div></div>";
 }
+document.getElementById("chSync").onclick=async e=>{
+  const b=e.currentTarget;if(!isOwner())return;b.disabled=true;b.textContent=t("chSyncing");msgIn("chMsg","");
+  try{const r=await fetch(CONFIG.api+"/admin/sync",{method:"POST",headers:{"Authorization":"Bearer "+SP.token}});const j=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error(j.detail||j.error||("HTTP "+r.status));
+    await loadCH();msgIn("chMsg",t("chSynced").replace("{n}",j.count),"ok");
+  }catch(err){msgIn("chMsg",t("chSyncFail").replace("{e}",err.message),"bad");}
+  b.disabled=false;b.textContent=t("chSync");
+};
 document.getElementById("vFix").onclick=()=>{mState.view="fixtures";renderMatches();};
 document.getElementById("vRes").onclick=()=>{mState.view="results";renderMatches();};
 document.getElementById("seasonSel").onchange=e=>{mState.season=Number(e.target.value);mState.view=mState.season===6?"fixtures":"results";mState.round=-1;renderMatches();};
@@ -1706,6 +1746,7 @@ showTab(location.hash.slice(1),false);
 loadSponsors();
 loadTeams();
 loadGallery();
+loadCH();
 loadExpenses();
 addEventListener("hashchange",()=>showTab(location.hash.slice(1),false));
 

@@ -21,3 +21,18 @@ CREATE TABLE IF NOT EXISTS teams (
 CREATE UNIQUE INDEX IF NOT EXISTS teams_name_live ON teams (lower(name)) WHERE status != 'rejected';
 CREATE INDEX IF NOT EXISTS teams_status ON teams (status);
 CREATE INDEX IF NOT EXISTS teams_ip ON teams (ip_hash, created_at);
+
+-- Season 6 matches copied from CricHeroes (worker.js syncMatches); data = the compact JSON the site shows
+CREATE TABLE IF NOT EXISTS ch_matches (
+  match_id      INTEGER PRIMARY KEY,
+  data          TEXT NOT NULL,
+  status        TEXT NOT NULL,             -- upcoming | live | past
+  start_time    TEXT,
+  updated_at    TEXT NOT NULL
+);
+
+-- Small key/value settings: last_sync, last_try
+CREATE TABLE IF NOT EXISTS meta (
+  key           TEXT PRIMARY KEY,
+  value         TEXT
+);

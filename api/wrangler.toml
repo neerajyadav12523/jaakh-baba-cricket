@@ -7,6 +7,12 @@ ALLOWED_ORIGINS = "https://neerajyadav12523.github.io"
 MAX_TEAMS = "32"
 REG_CLOSES = "2026-10-31T23:59:59+05:30"   # no new registrations after this
 GITHUB_REPO = "neerajyadav12523/jaakh-baba-cricket"   # admin = a GitHub token with write access to this repo
+CH_TOURNAMENT = "https://cricheroes.com/tournament/2261877/jaakh-baba-cricket-tournament-season-6"   # matches are copied from here
+SYNC_UNTIL = "2026-11-14T00:00:00+05:30"   # stop reading CricHeroes after the tournament
+
+# every 5 minutes: copy scores and results from CricHeroes (only until SYNC_UNTIL)
+[triggers]
+crons = ["*/5 * * * *"]
 
 # created with: npx wrangler d1 create jaakh-baba
 [[d1_databases]]

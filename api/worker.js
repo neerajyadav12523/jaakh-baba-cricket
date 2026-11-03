@@ -12,30 +12,40 @@
 //   POST /admin/newpin           {id} -> replaces the captain PIN and returns it (to send again on WhatsApp)
 //   POST /admin/delete           {id}
 //   POST /admin/update           {id, name?, village?, captain?, phone?, players?} -> edit any team
+//   POST /admin/sync             re-reads the matches from CricHeroes now
+// Matches (copied from the CricHeroes tournament pages every 5 minutes during the tournament, and on demand)
+//   GET  /matches                every Season 6 match seen on CricHeroes + when it was last synced
 //
-// Bindings (wrangler.toml): DB (D1). Secrets: PIN_PEPPER, optional ADMIN_KEY. Vars: ALLOWED_ORIGINS, MAX_TEAMS, GITHUB_REPO, REG_CLOSES.
+// Bindings (wrangler.toml): DB (D1). Secrets: PIN_PEPPER, optional ADMIN_KEY.
+// Vars: ALLOWED_ORIGINS, MAX_TEAMS, GITHUB_REPO, REG_CLOSES, CH_TOURNAMENT, SYNC_UNTIL.
 
 const LIMITS = { text: 40, phoneDigits: 10, pinDigits: 6, regsPerIpPerHour: 5, maxPlayers: 15, pinTries: 5, lockMinutes: 15 };
+const SYNC = { staleMs: 2 * 60e3, pageSize: 12, lists: ['upcoming', 'live', 'past'] };
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const cors = corsHeaders(request, env);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     try {
-      const res = await route(request, env);
+      const res = await route(request, env, ctx);
       for (const [k, v] of Object.entries(cors)) res.headers.set(k, v);
       return res;
     } catch (err) {
       return json({ error: 'server_error' }, 500, cors);
     }
+  },
+  // Cron (wrangler.toml): keeps scores and results current even when nobody has the site open
+  async scheduled(event, env, ctx) {
+    if (syncWindowOpen(env)) ctx.waitUntil(syncMatches(env).catch(() => {}));
   }
 };
 
-async function route(request, env) {
+async function route(request, env, ctx) {
   const url = new URL(request.url);
   const path = url.pathname.replace(/\/+$/, '') || '/';
   const m = request.method;
 
+  if (m === 'GET' && path === '/matches') return publicMatches(env, ctx);
   if (m === 'GET' && path === '/teams') return publicTeams(env);
   if (m === 'POST' && path === '/register') return register(request, env);
   if (m === 'POST' && path === '/captain/login') return captainLogin(request, env);
@@ -48,6 +58,7 @@ async function route(request, env) {
     if (m === 'POST' && path === '/admin/newpin') return adminNewPin(request, env);
     if (m === 'POST' && path === '/admin/delete') return adminDelete(request, env);
     if (m === 'POST' && path === '/admin/update') return adminUpdate(request, env);
+    if (m === 'POST' && path === '/admin/sync') return adminSync(env);
   }
   return json({ error: 'not_found' }, 404);
 }
@@ -265,6 +276,117 @@ async function setNewPin(env, id) {
   await env.DB.prepare('UPDATE teams SET pin_salt = ?, pin_hash = ?, fail_count = 0, locked_until = NULL, updated_at = ? WHERE id = ?')
     .bind(salt, hash, new Date().toISOString(), id).run();
   return pin;
+}
+
+/* ---------- matches from CricHeroes ---------- */
+
+async function publicMatches(env, ctx) {
+  const { results } = await env.DB.prepare('SELECT data FROM ch_matches ORDER BY start_time, match_id').all();
+  const meta = await readMeta(env);
+  // A visitor's request refreshes stale data in the background, so live scores stay within ~2 minutes
+  if (syncWindowOpen(env) && Date.now() - Date.parse(meta.last_try || 0) > SYNC.staleMs) ctx.waitUntil(syncMatches(env).catch(() => {}));
+  return json({ matches: results.map(r => JSON.parse(r.data)), synced: meta.last_sync || null, source: env.CH_TOURNAMENT || '' },
+    200, { 'Cache-Control': 'public, max-age=30' });
+}
+
+async function adminSync(env) {
+  try {
+    const n = await syncMatches(env);
+    return json({ ok: true, count: n, synced: new Date().toISOString() });
+  } catch (e) {
+    return json({ error: 'sync_failed', detail: String(e.message || e) }, 502);
+  }
+}
+
+function syncWindowOpen(env) { return !!env.CH_TOURNAMENT && (!env.SYNC_UNTIL || Date.now() < Date.parse(env.SYNC_UNTIL)); }
+
+/* Reads the upcoming, live and past lists (CricHeroes shows the latest 12 of each) and upserts every match.
+   Past matches are kept even after they drop off CricHeroes' first page; an upcoming or live match that has
+   vanished from every list was deleted or rescheduled away on CricHeroes, so it is removed here too. */
+async function syncMatches(env) {
+  await writeMeta(env, 'last_try', new Date().toISOString());
+  const lists = {};
+  for (const s of SYNC.lists) lists[s] = await fetchList(env.CH_TOURNAMENT, s);
+  const now = new Date().toISOString(), seen = new Set(), stmts = [];
+  for (const s of SYNC.lists) {
+    for (const raw of lists[s]) {
+      const m = compactMatch(raw);
+      seen.add(m.id);
+      stmts.push(env.DB.prepare(
+        'INSERT INTO ch_matches (match_id, data, status, start_time, updated_at) VALUES (?, ?, ?, ?, ?) ' +
+        'ON CONFLICT(match_id) DO UPDATE SET data = excluded.data, status = excluded.status, start_time = excluded.start_time, updated_at = excluded.updated_at'
+      ).bind(m.id, JSON.stringify(m), m.status, m.start, now));
+    }
+  }
+  const complete = lists.upcoming.length < SYNC.pageSize && lists.live.length < SYNC.pageSize;
+  if (complete) {
+    const { results } = await env.DB.prepare("SELECT match_id FROM ch_matches WHERE status != 'past'").all();
+    for (const r of results) if (!seen.has(r.match_id)) stmts.push(env.DB.prepare('DELETE FROM ch_matches WHERE match_id = ?').bind(r.match_id));
+  }
+  if (stmts.length) await env.DB.batch(stmts);
+  await writeMeta(env, 'last_sync', now);
+  return seen.size;
+}
+
+async function fetchList(base, status) {
+  const r = await fetch(base + '/matches/' + status + '-matches', {
+    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36', 'Accept': 'text/html' }
+  });
+  if (!r.ok) throw new Error('CricHeroes ' + status + ' list: HTTP ' + r.status);
+  return extractMatches(await r.text());
+}
+
+/* The page embeds its data as Next.js flight chunks: self.__next_f.push([1,"<escaped text>"]).
+   Joins the chunks, then cuts out the JSON array at "matches":{"status":true,...,"data":[...]. */
+function extractMatches(html) {
+  let payload = '';
+  for (const m of html.matchAll(/self\.__next_f\.push\((\[1,"(?:[^"\\]|\\.)*"\])\)/g)) {
+    try { payload += JSON.parse(m[1])[1]; } catch (e) { /* not a text chunk */ }
+  }
+  const at = payload.indexOf('"matches":{"status":true');
+  if (at < 0) return [];                       // CricHeroes says "status":false when the list is empty
+  const start = payload.indexOf('"data":[', at);
+  if (start < 0) return [];
+  const arr = balancedArray(payload, start + 7);
+  if (!arr) throw new Error('CricHeroes page format changed');
+  return JSON.parse(arr);
+}
+
+function balancedArray(s, i) {
+  let depth = 0, inStr = false;
+  for (let j = i; j < s.length; j++) {
+    const c = s[j];
+    if (inStr) { if (c === '\\') j++; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true;
+    else if (c === '[' || c === '{') depth++;
+    else if (c === ']' || c === '}') { depth--; if (depth === 0) return s.slice(i, j + 1); }
+  }
+  return null;
+}
+
+/* Only what the site shows: teams, time, round, scores [runs, wickets, overs], result and scorecard link */
+function compactMatch(x) {
+  const inn = a => { const i = (a || [])[0]; return i ? [i.total_run, i.total_wicket, i.overs_played] : null; };
+  const slug = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const win = String(x.winning_team_id || '');
+  return {
+    id: x.match_id, status: x.status, start: x.match_start_time, round: x.tournament_round_name || '', overs: x.overs,
+    a: x.team_a, b: x.team_b, sa: inn(x.team_a_innings), sb: inn(x.team_b_innings),
+    // batting order: CricHeroes lists team A first unless team B batted first
+    bFirst: !!((x.team_b_innings || [])[0] && (x.team_a_innings || [])[0] && x.team_b_innings[0].inning < x.team_a_innings[0].inning),
+    winner: win && win === String(x.team_a_id) ? 'a' : win && win === String(x.team_b_id) ? 'b' : '',
+    result: (x.match_summary && x.match_summary.summary) || '', toss: x.toss_details || '',
+    url: 'https://cricheroes.com/scorecard/' + x.match_id + '/' + slug(x.tournament_name) + '/' + slug(x.team_a) + '-vs-' + slug(x.team_b) + '/scorecard'
+  };
+}
+
+async function readMeta(env) {
+  const { results } = await env.DB.prepare('SELECT key, value FROM meta').all();
+  return Object.fromEntries(results.map(r => [r.key, r.value]));
+}
+
+function writeMeta(env, key, value) {
+  return env.DB.prepare('INSERT INTO meta (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value').bind(key, value).run();
 }
 
 /* ---------- helpers ---------- */
