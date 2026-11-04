@@ -390,6 +390,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-03T07:36:44.153Z"
+  },
+  {
+   "id": "emw1tb1xz6zk",
+   "kind": "income",
+   "date": "2026-11-04",
+   "item": "Balaha Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-04T07:45:36.825Z"
   }
  ]
 }
