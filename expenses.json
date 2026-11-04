@@ -401,6 +401,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-04T07:45:36.825Z"
+  },
+  {
+   "id": "emw1w2tq4bmd",
+   "kind": "income",
+   "date": "2026-11-04",
+   "item": "Tiba Entry",
+   "category": "fees",
+   "amount": 700,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-04T09:03:11.674Z"
   }
  ]
 }
