@@ -445,6 +445,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-06T10:28:30.380Z"
+  },
+  {
+   "id": "emw4vxlxc0xj",
+   "kind": "income",
+   "date": "2026-11-06",
+   "item": "Dumoli Entry",
+   "category": "fees",
+   "amount": 1500,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-06T11:22:26.300Z"
   }
  ]
 }
