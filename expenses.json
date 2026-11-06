@@ -423,6 +423,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-06T04:13:20.043Z"
+  },
+  {
+   "id": "emw4nmffwcl9",
+   "kind": "income",
+   "date": "2026-11-06",
+   "item": "Khatoti Entry",
+   "category": "fees",
+   "amount": 700,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-06T07:29:48.070Z"
   }
  ]
 }
