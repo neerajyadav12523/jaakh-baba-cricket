@@ -434,6 +434,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-06T07:29:48.070Z"
+  },
+  {
+   "id": "emw4u08mtfiq",
+   "kind": "income",
+   "date": "2026-11-06",
+   "item": "Dochana Entry",
+   "category": "fees",
+   "amount": 1000,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-06T10:28:30.380Z"
   }
  ]
 }
