@@ -456,6 +456,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-06T11:22:26.300Z"
+  },
+  {
+   "id": "emw4vz6l8gwz",
+   "kind": "income",
+   "date": "2026-11-06",
+   "item": "Banss Shimla Entry",
+   "category": "fees",
+   "amount": 1000,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-06T11:23:39.902Z"
   }
  ]
 }
