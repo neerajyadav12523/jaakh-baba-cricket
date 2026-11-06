@@ -412,6 +412,17 @@
    "note": "",
    "bill": "",
    "added": "2026-11-04T09:03:11.674Z"
+  },
+  {
+   "id": "emw4glroo8el",
+   "kind": "income",
+   "date": "2026-11-06",
+   "item": "Dudhwa Entry",
+   "category": "fees",
+   "amount": 1000,
+   "note": "",
+   "bill": "",
+   "added": "2026-11-06T04:13:20.043Z"
   }
  ]
 }
